@@ -12,26 +12,22 @@ jobs:
     # Specify runner +  build & upload the static files as an artifact
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Cache npm
-        uses: actions/cache@v3
+      - name: Cache NPM Dependencies
+        uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+          path: node_modules
+          key: ${{ runner.OS }}-npm-cache
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache
 
-      - name: Cache Eleventy .cache
-        uses: actions/cache@v3
-        with:
-          path: ./.cache
-          key: ${{ runner.os }}-eleventy-fetch-cache
-
-      - name: Install requirements
+      - name: Install Dependencies
         run: npm install
 
       - name: Build static files
@@ -43,7 +39,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: _site/
+          path: ./public
 
   # Deployment job
   deploy:
