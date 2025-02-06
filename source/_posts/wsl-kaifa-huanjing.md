@@ -6,7 +6,7 @@ categories: ['最佳实践']
 tags:
   - linux
   - windows
-  - devops
+  - xops
 ---
 
 ## 安装和配置 WSL

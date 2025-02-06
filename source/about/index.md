@@ -30,6 +30,7 @@ toc: true
     - {% url_for electron tags/electron %}
     - {% url_for pytorch tags/pytorch %}
     - {% url_for react tags/react %}
+    - {% url_for bash tags/bash %}
     - {% url_for ros2 tags/ros2 %}
     - {% url_for ... tags %}
 - 工具类
@@ -46,5 +47,5 @@ toc: true
     - {% url_for ai tags/ai %}
     - {% url_for robot tags/robot %}
     - {% url_for physics tags/physics %}
-    - {% url_for devops tags/devops %}
+    - {% url_for xops tags/xops %}
     - {% url_for ... tags %}

@@ -5,7 +5,7 @@ date: 2025-11-09 22:14:14
 categories: ['最佳实践']
 tags:
   - python
-  - devops
+  - xops
 ---
 
 ## Overview

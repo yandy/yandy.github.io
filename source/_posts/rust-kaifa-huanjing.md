@@ -5,7 +5,7 @@ date: 2025-02-06 17:11:36
 categories: ['最佳实践']
 tags:
   - rust
-  - devops
+  - xops
 ---
 
 ## Overview

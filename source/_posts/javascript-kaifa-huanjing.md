@@ -5,7 +5,7 @@ date: 2025-02-06 15:38:24
 categories: ['最佳实践']
 tags:
   - js
-  - devops
+  - xops
 ---
 
 ## Overview
