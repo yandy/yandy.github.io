@@ -3,7 +3,7 @@ version: 5.1.0
 # Icarus theme variant, can be "default" or "cyberpunk"
 variant: default
 # Path or URL to the website's logo
-logo: /img/head.png
+logo: /img/logo-1024x1024.png
 # Page metadata configurations
 head:
     # URL or path to the website's icon
@@ -17,7 +17,7 @@ head:
         # when there is not enough space to display full name
         short_name: yandy
         # The start URL of the web application
-        start_url:
+        start_url: /
         # The default theme color for the application
         theme_color:
         # A placeholder background color for the application page to display
@@ -29,11 +29,11 @@ head:
         icons:
             -
                 # The path to the image file
-                src: '/img/head.png'
+                src: '/img/logo.png'
                 # A string containing space-separated image dimensions
-                sizes: ''
+                sizes: '512x512'
                 # A hint as to the media type of the image
-                type: image/jpeg
+                type: image/png
     # Open Graph metadata
     # https://hexo.io/docs/helpers.html#open-graph
     # open_graph:
@@ -228,11 +228,11 @@ widgets:
         # Author name
         author: 神奇小龟
         # Author title
-        author_title: Mr.
+        author_title: Developer
         # Author's current location
-        location: China
+        location: Nanjing, China
         # URL or path to the avatar image
-        avatar: /img/avatar.png
+        avatar: /img/avatar.jpg
         # Whether show the rounded avatar image
         avatar_rounded: true
         # Email address for the Gravatar
