@@ -3,11 +3,11 @@ version: 5.1.0
 # Icarus theme variant, can be "default" or "cyberpunk"
 variant: default
 # Path or URL to the website's logo
-logo: /img/logo.svg
+logo: /img/head.png
 # Page metadata configurations
 head:
     # URL or path to the website's icon
-    favicon: /img/favicon.svg
+    favicon: /img/icon.svg
     # Web application manifests configuration
     # https://developer.mozilla.org/en-US/docs/Web/Manifest
     manifest:
@@ -15,7 +15,7 @@ head:
         name:
         # The displayed name of the web application
         # when there is not enough space to display full name
-        short_name:
+        short_name: yandy
         # The start URL of the web application
         start_url:
         # The default theme color for the application
@@ -29,47 +29,47 @@ head:
         icons:
             -
                 # The path to the image file
-                src: ''
+                src: '/img/head.png'
                 # A string containing space-separated image dimensions
                 sizes: ''
                 # A hint as to the media type of the image
-                type:
+                type: image/jpeg
     # Open Graph metadata
     # https://hexo.io/docs/helpers.html#open-graph
-    open_graph:
-        # Page title (og:title) (optional)
-        # You should leave this blank for most of the time
-        title:
-        # Page type (og:type) (optional)
-        # You should leave this blank for most of the time
-        type: blog
-        # Page URL (og:url) (optional)
-        # You should leave this blank for most of the time
-        url:
-        # Page cover (og:image) (optional)
-        # You should leave this blank for most of the time
-        image:
-        # Site name (og:site_name) (optional)
-        # You should leave this blank for most of the time
-        site_name:
-        # Page author (article:author) (optional)
-        # You should leave this blank for most of the time
-        author:
-        # Page description (og:description) (optional)
-        # You should leave this blank for most of the time
-        description:
-        # Twitter card type (twitter:card)
-        twitter_card:
-        # Twitter ID (twitter:creator)
-        twitter_id:
-        # Twitter Site (twitter:site)
-        twitter_site:
-        # Google+ profile link (deprecated)
-        google_plus:
-        # Facebook admin ID
-        fb_admins:
-        # Facebook App ID
-        fb_app_id:
+    # open_graph:
+    #     # Page title (og:title) (optional)
+    #     # You should leave this blank for most of the time
+    #     title:
+    #     # Page type (og:type) (optional)
+    #     # You should leave this blank for most of the time
+    #     type: blog
+    #     # Page URL (og:url) (optional)
+    #     # You should leave this blank for most of the time
+    #     url:
+    #     # Page cover (og:image) (optional)
+    #     # You should leave this blank for most of the time
+    #     image:
+    #     # Site name (og:site_name) (optional)
+    #     # You should leave this blank for most of the time
+    #     site_name:
+    #     # Page author (article:author) (optional)
+    #     # You should leave this blank for most of the time
+    #     author:
+    #     # Page description (og:description) (optional)
+    #     # You should leave this blank for most of the time
+    #     description:
+    #     # Twitter card type (twitter:card)
+    #     twitter_card:
+    #     # Twitter ID (twitter:creator)
+    #     twitter_id:
+    #     # Twitter Site (twitter:site)
+    #     twitter_site:
+    #     # Google+ profile link (deprecated)
+    #     google_plus:
+    #     # Facebook admin ID
+    #     fb_admins:
+    #     # Facebook App ID
+    #     fb_app_id:
     # Structured data of the page
     # https://developers.google.com/search/docs/guides/intro-structured-data
     structured_data:
@@ -177,7 +177,7 @@ donates:
     -
         type: alipay
         # Alipay qrcode image URL
-        qrcode: ''
+        qrcode: '/img/alipay_paycode.jpg'
     # "Buy me a coffee" donate button configurations
     # -
     #     type: buymeacoffee
@@ -199,7 +199,7 @@ donates:
     -
         type: wechat
         # Wechat qrcode image URL
-        qrcode: ''
+        qrcode: '/img/wechat_paycode.jpg'
 # Share plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Share/
 # share:
@@ -232,9 +232,9 @@ widgets:
         # Author's current location
         location: China
         # URL or path to the avatar image
-        avatar:
+        avatar: /img/avatar.png
         # Whether show the rounded avatar image
-        avatar_rounded: false
+        avatar_rounded: true
         # Email address for the Gravatar
         gravatar:
         # URL or path for the follow button
