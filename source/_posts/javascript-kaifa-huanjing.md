@@ -1,5 +1,5 @@
 ---
-title: Javascript 开发环境搭建
+title: Javascript 开发环境
 toc: true
 date: 2025-02-06 15:38:24
 categories: ['最佳实践']

@@ -1,5 +1,5 @@
 ---
-title: WSL开发环境搭建
+title: WSL开发环境
 toc: true
 date: 2024-10-06 22:28:33
 categories: ['最佳实践']

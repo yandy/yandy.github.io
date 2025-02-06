@@ -1,5 +1,5 @@
 ---
-title: Windows 开发环境搭建
+title: Windows 开发环境
 toc: true
 date: 2024-10-06 19:05:50
 categories: ['最佳实践']
@@ -64,6 +64,5 @@ $env:PATH = "$HOME\AppData\Local\CmdTools;$env:PATH"
 
 ## Language
 
-- {% post_link javascript-kaifa-huanjing-dajian 'Javascript' %}
 - C++
-- Rust
+- {% post_link javascript-kaifa-huanjing 'Javascript' %}
