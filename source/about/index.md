@@ -17,34 +17,34 @@ toc: true
 
 #### Categories
 
-- 按图索骥(LearnNote)：学习笔记(quick start, tutorial)
-- 刨根问底(SeekWhy)：理论学习，debug(问题定位与修复，原理探寻)
-- 最佳实践(BestPractice)：实现、配置、优化等方案
+- {% url_for 按图索骥 categories/howto %} ：学习笔记(quick start, tutorial)
+- {% url_for 刨根问底 categories/why %} ：理论学习，debug(问题定位与修复，原理探寻)
+- {% url_for 最佳实践 categories/bestpractice %} ：实现、配置、优化等方案
 
 #### Tags
 - 编程类
-    - `python`
-    - `cpp`
-    - `js`
-    - `flask`
-    - `electron`
-    - `pytorch`
-    - `react`
-    - `ros2`
-    - ...
+    - {% url_for python tags/python %}
+    - {% url_for cpp tags/cpp %}
+    - {% url_for js tags/js %}
+    - {% url_for flask tags/flask %}
+    - {% url_for electron tags/electron %}
+    - {% url_for pytorch tags/pytorch %}
+    - {% url_for react tags/react %}
+    - {% url_for ros2 tags/ros2 %}
+    - {% url_for ... tags %}
 - 工具类
-    - `windows`
-    - `linux`
-    - `docker`
-    - `nginx`
-    - `ide`
-    - `git`
-    - `cmake`
-    - `vite`
-    - ...
+    - {% url_for windows tags/windows %}
+    - {% url_for linux tags/linux %}
+    - {% url_for docker tags/docker %}
+    - {% url_for nginx tags/nginx %}
+    - {% url_for ide tags/ide %}
+    - {% url_for git tags/git %}
+    - {% url_for cmake tags/cmake %}
+    - {% url_for vite tags/vite %}
+    - {% url_for ... tags %}
 - 领域类
-    - `ai`
-    - `robot`
-    - `physics`
-    - `devops`
-    - ...
+    - {% url_for ai tags/ai %}
+    - {% url_for robot tags/robot %}
+    - {% url_for physics tags/physics %}
+    - {% url_for devops tags/devops %}
+    - {% url_for ... tags %}

@@ -247,15 +247,6 @@ widgets:
             RSS:
                 icon: fas fa-rss
                 url: /atom.xml
-    # Recommendation links widget configurations
-    -
-        # Where should the widget be placed, left sidebar or right sidebar
-        position: left
-        type: links
-        # # Names and URLs of the sites
-        links:
-            Hexo: https://hexo.io
-            Icarus: https://ppoffice.github.io/hexo-theme-icarus/
     # Recent posts widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
@@ -311,6 +302,15 @@ widgets:
     #     action_url: ''
     #     # Feed claiming verification code
     #     verification_code: ''
+    # Recommendation links widget configurations
+    -
+        # Where should the widget be placed, left sidebar or right sidebar
+        position: left
+        type: links
+        # # Names and URLs of the sites
+        links:
+            Hexo: https://hexo.io
+            Icarus: https://ppoffice.github.io/hexo-theme-icarus/
 # Plugin configurations
 # https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/
 plugins:
