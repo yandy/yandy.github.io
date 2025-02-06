@@ -20,7 +20,10 @@ tags:
 
 ```pwsh
 # 安装
-cargo install fnm # 其他安装方法参考 https://github.com/Schniz/fnm?tab=readme-ov-file#using-winget-windows
+# https://github.com/Schniz/fnm?tab=readme-ov-file#installation
+winget install -e --id Schniz.fnm
+# or using cargo if you have rust installed
+# cargo install fnm
 
 # 配置
 fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
