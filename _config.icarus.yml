@@ -105,11 +105,11 @@ head:
 navbar:
     # Navigation menu items
     menu:
-        Home: /
-        Archives: /archives
-        Categories: /categories
-        Tags: /tags
-        About: /about
+        首页: /
+        类别: /categories
+        标签: /tags
+        文章: /archives
+        关于: /about
     # Links to be shown on the right of the navigation bar
     links:
         Visit on GitHub:
