@@ -1,0 +1,69 @@
+---
+title: Rust 开发环境搭建
+toc: true
+date: 2025-02-06 17:11:36
+categories: ['最佳实践']
+tags:
+  - rust
+  - devops
+---
+
+## Overview
+
+|  | Windows | WSL | Container |
+| --- | --- | --- | --- |
+| 开发环境(VS Code with Extension) | ✓ | ✓ | ✓ |
+
+<!-- more -->
+
+## Windows
+
+#### 安装
+
+下载 [rustup-init.exe](https://www.rust-lang.org/tools/install)，双击安装
+
+#### 设置
+
+使用 [RsProxy](https://rsproxy.cn/) 镜像源，编辑配置文件
+`code $HOME\.cargo\config.toml`
+
+```toml
+[source.crates-io]
+replace-with = 'rsproxy-sparse'
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+[net]
+git-fetch-with-cli = true
+```
+
+
+## WSL
+
+```bash
+# install
+export RUSTUP_DIST_SERVER="https://rsproxy.cn"
+export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
+curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh | sh
+
+# config
+cat > ~/.cargo/config.toml <<- 'EOM'
+[source.crates-io]
+replace-with = 'rsproxy-sparse'
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+[net]
+git-fetch-with-cli = true
+EOM
+```
+
+## Container
+
+参考 [项目模板](https://github.com/yandy/project-tmpl)： [Rust](https://github.com/yandy/project-tmpl/tree/main/rust)

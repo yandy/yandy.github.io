@@ -20,7 +20,7 @@ tags:
 
 ```pwsh
 # 安装
-cargo install fnm
+cargo install fnm # 其他安装方法参考 https://github.com/Schniz/fnm?tab=readme-ov-file#using-winget-windows
 
 # 配置
 fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
