@@ -25,7 +25,7 @@ toc: true
 - 编程类
     - `python`
     - `cpp`
-    - `typescript`
+    - `js`
     - `flask`
     - `electron`
     - `pytorch`
