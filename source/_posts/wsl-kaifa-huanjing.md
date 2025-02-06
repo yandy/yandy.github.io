@@ -61,4 +61,4 @@ Optimize-VHD -Path .\ext4.vhdx -Mode full
 ## Language
 
 - {% post_link cpp-kaifa-huanjing 'C++' %}
-- Python
+- {% post_link python-kaifa-huanjing 'Python' %}
