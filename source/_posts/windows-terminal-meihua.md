@@ -16,19 +16,19 @@ tags:
 
 <!-- more -->
 
-#### 安装字体
+### 安装字体
 
 安装 [Nerd Font](https://www.nerdfonts.com/font-downloads)，选择 [Cascadia Code NF](https://github.com/microsoft/cascadia-code/releases) 字体。
 安装方式：下载字体 `.zip`，解压后，双击对应的 `.ttf` 文件
 
 
-#### 设置 Windows Terminal 字体
+### 设置 Windows Terminal 字体
 
 `ctrl+,`打开配置界面，选择 "配置文件" -> "其他设置" -> "外观" -> "字体" ，设置为 `Cascadia Code NF`
 
-#### 安装 oh-my-posh
+### 安装 oh-my-posh
 
-###### windows(powershell)
+#### windows(powershell)
 
 ```pwsh
 # 安装
@@ -45,7 +45,7 @@ oh-my-posh init pwsh | Invoke-Expression
 '@
 ```
 
-###### wsl(bash)
+#### wsl(bash)
 
 ```bash
 # 安装
@@ -63,7 +63,7 @@ EOM
 
 [Terminal-Icons](https://github.com/devblackops/Terminal-Icons) is a PowerShell module that adds file and folder icons when displaying items in the terminal
 
-#### 安装
+### 安装
 
 ```pwsh
 # 安装
@@ -76,7 +76,7 @@ Import-Module -Name Terminal-Icons
 '@
 ```
 
-#### 用法
+### 用法
 
 ```pwsh
 Get-Item ./README.md

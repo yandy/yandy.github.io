@@ -18,11 +18,11 @@ tags:
 
 ## Windows
 
-#### build tools
+### build tools
 
 安装 [Microsoft C++ 生成工具](https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/)
 
-#### vcpkg
+### vcpkg
 
 ```pwsh
 # update $PROFILE
@@ -43,13 +43,13 @@ bootstrap-vcpkg.bat -disableMetrics
 
 ## WSL
 
-#### build tools
+### build tools
 
 ```bash
 sudo apt-get install -y --no-install-recommends build-essential cmake ninja-build
 ```
 
-#### vcpkg
+### vcpkg
 
 ```bash
 export VCPKG_ROOT="${HOME}/.vcpkg"

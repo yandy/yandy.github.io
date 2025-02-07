@@ -18,11 +18,11 @@ tags:
 
 ## Windows
 
-#### 安装
+### 安装
 
 下载 [rustup-init.exe](https://www.rust-lang.org/tools/install)，双击安装
 
-#### 设置
+### 设置
 
 使用 [RsProxy](https://rsproxy.cn/) 镜像源，编辑配置文件
 `code $HOME\.cargo\config.toml`

@@ -15,13 +15,13 @@ toc: true
 
 ## 关于本站
 
-#### Categories
+### Categories
 
 - {% url_for 按图索骥 categories/howto %} ：学习笔记(quick start, tutorial)
 - {% url_for 刨根问底 categories/why %} ：理论学习，debug(问题定位与修复，原理探寻)
-- {% url_for 最佳实践 categories/bestpractice %} ：实现、配置等最优/推荐方案
+- {% url_for 最佳实践 categories/bestpractice %} ：实现、配置等最优/推荐方案(的整理、汇总)
 
-#### Tags
+### Tags
 - 编程类
     - {% url_for python tags/python %}
     - {% url_for cpp tags/cpp %}

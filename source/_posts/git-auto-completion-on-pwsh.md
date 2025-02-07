@@ -2,7 +2,7 @@
 title: Powershell 下的 git 自动补全
 toc: true
 date: 2024-11-10 23:37:49
-categories: ['最佳实践']
+categories: ['按图索骥']
 tags:
   - git
   - xops

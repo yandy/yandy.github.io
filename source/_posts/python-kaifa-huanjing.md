@@ -20,7 +20,7 @@ tags:
 
 使用 [pyenv](https://github.com/pyenv/pyenv) 管理python版本和虚拟环境
 
-#### pyenv
+### pyenv
 
 ```bash
 # install pyenv
@@ -34,7 +34,7 @@ eval "$(pyenv init -)"
 EOF
 ```
 
-#### python
+### python
 
 ```bash
 # install python build dependencies

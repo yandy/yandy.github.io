@@ -11,11 +11,11 @@ tags:
 
 ## 基础工具
 
-#### 网络工具
+### 网络工具
 
 [Clash Verge](https://clashverge.net/)
 
-#### Powershell
+### Powershell
 
 ```pwsh
 winget install --id Microsoft.PowerShell -e --source winget
@@ -26,31 +26,51 @@ New-Item -Path $PROFILE -Type File -Force
 
 <!-- more -->
 
-#### Windows Terminal
+### Windows Terminal
 
-优化(美化)
+Windows Terminal的{% post_link windows-terminal-meihua '美化' %}
 
-#### Docker Desktop
+
+### Docker Desktop
 
 - 下载并安装 [Docker Desktop](https://docs.docker.com/desktop/)
 - 设置 proxy 和 proxy bypass
   - proxy: `http://127.0.0.1:7892`
   - proxy bypass: `mirrors.ustc.edu.cn,registry.npmmirror.com,*.aliyun.com,*.cn`
 
-#### IDE
+### IDE
 
 - 下载并安装 [VSCode](https://code.visualstudio.com/) 或者通过 Microsoft Store
 - 登录微软账号，开启[配置同步](https://code.visualstudio.com/docs/editor/settings-sync)，注意配置不同步 `UI状态`
 
-#### Git
+### Git
+
+安装和配置:
 
 ```pwsh
+# 安装
 winget install --id Git.Git -e --source winget
+
+# 配置
 git config --global user.name "Michael Ding"
 git config --global user.email "yandy.ding@gmail.com"
 ```
 
-#### Custom Cmdline
+自动补全：
+
+```pwsh
+# 安装
+Install-Module -Name posh-git -Repository PSGallery -Scope CurrentUser
+
+# 配置 $PROFILE
+Add-Content -Path $PROFILE -Value @'
+# posh-git
+Import-Module -Name posh-git
+
+'@
+```
+
+### Custom Cmdline
 
 ```pwsh
 mkdir "$HOME\AppData\Local\CmdTools"
