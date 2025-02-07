@@ -11,8 +11,6 @@ tags:
 
 Powershell(Windows) 下实现 git 自动补全，可以通过 [Posh-Git](https://github.com/dahlbyk/posh-git)
 
-<!-- more -->
-
 ```pwsh
 # 安装
 Install-Module -Name posh-git -Repository PSGallery -Scope CurrentUser

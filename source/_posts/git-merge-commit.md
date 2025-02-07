@@ -8,6 +8,7 @@ tags:
 ---
 
 有时候为了使 git log 看起来更简洁，需要合并多个commit为一个(例如：在一个分支做开发时，创建了很多commit，提交Pull Request，需要作为一个commit 提交)
+
 <!-- more -->
 
 ## 方案1，使用 reset

@@ -10,12 +10,12 @@ tags:
 
 [.dockerignore](https://docs.docker.com/reference/dockerfile/#dockerignore-file) 和 [.gitignore](https://git-scm.com/docs/gitignore) 语法相似，但是有两个主要区别
 
-<!-- more -->
-
 ## 相对路径
 
 在 _.gitignore_ 中，相对路径（例如`filename`）可匹配任意目录下的该路径；
 而在 _.dockerignore_ 中，相对路径（例如`filename`）与根路径（例如`/filename`）等效，且仅匹配根目录下的路径。若要匹配任意目录下的路径，应使用`**/filename` 。
+
+<!-- more -->
 
 > In _.gitignore_, a relative path (e.g. `filename`) matches the path under any directory;
 > while in _.dockerignore_, a relative path (e.g. `filename`) is the same as a rooted one (e.g. `/filename`) and matches only ones under the root. To match the path under any directory, `**/filename` should be used.
