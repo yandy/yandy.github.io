@@ -15,11 +15,20 @@ tags:
 
 [Clash Verge](https://clashverge.net/)
 
+### IDE
+
+- 下载并安装 [VSCode](https://code.visualstudio.com/) 或者通过 Microsoft Store
+- 登录微软账号，开启[配置同步](https://code.visualstudio.com/docs/editor/settings-sync)，注意配置不同步 `UI状态`
+
 ### Powershell
 
 ```pwsh
 winget install --id Microsoft.PowerShell -e --source winget
+```
 
+打开新安装 powershell
+
+```pwsh
 # 创建 profile
 New-Item -Path $PROFILE -Type File -Force
 ```
@@ -37,11 +46,6 @@ Windows Terminal的{% post_link windows-terminal-meihua '美化' %}
 - 设置 proxy 和 proxy bypass
   - proxy: `http://127.0.0.1:7892`
   - proxy bypass: `mirrors.ustc.edu.cn,registry.npmmirror.com,*.aliyun.com,*.cn`
-
-### IDE
-
-- 下载并安装 [VSCode](https://code.visualstudio.com/) 或者通过 Microsoft Store
-- 登录微软账号，开启[配置同步](https://code.visualstudio.com/docs/editor/settings-sync)，注意配置不同步 `UI状态`
 
 ### Git
 
