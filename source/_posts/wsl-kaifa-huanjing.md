@@ -16,13 +16,13 @@ tags:
 Windows Powershell 中执行：
 
 ```pwsh
-# install wsl, run as administrator
-wsl --install
-
 Add-Content -Path $HOME\.wslconfig -Value @'
 [wsl2]
 networkingMode=mirrored
 '@
+
+# install wsl, run as administrator
+wsl --install
 
 # set firewall, run as Administrator
 # ref: https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/hyper-v-firewall
