@@ -22,6 +22,14 @@ tags:
 
 安装 [Microsoft C++ 生成工具](https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/)
 
+```pwsh
+Add-Content -Path $PROFILE -Value @'
+# vs build tools
+& "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\Tools\Launch-VsDevShell.ps1"
+
+'@
+```
+
 ## WSL
 
 ### build tools
