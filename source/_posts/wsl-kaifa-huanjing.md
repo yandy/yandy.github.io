@@ -19,6 +19,8 @@ Windows Powershell 中执行：
 Add-Content -Path $HOME\.wslconfig -Value @'
 [wsl2]
 networkingMode=mirrored
+defaultVhdSize=21474836480
+autoProxy=false
 '@
 
 # install wsl, run as administrator
