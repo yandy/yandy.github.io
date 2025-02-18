@@ -22,25 +22,6 @@ tags:
 
 安装 [Microsoft C++ 生成工具](https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/)
 
-### vcpkg
-
-```pwsh
-# update $PROFILE
-Add-Content -Path $PROFILE -Value @'
-# vcpkg
-& "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\Tools\Launch-VsDevShell.ps1"
-$env:VCPKG_ROOT = "$HOME/.vcpkg"
-$env:VCPKG_FORCE_SYSTEM_BINARIES = "1"
-$env:PATH = "$env:VCPKG_ROOT;$env:PATH"
-
-'@
-
-# Close your Terminal window and open a new one so your changes take effect
-# install vcpkg
-git clone https://github.com/microsoft/vcpkg $env:VCPKG_ROOT
-bootstrap-vcpkg.bat -disableMetrics
-```
-
 ## WSL
 
 ### build tools
