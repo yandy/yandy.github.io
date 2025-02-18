@@ -25,9 +25,9 @@ tags:
 ### 设置
 
 使用 [RsProxy](https://rsproxy.cn/) 镜像源，编辑配置文件
-`code $HOME\.cargo\config.toml`
 
-```toml
+```pwsh
+Add-Content -Path $HOME\.cargo\config.toml -Value @'
 [source.crates-io]
 replace-with = 'rsproxy-sparse'
 [source.rsproxy]
@@ -38,6 +38,7 @@ registry = "sparse+https://rsproxy.cn/index/"
 index = "https://rsproxy.cn/crates.io-index"
 [net]
 git-fetch-with-cli = true
+'@
 ```
 
 
