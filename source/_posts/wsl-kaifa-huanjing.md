@@ -19,7 +19,7 @@ Windows Powershell 中执行：
 Add-Content -Path $HOME\.wslconfig -Value @'
 [wsl2]
 networkingMode=mirrored
-defaultVhdSize=110474836480
+defaultVhdSize=107374182400
 autoProxy=false
 '@
 
