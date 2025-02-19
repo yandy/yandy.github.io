@@ -35,6 +35,10 @@ New-Item -Path $PROFILE -Type File -Force
 
 <!-- more -->
 
+### WSL(Windows Subsystem for Linux)
+
+{% post_link wsl-kaifa-huanjing '安装 WSL' %}
+
 ### Windows Terminal
 
 Windows Terminal的{% post_link windows-terminal-meihua '美化' %}
@@ -72,6 +76,14 @@ Add-Content -Path $PROFILE -Value @'
 Import-Module -Name posh-git
 
 '@
+```
+
+### 7-zip
+
+安装 [7-zip](https://sparanoid.com/lab/7z/)
+
+```pwsh
+winget install --id 7zip.7zip -e --source winget
 ```
 
 ### Custom Cmdline
