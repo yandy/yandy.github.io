@@ -44,6 +44,8 @@ sudo sed -i 's@//.*security.ubuntu.com@//mirrors.aliyun.com@g' /etc/apt/sources.
 sudo apt update && sudo apt install aptitude
 
 # config git
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
+git config --global core.sshcommand "ssh.exe"
 git config --global user.name "Michael Ding"
 git config --global user.email "yandy.ding@gmail.com"
 ```
