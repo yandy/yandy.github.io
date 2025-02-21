@@ -20,17 +20,11 @@ tags:
 - 下载并安装 [VSCode](https://code.visualstudio.com/) 或者通过 Microsoft Store
 - 登录微软账号，开启[配置同步](https://code.visualstudio.com/docs/editor/settings-sync)，注意配置不同步 `UI状态`
 
-### Powershell
-
-```pwsh
-winget install --id Microsoft.PowerShell -e --source winget
-```
-
-打开新安装 powershell
+### Windows Powershell
 
 ```pwsh
 # 创建 profile
-New-Item -Path $PROFILE -Type File -Force
+New-Item -Path $PROFILE -Type File
 ```
 
 <!-- more -->
