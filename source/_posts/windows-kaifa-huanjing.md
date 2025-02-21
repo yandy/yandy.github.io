@@ -46,10 +46,7 @@ Windows Terminal的{% post_link windows-terminal-meihua '美化' %}
 
 ### Docker Desktop
 
-- 下载并安装 [Docker Desktop](https://docs.docker.com/desktop/)
-- 设置 proxy 和 proxy bypass
-  - proxy: `http://127.0.0.1:7892`
-  - proxy bypass: `mirrors.ustc.edu.cn,registry.npmmirror.com,*.aliyun.com,*.cn`
+下载并安装 [Docker Desktop](https://docs.docker.com/desktop/)
 
 ### Git
 
