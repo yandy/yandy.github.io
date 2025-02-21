@@ -20,7 +20,6 @@ Add-Content -Path $HOME\.wslconfig -Value @'
 [wsl2]
 networkingMode=mirrored
 defaultVhdSize=107374182400
-autoProxy=false
 '@
 
 # install wsl, run as administrator
