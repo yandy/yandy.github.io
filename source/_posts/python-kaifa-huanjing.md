@@ -8,7 +8,7 @@ tags:
   - xops
 ---
 
-## Overview
+## 1. Overview
 
 | fnm/electron/nextjs | Windows | WSL | Container |
 | --- | --- | --- | --- |
@@ -16,11 +16,11 @@ tags:
 
 <!-- more -->
 
-## WSL
+## 2. WSL
 
 使用 [pyenv](https://github.com/pyenv/pyenv) 管理python版本和虚拟环境
 
-### pyenv
+### 2.1. pyenv
 
 ```bash
 # install pyenv
@@ -34,7 +34,7 @@ eval "$(pyenv init -)"
 EOF
 ```
 
-### python
+### 2.2. python
 
 ```bash
 # install python build dependencies
@@ -55,6 +55,6 @@ pyenv global 3.12.6
 pip config --user set global.index-url https://mirrors.aliyun.com/pypi/simple/
 ```
 
-## Container
+## 3. Container
 
 参考 [项目模板](https://github.com/yandy/project-tmpl)： [Python](https://github.com/yandy/project-tmpl/tree/main/python)

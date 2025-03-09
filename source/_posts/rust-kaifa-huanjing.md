@@ -8,7 +8,7 @@ tags:
   - xops
 ---
 
-## Overview
+## 1. Overview
 
 |  | Windows | WSL | Container |
 | --- | --- | --- | --- |
@@ -16,13 +16,13 @@ tags:
 
 <!-- more -->
 
-## Windows
+## 2. Windows
 
-### 安装
+### 2.1. 安装
 
 下载 [rustup-init.exe](https://www.rust-lang.org/tools/install)，双击安装
 
-### 设置
+### 2.2. 设置
 
 使用 [RsProxy](https://rsproxy.cn/) 镜像源，编辑配置文件
 
@@ -42,7 +42,7 @@ git-fetch-with-cli = true
 ```
 
 
-## WSL
+## 3. WSL
 
 ```bash
 # install
@@ -65,6 +65,6 @@ git-fetch-with-cli = true
 EOM
 ```
 
-## Container
+## 4. Container
 
 参考 [项目模板](https://github.com/yandy/project-tmpl)： [Rust](https://github.com/yandy/project-tmpl/tree/main/rust)

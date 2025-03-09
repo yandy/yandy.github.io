@@ -8,7 +8,7 @@ tags:
   - xops
 ---
 
-## oh-my-posh
+## 1. oh-my-posh
 
 [oh-my-posh](https://ohmyposh.dev/) 提供 Git 状态颜色编码和提示的完全自定义命令提示符体验提供主题功能。
 
@@ -16,17 +16,17 @@ tags:
 
 <!-- more -->
 
-### 安装字体
+### 1.1. 安装字体
 
 安装 [Nerd Font](https://www.nerdfonts.com/font-downloads)，选择 [Cascadia Code NF](https://github.com/microsoft/cascadia-code/releases) 字体。
 安装方式：下载字体 `.zip`，解压后，双击对应的 `.ttf` 文件
 
 
-### 设置 Windows Terminal 字体
+### 1.2. 设置 Windows Terminal 字体
 
 `ctrl+,`打开配置界面，选择 "配置文件" -> "其他设置" -> "外观" -> "字体" ，设置为 `Cascadia Code NF`
 
-### 安装 oh-my-posh
+### 1.3. 安装 oh-my-posh
 
 #### windows(powershell)
 
@@ -59,11 +59,11 @@ eval "$(oh-my-posh init bash)"
 EOM
 ```
 
-## Terminal-Icons (for Powershell)
+## 2. Terminal-Icons (for Powershell)
 
 [Terminal-Icons](https://github.com/devblackops/Terminal-Icons) is a PowerShell module that adds file and folder icons when displaying items in the terminal
 
-### 安装
+### 2.1. 安装
 
 ```pwsh
 # 安装
@@ -76,7 +76,7 @@ Import-Module -Name Terminal-Icons
 '@
 ```
 
-### 用法
+### 2.2. 用法
 
 ```pwsh
 Get-Item ./README.md

@@ -9,7 +9,7 @@ tags:
   - xops
 ---
 
-## 安装和配置 WSL
+## 1. 安装和配置 WSL
 
 [WSL](https://learn.microsoft.com/en-us/windows/wsl/about) 全称 Windows Subsystem for Linux
 
@@ -50,7 +50,7 @@ git config --global user.email "yandy.ding@gmail.com"
 ```
 
 
-## WSL 管理
+## 2. WSL 管理
 
 Windows Powershell 中
 
@@ -61,7 +61,7 @@ cd $HOME\AppData\Local\Packages\<WSL Distro>\LocalState
 Optimize-VHD -Path .\ext4.vhdx -Mode full
 ```
 
-## Language
+## 3. Language
 
 - {% post_link cpp-kaifa-huanjing 'C++' %}
 - {% post_link python-kaifa-huanjing 'Python' %}

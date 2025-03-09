@@ -22,11 +22,11 @@ tags:
 | HTTP(s) | 场景1 | 场景2 |
 | SSH | 场景3 | 场景4 |
 
-### HTTP(s) 认证信息的共享
+### 1. HTTP(s) 认证信息的共享
 
 对于 HTTP 认证信息，Remote Development 的支持是非常好的：
 
-#### Remote WSL(场景1)
+#### 1.1. Remote WSL(场景1)
 
 在 WSL 下执行：
 
@@ -34,13 +34,13 @@ tags:
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
 ```
 
-#### Remote DevContainer(场景2)
+#### 1.2. Remote DevContainer(场景2)
 
 自动支持，无需手动配置
 
-### SSH 认证信息的共享
+### 2. SSH 认证信息的共享
 
-#### Remote WSL(场景3)
+#### 2.1. Remote WSL(场景3)
 
 有两种方案：
 
@@ -75,7 +75,7 @@ Get-Service ssh-agent # check status
 > 注：具体不兼容的原因如下：
 > Windows的 openssh 中，ssh-agent的实现 和 Linux版本的有区别，linux版本用的是 unix socket，windows版本用的是 named pipe，所以linux自带的ssh-agent无法使用 windows 端的 ssh-agent service，需要将linux自带的ssh-agent 变更为支持 named pipeline 的版本
 
-#### Remote DevContainer(场景4)
+#### 2.2. Remote DevContainer(场景4)
 
 只需在Windows端开启 `ssh-agent`:
 

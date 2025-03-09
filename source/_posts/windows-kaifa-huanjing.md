@@ -9,18 +9,18 @@ tags:
 ---
 
 
-## 基础工具
+## 1. 基础工具
 
-### 网络工具
+### 1.1. 网络工具
 
 [Clash Verge](https://clashverge.net/)
 
-### IDE
+### 1.2. IDE
 
 - 下载并安装 [VSCode](https://code.visualstudio.com/) 或者通过 Microsoft Store
 - 登录微软账号，开启[配置同步](https://code.visualstudio.com/docs/editor/settings-sync)，注意配置不同步 `UI状态`
 
-### Windows Powershell
+### 1.3. Windows Powershell
 
 ```pwsh
 # 创建 profile
@@ -32,20 +32,20 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 <!-- more -->
 
-### WSL(Windows Subsystem for Linux)
+### 1.4. WSL(Windows Subsystem for Linux)
 
 {% post_link wsl-kaifa-huanjing '安装 WSL' %}
 
-### Windows Terminal
+### 1.5. Windows Terminal
 
 Windows Terminal的{% post_link windows-terminal-meihua '美化' %}
 
 
-### Docker Desktop
+### 1.6. Docker Desktop
 
 下载并安装 [Docker Desktop](https://docs.docker.com/desktop/)
 
-### Git
+### 1.7. Git
 
 安装和配置:
 
@@ -72,7 +72,7 @@ Import-Module -Name posh-git
 '@
 ```
 
-### 7-zip
+### 1.8. 7-zip
 
 安装 [7-zip](https://sparanoid.com/lab/7z/)
 
@@ -80,7 +80,7 @@ Import-Module -Name posh-git
 winget install --id 7zip.7zip -e --source winget
 ```
 
-### Custom Cmdline
+### 1.9. Custom Cmdline
 
 ```pwsh
 mkdir "$HOME\AppData\Local\CmdTools"
@@ -92,7 +92,7 @@ $env:PATH = "$HOME\AppData\Local\CmdTools;$env:PATH"
 '@
 ```
 
-## Language
+## 2. Language
 
 - {% post_link cpp-kaifa-huanjing 'C++' %}
 - {% post_link javascript-kaifa-huanjing 'Javascript' %}

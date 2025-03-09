@@ -8,7 +8,7 @@ tags:
   - xops
 ---
 
-## Overview
+## 1. Overview
 
 | fnm/electron/nextjs | Windows | WSL | Container |
 | --- | --- | --- | --- |
@@ -16,7 +16,7 @@ tags:
 
 <!-- more -->
 
-## Windows
+## 2. Windows
 
 ```pwsh
 # 安装
@@ -49,6 +49,6 @@ $env:ELECTRON_MIRROR = "https://npmmirror.com/mirrors/electron/"
 '@
 ```
 
-## Container
+## 3. Container
 
 参考 [项目模板](https://github.com/yandy/project-tmpl)： [next](https://github.com/yandy/project-tmpl/tree/main/next)

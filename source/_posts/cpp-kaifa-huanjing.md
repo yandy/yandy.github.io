@@ -8,7 +8,7 @@ tags:
   - xops
 ---
 
-## Overview
+## 1. Overview
 
 |  | Windows | WSL | Container |
 | --- | --- | --- | --- |
@@ -16,21 +16,21 @@ tags:
 
 <!-- more -->
 
-## Windows
+## 2. Windows
 
-### build tools
+### 2.1. build tools
 
 安装 [Microsoft C++ 生成工具](https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/)
 
-## WSL
+## 3. WSL
 
-### build tools
+### 3.1. build tools
 
 ```bash
 sudo apt-get install -y --no-install-recommends build-essential cmake ninja-build
 ```
 
-### vcpkg
+### 3.2. vcpkg
 
 ```bash
 export VCPKG_ROOT="${HOME}/.vcpkg"
@@ -51,6 +51,6 @@ PATH="$VCPKG_ROOT:$PATH"
 EOM
 ```
 
-## Container
+## 4. Container
 
 参考 [项目模板](https://github.com/yandy/project-tmpl)： [C++](https://github.com/yandy/project-tmpl/tree/main/cpp)
