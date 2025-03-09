@@ -58,7 +58,7 @@ git config --global user.email "your@example.com"
 
 ### 创建仓库
 
-#### 将一个普通目录，转变为git仓库：`**git init**`
+#### 将一个普通目录，转变为git仓库：`git init`
 
 ![](2.2-1.png)
 
@@ -66,7 +66,7 @@ git config --global user.email "your@example.com"
 
 ### 总览
 
-#### 总览工作区、暂存区与HEAD的状态：`**git status**`
+#### 总览工作区、暂存区与HEAD的状态：`git status`
 
 ![](2.3-1.png)
 
@@ -80,11 +80,11 @@ Untracked files 是HEAD和暂存区中不存在，但是工作区中存在的�
 
 ### 工作区到暂存区
 
-#### 比较工作区和暂存区的差异：`**git diff**`
+#### 比较工作区和暂存区的差异：`git diff`
 
 ![](2.4-1.png)
 
-#### 将工作区的变更保存到暂存区：`**git add <dir_or_files>**`
+#### 将工作区的变更保存到暂存区：`git add <dir_or_files>`
 
 git add 命令接受的参数，可以是目录，也可以是文件
 
@@ -96,11 +96,11 @@ git add 命令接受的参数，可以是目录，也可以是文件
 
 ### 暂存区到HEAD
 
-#### 比较暂存区和HEAD的差异：`**git diff --cached**`
+#### 比较暂存区和HEAD的差异：`git diff --cached`
 
 ![](2.5-1.png)
 
-#### 提交暂存区的变更: `**git commit -m '<commit message>'**`
+#### 提交暂存区的变更: `git commit -m '<commit message>'`
 
 ![](2.5-2.png)
 
@@ -110,7 +110,7 @@ git add 命令接受的参数，可以是目录，也可以是文件
 
 前文提到，“提交”是项目某一时刻的快照，记录了文件的变化和相关说明。提交和提交形成“提交树”，提交树是一个有向无环图结构，展示了“提交”之间的演进关系。
 
-### 查看提交树: `**git log**`
+### 查看提交树: `git log`
 
 如果你想了解本地仓库的历史记录，最简单的命令就是使用:
 
@@ -153,25 +153,25 @@ HEAD是这个活动分支的指针，意味着前文提到的git commit命令�
 2.  将活动分支指向新创建的提交
 
 
-#### 罗列可用分支: `**git branch**`
+#### 罗列可用分支: `git branch`
 
 ![](3.3-1.png)
 
-#### 创建分支并激活: `**git checkout -b <branch_name>**`
+#### 创建分支并激活: `git checkout -b <branch_name>`
 
 ![](3.3-2.png)
 
-#### 切换活动分支: `**git checkout <branch_name>**`
+#### 切换活动分支: `git checkout <branch_name>`
 
 ![](3.3-3.png)
 
 注意，切换活动分支后，会将活动分支对应的快照“检出”到工作目录
 
-#### 删除分支: `**git branch -d <branch_name>**`
+#### 删除分支: `git branch -d <branch_name>`
 
 ![](3.3-4.png)
 
-#### 合并分支内容: `**git merge <source_branch_name>**`
+#### 合并分支内容: `git merge <source_branch_name>`
 
 这个命令是基于分支的协作的核心功能，假设当前分支为 <current\_branch\_name>,执行合并命令后，将 <source\_branch\_name>指向的（提交对应的）快照与<current\_branch\_name>指向的快照合并，形成一个新的提交，这个新提交的“上一个提交”为两个分支分别指向的两个提交，最后将<current\_branch\_name>指向这个新提交。
 
@@ -181,11 +181,11 @@ HEAD是这个活动分支的指针，意味着前文提到的git commit命令�
 
 每一个分支是提交树上的一个不可变指针，指向一个提交
 
-#### 给某个提交打上标签 `**git tag <tag_name> <commit_id>**`
+#### 给某个提交打上标签 `git tag <tag_name> <commit_id>`
 
 ![](3.4-1.png)
 
-#### 删除标签 `**git tag -d <tag_name>**`
+#### 删除标签 `git tag -d <tag_name>`
 
 ![](3.4-2.png)
 
@@ -193,7 +193,7 @@ HEAD是这个活动分支的指针，意味着前文提到的git commit命令�
 
 git是一个分布式的版本控制系统，意味着没有绝对的服务端和本地的概念。对于同一个git仓库无论是服务端还是本地都拥有完整的提交树。但是一般实践中，会挑选一个机器集中存放git仓库，本地git仓库都与这个机器上的git仓库交互，这个机器就是概念上的服务端。
 
-#### 克隆一个git仓库：`**git clone </path/to/repository>**`
+#### 克隆一个git仓库：`git clone </path/to/repository>`
 
 将一个git仓库"复制"到本地，本质上是2步：
 
@@ -204,11 +204,11 @@ git是一个分布式的版本控制系统，意味着没有绝对的服务端�
 3.  将被克隆仓库地址 </path/to/repository> 设置为一个名为  `origin` 的 远程仓库(remote)
 
 
-#### 将远程仓库的提交树同步到本地:  `**git fetch <remote> <branch>**`
+#### 将远程仓库的提交树同步到本地:  `git fetch <remote> <branch>`
 
 其中 <remote> 和 <branch>都可以省略，默认值是 origin 和 所有远程分支
 
-#### 将远程仓库的提交树同步到本地，并更新本地工作目录: `**git pull <remote> <branch>**`
+#### 将远程仓库的提交树同步到本地，并更新本地工作目录: `git pull <remote> <branch>`
 
 git pull = git fetch + git merge
 

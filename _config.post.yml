@@ -9,6 +9,6 @@ widgets:
     # Whether to collapse sub-headings when they are out-of-view
     collapsed: false
     # Maximum level of headings to show (1-6)
-    depth: 3
+    depth: 2
   - type: recent_posts
     position: right
