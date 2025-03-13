@@ -12,15 +12,44 @@ tags:
 
 | fnm/electron/nextjs | Windows | WSL | Container |
 | --- | --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✕ | ✓ | ✓ |
+| 开发环境(VS Code with Extension) | ✓ | ✓ | ✓ |
+
+## 2. Windows
+
+使用 [pyenv-win](https://github.com/pyenv-win/pyenv-win) 管理python版本
+
+### 2.1. pyenv-win
+
+```pwsh
+# install pyenv-win
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+```
+
+### 2.2. python
 
 <!-- more -->
 
-## 2. WSL
+```pwsh
+# list all available Python versions
+pyenv install -l
+
+# install a Python version
+pyenv install 3.12.6
+
+# set a Python version to use globally
+pyenv global 3.12.6
+
+# set pip mirror
+pip config --user set global.index-url "https://mirrors.aliyun.com/pypi/simple/"
+```
+
+
+## 3. WSL
 
 使用 [pyenv](https://github.com/pyenv/pyenv) 管理python版本和虚拟环境
 
-### 2.1. pyenv
+### 3.1. pyenv
 
 ```bash
 # install pyenv
@@ -34,7 +63,7 @@ eval "$(pyenv init -)"
 EOF
 ```
 
-### 2.2. python
+### 3.2. python
 
 ```bash
 # install python build dependencies
@@ -55,6 +84,6 @@ pyenv global 3.12.6
 pip config --user set global.index-url https://mirrors.aliyun.com/pypi/simple/
 ```
 
-## 3. Container
+## 4. Container
 
 参考 [项目模板](https://github.com/yandy/project-tmpl)： [Python](https://github.com/yandy/project-tmpl/tree/main/python)
