@@ -25,17 +25,15 @@ winget install -e --id Schniz.fnm
 # or using cargo if you have rust installed
 # cargo install fnm
 
-# 配置
-fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
-
 # 更新 $PROFILE
 Add-Content -Path $PROFILE -Value @'
 # fnm
+$env:FNM_NODE_DIST_MIRROR = "https://mirrors.aliyun.com/nodejs-release/"
 fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 
 '@
 
-# 安装 node
+# 安装 node (open in a new terminal tab)
 fnm use --install-if-missing 22
 
 # 设置 npm 源
