@@ -96,3 +96,4 @@ $env:PATH = "$HOME\AppData\Local\CmdTools;$env:PATH"
 
 - {% post_link cpp-kaifa-huanjing 'C++' %}
 - {% post_link javascript-kaifa-huanjing 'Javascript' %}
+- {% post_link python-kaifa-huanjing 'Python' %}
