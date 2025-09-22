@@ -30,7 +30,7 @@ winget install --id Microsoft.PowerShell --source winget
 pwsh
 
 # 创建 profile
-New-Item -Path $PROFILE -Type File
+New-Item -Path $PROFILE -Type File -Force
 
 # 配置执行策略, 参考 https:/go.microsoft.com/fwlink/?LinkID=135170
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
