@@ -12,7 +12,7 @@ tags:
 
 | fnm/electron/nextjs | Windows | WSL | Container |
 | --- | --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✕ | ✓ |
+| 开发环境(VS Code with Extension) | ✓ | ✓ | ✓ |
 
 <!-- more -->
 
@@ -47,6 +47,21 @@ $env:ELECTRON_MIRROR = "https://npmmirror.com/mirrors/electron/"
 '@
 ```
 
-## 3. Container
+## 3. WSL
+
+```bash
+# 安装
+curl -fsSL https://fnm.vercel.app/install | bash
+
+# 打开新终端
+# 安装 node (open in a new terminal tab)
+fnm use --install-if-missing 22
+
+# 设置 npm 源
+npm config set registry https://registry.npmmirror.com
+```
+
+
+## 4. Container
 
 参考 [项目模板](https://github.com/yandy/project-tmpl)： [next](https://github.com/yandy/project-tmpl/tree/main/next)
