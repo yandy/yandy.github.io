@@ -20,7 +20,14 @@ tags:
 
 ### 2.1. 安装
 
-下载 [rustup-init.exe](https://www.rust-lang.org/tools/install)，双击安装
+下载 [rustup-init.exe](https://www.rust-lang.org/tools/install)
+
+```pwsh
+$env:RUSTUP_DIST_SERVER="https://rsproxy.cn"
+$env:RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
+
+/path/to/rustup-init.exe
+```
 
 ### 2.2. 设置
 
