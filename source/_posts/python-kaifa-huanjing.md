@@ -10,9 +10,9 @@ tags:
 
 ## 1. Overview
 
-| fnm/electron/nextjs | Windows | WSL | Container |
-| --- | --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✓ | ✓ |
+| fnm/electron/nextjs | Windows | WSL |
+| --- | --- | --- |
+| 开发环境(VS Code with Extension) | ✓ | ✓ |
 
 ## 2. Windows
 
@@ -83,7 +83,3 @@ pyenv global 3.12.6
 # set pip mirror
 pip config --user set global.index-url https://mirrors.aliyun.com/pypi/simple/
 ```
-
-## 4. Container
-
-参考 [项目模板](https://github.com/yandy/project-tmpl)： [Python](https://github.com/yandy/project-tmpl/tree/main/python)

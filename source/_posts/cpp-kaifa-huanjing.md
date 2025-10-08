@@ -10,9 +10,9 @@ tags:
 
 ## 1. Overview
 
-|  | Windows | WSL | Container |
-| --- | --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✓ | ✓ |
+|  | Windows | WSL |
+| --- | --- | --- |
+| 开发环境(VS Code with Extension) | ✓ | ✓ |
 
 <!-- more -->
 
@@ -50,7 +50,3 @@ export VCPKG_FORCE_SYSTEM_BINARIES=1
 PATH="$VCPKG_ROOT:$PATH"
 EOM
 ```
-
-## 4. Container
-
-参考 [项目模板](https://github.com/yandy/project-tmpl)： [C++](https://github.com/yandy/project-tmpl/tree/main/cpp)

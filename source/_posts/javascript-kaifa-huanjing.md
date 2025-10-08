@@ -10,9 +10,9 @@ tags:
 
 ## 1. Overview
 
-| fnm/electron/nextjs | Windows | WSL | Container |
-| --- | --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✓ | ✓ |
+| fnm/electron/nextjs | Windows | WSL |
+| --- | --- | --- |
+| 开发环境(VS Code with Extension) | ✓ | ✓ |
 
 <!-- more -->
 
@@ -60,8 +60,3 @@ fnm use --install-if-missing 22
 # 设置 npm 源
 npm config set registry https://registry.npmmirror.com
 ```
-
-
-## 4. Container
-
-参考 [项目模板](https://github.com/yandy/project-tmpl)： [next](https://github.com/yandy/project-tmpl/tree/main/next)

@@ -55,13 +55,14 @@ git config --global user.email "yandy.ding@gmail.com"
 Windows Powershell 中
 
 ```pwsh
-# reduce wsl virtual disk file
-# run as administrator
-cd $HOME\AppData\Local\Packages\<WSL Distro>\LocalState
-Optimize-VHD -Path .\ext4.vhdx -Mode full
+# 移动 WSL 虚拟磁盘文件到其他磁盘, wsl --manage <distro> --move <path>
+# 例如移动 Ubuntu-24.04 到 D:\wsl\packages\Ubuntu-24.04\
+wsl --manage Ubuntu-24.04 --move D:\wsl\packages\Ubuntu-24.04\
 ```
 
 ## 3. Language
 
 - {% post_link cpp-kaifa-huanjing 'C++' %}
 - {% post_link python-kaifa-huanjing 'Python' %}
+- {% post_link javascript-kaifa-huanjing 'Javascript' %}
+- {% post_link rust-kaifa-huanjing 'Rust' %}

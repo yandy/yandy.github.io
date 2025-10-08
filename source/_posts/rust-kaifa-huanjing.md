@@ -10,9 +10,9 @@ tags:
 
 ## 1. Overview
 
-|  | Windows | WSL | Container |
-| --- | --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✓ | ✓ |
+|  | Windows | WSL |
+| --- | --- | --- |
+| 开发环境(VS Code with Extension) | ✓ | ✓ |
 
 <!-- more -->
 
@@ -71,7 +71,3 @@ index = "https://rsproxy.cn/crates.io-index"
 git-fetch-with-cli = true
 EOM
 ```
-
-## 4. Container
-
-参考 [项目模板](https://github.com/yandy/project-tmpl)： [Rust](https://github.com/yandy/project-tmpl/tree/main/rust)
