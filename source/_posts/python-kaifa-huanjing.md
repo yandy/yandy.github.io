@@ -10,20 +10,28 @@ tags:
 
 ## 1. Overview
 
-| fnm/electron/nextjs | Windows | WSL |
-| --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✓ |
+| Windows | WSL |
+| --- | --- |
+| ✓ | ✓ |
 
 ## 2. Windows
 
-使用 [pyenv-win](https://github.com/pyenv-win/pyenv-win) 管理python版本
+使用 [uv](https://github.com/astral-sh/uv) 管理python版本和虚拟环境
 
-### 2.1. pyenv-win
+### 2.1. uv
 
 ```pwsh
-# install pyenv-win
-# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+# Install uv
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Upgrading uv
+uv self update
+
+# Add shell autocompletion
+if (!(Test-Path -Path $PROFILE)) {
+  New-Item -ItemType File -Path $PROFILE -Force
+}
+Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
 ```
 
 ### 2.2. python
@@ -32,54 +40,56 @@ Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv
 
 ```pwsh
 # list all available Python versions
-pyenv install -l
+uv python list
 
 # install a Python version
-pyenv install 3.12.6
+uv python install 3.12 --default
 
-# set a Python version to use globally
-pyenv global 3.12.6
-
-# set pip mirror
-pip config --user set global.index-url "https://mirrors.aliyun.com/pypi/simple/"
+# set uv pip install mirror
+Add-Content -Path $env:APPDATA\uv\uv.toml -Value @'
+[[index]]
+url = "https://mirrors.aliyun.com/pypi/simple"
+default = true
+'@
 ```
 
 
 ## 3. WSL
 
-使用 [pyenv](https://github.com/pyenv/pyenv) 管理python版本和虚拟环境
+使用 [uv](https://github.com/astral-sh/uv) 管理python版本和虚拟环境
 
-### 3.1. pyenv
+### 3.1. uv
 
 ```bash
-# install pyenv
-curl https://pyenv.run | bash
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-cat >> ~/.profile <<- 'EOF'
+# Upgrading uv
+uv self update
 
-# pyenv
-PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-EOF
+# Add shell autocompletion
+cat >> ~/.profile <<- 'EOM'
+# uv
+eval "$(uv generate-shell-completion bash)"
+
+EOM
 ```
 
 ### 3.2. python
 
-```bash
-# install python build dependencies
-sudo apt update; sudo apt install -y build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev curl git \
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+<!-- more -->
 
+```bash
 # list all available Python versions
-pyenv install -l
+uv python list
 
 # install a Python version
-pyenv install 3.12.6
+uv python install 3.12 --default
 
-# set a Python version to use globally
-pyenv global 3.12.6
-
-# set pip mirror
-pip config --user set global.index-url https://mirrors.aliyun.com/pypi/simple/
+# set uv pip install mirror
+cat > ~/.config/uv/uv.toml <<- 'EOM'
+[[index]]
+url = "https://mirrors.aliyun.com/pypi/simple"
+default = true
+EOM
 ```

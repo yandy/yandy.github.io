@@ -10,9 +10,9 @@ tags:
 
 ## 1. Overview
 
-|  | Windows | WSL |
-| --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✓ |
+| Windows | WSL |
+| --- | --- |
+| ✓ | ✓ |
 
 <!-- more -->
 
@@ -39,6 +39,7 @@ export VCPKG_ROOT="${HOME}/.vcpkg"
 git clone https://github.com/microsoft/vcpkg "${VCPKG_ROOT}"
 
 # bootstrap vcpkg
+sudo apt install -y curl zip unzip tar
 "${VCPKG_ROOT}/bootstrap-vcpkg.sh" -disableMetrics
 
 # update ~/.profile

@@ -10,9 +10,9 @@ tags:
 
 ## 1. Overview
 
-|  | Windows | WSL |
-| --- | --- | --- |
-| 开发环境(VS Code with Extension) | ✓ | ✓ |
+| Windows | WSL |
+| --- | --- |
+| ✓ | ✓ |
 
 <!-- more -->
 

@@ -49,6 +49,7 @@ oh-my-posh init pwsh | Invoke-Expression
 
 ```bash
 # 安装
+sudo apt-get install -y unzip
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
 # 配置 ~/.profile
