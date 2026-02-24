@@ -28,10 +28,11 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 uv self update
 
 # Add shell autocompletion
-if (!(Test-Path -Path $PROFILE)) {
-  New-Item -ItemType File -Path $PROFILE -Force
-}
-Add-Content -Path $PROFILE -Value '(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression'
+Add-Content -Path $PROFILE -Value @'
+# uv
+(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression
+
+'@
 ```
 
 ### 2.2. python

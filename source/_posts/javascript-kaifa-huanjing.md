@@ -30,6 +30,7 @@ Add-Content -Path $PROFILE -Value @'
 # fnm
 $env:FNM_NODE_DIST_MIRROR = "https://mirrors.aliyun.com/nodejs-release/"
 fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
+$env:ELECTRON_MIRROR = "https://npmmirror.com/mirrors/electron/"
 
 '@
 
@@ -38,13 +39,6 @@ fnm use --install-if-missing 22
 
 # 设置 npm 源
 npm config set registry https://registry.npmmirror.com
-
-# 设置 electron 源
-Add-Content -Path $PROFILE -Value @'
-# electron
-$env:ELECTRON_MIRROR = "https://npmmirror.com/mirrors/electron/"
-
-'@
 ```
 
 ## 3. WSL
@@ -52,8 +46,16 @@ $env:ELECTRON_MIRROR = "https://npmmirror.com/mirrors/electron/"
 ```bash
 # 安装
 curl -fsSL https://fnm.vercel.app/install | bash
+```
 
-# 打开新终端
+将 fnm 相关shell配置从 `.bashrc` 移到 `.profile`，并在fnm相关shell配置block中增加如下环境变量定义：
+```bash
+export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
+export FNM_NODE_DIST_MIRROR="https://mirrors.aliyun.com/nodejs-release/"
+```
+
+打开新终端
+```bash
 # 安装 node (open in a new terminal tab)
 fnm use --install-if-missing 22
 
