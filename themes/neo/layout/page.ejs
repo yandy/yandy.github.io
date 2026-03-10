@@ -1,0 +1,23 @@
+<article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+  <div class="p-6 sm:p-8">
+    <!-- Header -->
+    <header class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <%= page.title %>
+      </h1>
+
+      <% if (page.date) { %>
+      <div class="text-sm text-gray-500 dark:text-gray-400">
+        <time datetime="<%= date_xml(page.date) %>">
+          <%= date(page.date, 'YYYY-MM-DD') %>
+        </time>
+      </div>
+      <% } %>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none">
+      <%- page.content %>
+    </div>
+  </div>
+</article>

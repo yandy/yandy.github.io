@@ -1,0 +1,43 @@
+# Neo Theme Configuration
+# Modern minimalist theme for Hexo
+
+# Theme Information
+name: neo
+version: 1.0.0
+description: A modern minimalist theme with card-based layout and dark mode support
+
+# Site Branding
+logo: /img/logo-1024x1024.png
+favicon: /img/icon.svg
+
+# Footer Configuration
+footer:
+  copyright: © 2024 神奇小龟
+  show_recent_posts: true
+  recent_posts_count: 5
+
+# Article Settings
+article:
+  highlight:
+    theme: atom-one-dark
+    clipboard: true
+    line_number: true
+  readtime: true
+  update_time: true
+
+# Donation Configuration
+donation:
+  enable: true
+  alipay_qrcode: /img/alipay_paycode.jpg
+  wechat_qrcode: /img/wechat_paycode.jpg
+
+# Dark Mode
+dark_mode:
+  enable: true
+  default: auto  # auto, light, dark
+  toggle: true
+
+# Performance
+performance:
+  lazy_loading: true
+  prefetch: true

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "outDir": "./themes/neo/source/js",
+    "rootDir": "./themes/neo/source/js",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": false,
+    "sourceMap": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true
+  },
+  "include": [
+    "themes/neo/source/js/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "public",
+    "themes/neo/source/js/*.js"
+  ]
+}
