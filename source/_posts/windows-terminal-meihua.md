@@ -52,8 +52,8 @@ oh-my-posh init pwsh | Invoke-Expression
 sudo apt-get install -y unzip
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
-# 配置 ~/.profile
-cat >> ~/.profile <<- 'EOM'
+# 配置 ~/.bashrc
+cat >> ~/.bashrc <<- 'EOM'
 
 # oh-my-posh
 eval "$(oh-my-posh init bash)"

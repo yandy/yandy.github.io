@@ -103,3 +103,20 @@ sudo pacman -S fcitx5-rime fcitx5-configtool
 
 paru -S clash-verge-rev-bin
 ```
+
+## 5. 常用工具
+
+```sh
+# 1. git
+git config --global user.name "Your Full Name"
+git config --global user.email "you@email.com"
+
+# 2. vscode
+paru -S "visual-studio-code-bin"
+
+# 3. edge/chrome
+```
+
+## 6. 美化
+
+### 6.1. konsole
