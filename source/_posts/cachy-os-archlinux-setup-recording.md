@@ -35,7 +35,7 @@ tags:
 
 ### 2.1. pacman 包管理器
 
-```
+```sh
 # 核心更新 / 安装 / 卸载：
 ## 更新
 sudo pacman -Syu
@@ -65,7 +65,7 @@ sudo pacman -Rns $(pacman -Qdtq)
 
 Cachy OS 默认安装了 paru 作为 AUR 助手
 
-```
+```sh
 # 安装软件
 paru -S 包名
 # 搜索软件
@@ -110,13 +110,41 @@ paru -S clash-verge-rev-bin
 # 1. git
 git config --global user.name "Your Full Name"
 git config --global user.email "you@email.com"
+git config --global core.editor "vim"
 
 # 2. vscode
 paru -S "visual-studio-code-bin"
 
 # 3. edge/chrome
+paru -S "microsoft-edge-stable-bin"
 ```
 
 ## 6. 美化
 
-### 6.1. konsole
+### 6.1. oh-my-posh
+
+[oh-my-posh](https://ohmyposh.dev/) 提供 Git 状态颜色编码和提示的完全自定义命令提示符体验提供主题功能。
+
+![](ohmyposh.png)
+
+
+```sh
+# 安装 oh-my-posh
+curl -s https://ohmyposh.dev/install.sh | bash -s
+
+# 安装字体
+## cachy os  自带了大量的 nerd 字体，包括 "meslo"，所以大多情况下无需安装字体
+oh-my-posh font install
+# This will present a list of Nerd Font libraries, from which you can select Meslo, which includes the Meslo LGM NF font we recommend. Note that you can also install it directly via:
+oh-my-posh font install meslo
+
+# 配置 shell
+echo "oh-my-posh init fish --config 'jandedobbeleer' | source" >> ~/.config/fish/config.fish
+
+# 另开一个新终端 或者执行
+exec fish
+```
+
+**配置终端(Konsole)字体**
+
+`CTRL + SHIFT + ,`打开配置，新建配置方案，选择 "外观" -> "字体"，设置为 `MesloLGM Nerd Font`

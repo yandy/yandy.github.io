@@ -16,17 +16,8 @@ tags:
 
 <!-- more -->
 
-### 1.1. 安装字体
 
-安装 [Nerd Font](https://www.nerdfonts.com/font-downloads)，选择 [Cascadia Code NF](https://github.com/microsoft/cascadia-code/releases) 字体。
-安装方式：下载字体 `.zip`，解压后，双击对应的 `.ttf` 文件
-
-
-### 1.2. 设置 Windows Terminal 字体
-
-`ctrl+,`打开配置界面，选择 "配置文件" -> "其他设置" -> "外观" -> "字体" ，设置为 `Cascadia Code NF`
-
-### 1.3. 安装 oh-my-posh
+### 1.1. 安装 oh-my-posh
 
 #### windows(powershell)
 
@@ -58,6 +49,33 @@ cat >> ~/.bashrc <<- 'EOM'
 # oh-my-posh
 eval "$(oh-my-posh init bash)"
 EOM
+```
+
+### 1.2. 安装字体
+
+```sh
+oh-my-posh font install
+# This will present a list of Nerd Font libraries, from which you can select Meslo, which includes the Meslo LGM NF font we recommend. Note that you can also install it directly via:
+oh-my-posh font install meslo
+```
+
+**设置 Windows Terminal 字体**
+
+`CTRL + SHIFT + ,`打开配置文件，加入字体设置：
+
+```json
+{
+    "profiles":
+    {
+        "defaults":
+        {
+            "font":
+            {
+                "face": "MesloLGM Nerd Font"
+            }
+        }
+    }
+}
 ```
 
 ## 2. Terminal-Icons (for Powershell)
