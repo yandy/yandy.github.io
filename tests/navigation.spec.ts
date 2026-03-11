@@ -2,13 +2,38 @@ import { test, expect } from '@playwright/test';
 
 /**
  * Internal Link Navigation Tests
- * 
+ *
  * These tests verify that all internal links on the site work correctly,
  * including navigation menu links, article links, and pagination.
  */
 
+/**
+ * Helper function to click a navigation link
+ * On mobile, first expands the hamburger menu if needed
+ */
+async function clickNavLink(page: any, href: string) {
+  // Use the specific ID for mobile menu toggle button
+  const hamburgerButton = page.locator('#mobile-menu-toggle');
+
+  // Check if hamburger menu is visible (mobile view)
+  const isHamburgerVisible = await hamburgerButton.isVisible().catch(() => false);
+
+  if (isHamburgerVisible) {
+    // Mobile view: click hamburger menu to expand navigation
+    await hamburgerButton.click();
+    // Wait for the mobile menu to be visible and click the link inside it
+    const mobileMenu = page.locator('#mobile-menu');
+    await mobileMenu.waitFor({ state: 'visible', timeout: 5000 });
+    // Click the link inside the mobile menu
+    await mobileMenu.locator(`a[href="${href}"]`).click();
+  } else {
+    // Desktop view: click the visible navigation link directly
+    await page.locator(`a[href="${href}"]`).first().click();
+  }
+}
+
 test.describe('Internal Link Navigation', () => {
-  
+
   test('should navigate to home page', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveURL('/');
@@ -17,28 +42,28 @@ test.describe('Internal Link Navigation', () => {
 
   test('should navigate to archives page', async ({ page }) => {
     await page.goto('/');
-    await page.click('a[href="/archives"]');
+    await clickNavLink(page, '/archives');
     await expect(page).toHaveURL(/\/archives/);
     await expect(page.locator('h1')).toContainText('归档');
   });
 
   test('should navigate to categories page', async ({ page }) => {
     await page.goto('/');
-    await page.click('a[href="/categories"]');
+    await clickNavLink(page, '/categories');
     await expect(page).toHaveURL(/\/categories/);
     await expect(page.locator('h1')).toContainText('分类');
   });
 
   test('should navigate to tags page', async ({ page }) => {
     await page.goto('/');
-    await page.click('a[href="/tags"]');
+    await clickNavLink(page, '/tags');
     await expect(page).toHaveURL(/\/tags/);
     await expect(page.locator('h1')).toContainText('标签');
   });
 
   test('should navigate to about page', async ({ page }) => {
     await page.goto('/');
-    await page.click('a[href="/about"]');
+    await clickNavLink(page, '/about');
     await expect(page).toHaveURL(/\/about/);
   });
 

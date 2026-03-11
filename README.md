@@ -11,7 +11,7 @@
 #### 1. 创建新文章或页面
 
 ```
-npx hexo new [layout] <title>
+bunx hexo new [layout] <title>
 ```
 
 `layout` 包含 `post`、`page` 和 `draft`，默认为 `post`
@@ -21,7 +21,7 @@ npx hexo new [layout] <title>
 对于 `draft`，完成编写以后，可以发布为 `post`
 
 ```
-npx hexo publish <title>
+bunx hexo publish <title>
 ```
 
 #### 3. 本地预览服务
@@ -29,22 +29,22 @@ npx hexo publish <title>
 可以启动一个本地服务器，预览网站效果
 
 ```
-npm run server
+bun run server
 ```
 
 #### 4. 构建静态网站
 
 ```
-npm run build
+bun run build
 ```
 
 #### 5. 测试
 
 ```
 # 测试特定浏览器（如 Chromium）
-npx playwright install --with-deps chromium
-npx playwright test --project=chromium
+bunx playwright install --with-deps chromium
+bunx playwright test --project=chromium
 
 # 测试所有浏览器
-npx playwright test
+bunx playwright test
 ```
