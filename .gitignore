@@ -8,6 +8,7 @@ public/
 _multiconfig.yml
 .vscode/
 .opencode/
+.marscode/
 .sisyphus/
 test-results/
 playwright-report
