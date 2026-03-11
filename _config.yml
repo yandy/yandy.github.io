@@ -67,6 +67,6 @@ updated_option: date
 per_page: 12
 pagination_dir: page
 ignore: null
-theme: icarus
+theme: neo
 deploy:
   type: ''

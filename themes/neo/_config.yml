@@ -1,0 +1,29 @@
+# Neo Theme Configuration
+name: neo
+version: 1.0.0
+
+# Dark Mode Configuration
+dark_mode:
+  enable: true
+  toggle: true
+  default: auto  # Options: 'auto', 'dark', 'light'
+
+# Navbar Configuration
+navbar:
+  menu:
+    首页: /
+    类别: /categories
+    标签: /tags
+    文章: /archives
+    关于: /about
+
+# Article Configuration
+article:
+  readtime: true
+  update_time: true
+
+# Footer Configuration
+footer:
+  show_recent_posts: true
+  recent_posts_count: 5
+  copyright: '© 2024 神奇小龟的个人网站'

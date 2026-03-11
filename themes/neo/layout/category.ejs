@@ -1,0 +1,58 @@
+<div class="space-y-8">
+  <!-- Page Header -->
+  <div class="text-center mb-12">
+    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+      分类: <%= page.category %>
+    </h1>
+    <p class="text-gray-600 dark:text-gray-400">
+      共 <%= page.posts.length %> 篇文章
+    </p>
+  </div>
+
+  <!-- Article List -->
+  <div class="space-y-6">
+    <% page.posts.each(function(post) { %>
+    <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow">
+      <div class="p-6">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          <a href="<%= url_for(post.path) %>" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            <%= post.title %>
+          </a>
+        </h2>
+        <div class="text-sm text-gray-500 dark:text-gray-400">
+          <time datetime="<%= date_xml(post.date) %>">
+            <%= date(post.date, 'YYYY-MM-DD') %>
+          </time>
+        </div>
+      </div>
+    </article>
+    <% }); %>
+  </div>
+
+  <!-- Pagination -->
+  <% if (page.total > 1) { %>
+  <nav class="flex items-center justify-between mt-12">
+    <% if (page.prev) { %>
+    <a href="<%= url_for(page.prev_link) %>" 
+       class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+      上一页
+    </a>
+    <% } else { %>
+    <span></span>
+    <% } %>
+
+    <span class="text-sm text-gray-500 dark:text-gray-400">
+      <%= page.current %> / <%= page.total %>
+    </span>
+
+    <% if (page.next) { %>
+    <a href="<%= url_for(page.next_link) %>" 
+       class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+      下一页
+    </a>
+    <% } else { %>
+    <span></span>
+    <% } %>
+  </nav>
+  <% } %>
+</div>

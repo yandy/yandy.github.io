@@ -1,0 +1,132 @@
+<% // 标签列表页面 - 展示所有标签云 %>
+<div class="tags-page">
+  <div class="page-header">
+    <h1 class="page-title">
+      <i class="fas fa-tags"></i>
+      标签
+    </h1>
+    <span class="page-subtitle">
+      共 <%= site.tags.length %> 个标签
+    </span>
+  </div>
+
+  <div class="tags-cloud">
+    <% site.tags.sort('name').each(function(tag) { %>
+      <a href="<%= url_for(tag.path) %>" class="tag-item" data-count="<%= tag.posts.length %>">
+        <span class="tag-name">
+          <i class="fas fa-tag"></i>
+          <%= tag.name %>
+        </span>
+        <span class="tag-count"><%= tag.posts.length %></span>
+      </a>
+    <% }); %>
+  </div>
+</div>
+
+<style>
+.tags-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color, #e8e8e8);
+}
+
+.page-title {
+  font-size: 2rem;
+  color: var(--heading-color, #333);
+  margin: 0 0 10px 0;
+}
+
+.page-title i {
+  color: var(--primary-color, #2196F3);
+  margin-right: 10px;
+}
+
+.page-subtitle {
+  color: var(--text-muted, #999);
+  font-size: 0.95rem;
+}
+
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.tag-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--text-color, #555);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.tag-item:hover {
+  background: var(--primary-color, #2196F3);
+  border-color: var(--primary-color, #2196F3);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.tag-item:hover .tag-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.tag-name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tag-name i {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+.tag-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--bg-color, #f5f5f5);
+  border-radius: 11px;
+  font-size: 0.75rem;
+  color: var(--text-muted, #888);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .tags-page {
+    padding: 15px;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .tag-item {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+</style>

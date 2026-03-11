@@ -6,7 +6,8 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
-    "server": "hexo server"
+    "server": "hexo server",
+    "uitest": "npx playwright test --project=chromium"
   },
   "hexo": {
     "version": "8.1.1"
@@ -22,6 +23,7 @@
     "hexo-renderer-marked": "^7.0.1",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
-    "hexo-theme-icarus": "^6.1.1"
+    "playwright": "^1.58.2",
+    "@playwright/test": "^1.58.2"
   }
 }

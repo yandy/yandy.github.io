@@ -7,3 +7,7 @@ public/
 .deploy*/
 _multiconfig.yml
 .vscode/
+.opencode/
+.sisyphus/
+test-results/
+playwright-report
