@@ -10,7 +10,7 @@ tags:
 
 ## 1. Overview
 
-| Windows | WSL |
+| Windows | Linux/WSL |
 | --- | --- |
 | ✓ | ✓ |
 
@@ -49,7 +49,9 @@ git-fetch-with-cli = true
 ```
 
 
-## 3. WSL
+## 3. Linux/WSL
+
+use **bash**
 
 ```bash
 # install
