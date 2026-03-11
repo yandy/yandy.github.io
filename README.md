@@ -37,3 +37,14 @@ npm run server
 ```
 npm run build
 ```
+
+#### 5. 测试
+
+```
+# 测试特定浏览器（如 Chromium）
+npx playwright install --with-deps chromium
+npx playwright test --project=chromium
+
+# 测试所有浏览器
+npx playwright test
+```

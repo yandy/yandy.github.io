@@ -10,3 +10,4 @@ _multiconfig.yml
 .opencode/
 .sisyphus/
 test-results/
+playwright-report
