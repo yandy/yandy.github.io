@@ -75,17 +75,17 @@ test.describe('Code Block Overflow', () => {
   });
 
   test('should not break layout on mobile viewport', async ({ page }) => {
-    // Set mobile viewport
+    // Set mobile viewport before navigating
     await page.setViewportSize({ width: 375, height: 667 });
-    
+
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
     await page.waitForLoadState('networkidle');
-    
+
     // Get the page body width - it should not exceed viewport width
     const bodyWidth = await page.evaluate(() => {
       return document.body.scrollWidth;
     });
-    
+
     // Allow 10px tolerance for scrollbars
     expect(bodyWidth).toBeLessThanOrEqual(375 + 10);
   });

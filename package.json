@@ -7,7 +7,7 @@
     "clean": "hexo clean",
     "deploy": "hexo deploy",
     "server": "hexo server",
-    "uitest": "npx playwright test --project=chromium"
+    "uitest": "npx playwright test"
   },
   "hexo": {
     "version": "8.1.1"
