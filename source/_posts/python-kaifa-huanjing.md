@@ -10,7 +10,7 @@ tags:
 
 ## 1. Overview
 
-| Windows | WSL |
+| Windows | Linux/WSL |
 | --- | --- |
 | ✓ | ✓ |
 
@@ -55,7 +55,7 @@ default = true
 ```
 
 
-## 3. WSL
+## 3. Linux/WSL
 
 使用 [uv](https://github.com/astral-sh/uv) 管理python版本和虚拟环境
 
@@ -67,30 +67,25 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Upgrading uv
 uv self update
-
-# Add shell autocompletion
-cat >> ~/.profile <<- 'EOM'
-# uv
-eval "$(uv generate-shell-completion bash)"
-
-EOM
 ```
 
 ### 3.2. python
 
-<!-- more -->
+use  **bash**
 
 ```bash
-# list all available Python versions
-uv python list
-
-# install a Python version
-uv python install 3.12 --default
-
 # set uv pip install mirror
 cat > ~/.config/uv/uv.toml <<- 'EOM'
 [[index]]
 url = "https://mirrors.aliyun.com/pypi/simple"
 default = true
 EOM
+```
+
+```sh
+# list all available Python versions
+uv python list
+
+# install a Python version
+uv python install 3.12 --default
 ```

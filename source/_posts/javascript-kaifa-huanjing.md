@@ -84,9 +84,9 @@ export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
 
 `$HOME/.config/fish/conf.d/fnm.fish`
 
-```fish
-set FNM_NODE_DIST_MIRROR "https://mirrors.aliyun.com/nodejs-release/"
-set ELECTRON_MIRROR "https://npmmirror.com/mirrors/electron/"
+```sh
+set -x FNM_NODE_DIST_MIRROR "https://mirrors.aliyun.com/nodejs-release/"
+set -x ELECTRON_MIRROR "https://npmmirror.com/mirrors/electron/"
 ```
 
 **打开新终端**
@@ -123,5 +123,5 @@ export BUN_CONFIG_REGISTRY="https://registry.npmmirror.com"
 `$HOME/.config/fish/config.fish`
 
 ```sh
-set --export BUN_CONFIG_REGISTRY "https://registry.npmmirror.com"
+set -x BUN_CONFIG_REGISTRY "https://registry.npmmirror.com"
 ```
