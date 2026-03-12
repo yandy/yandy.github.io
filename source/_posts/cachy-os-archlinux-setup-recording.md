@@ -119,6 +119,15 @@ sudo pacman -S fcitx5-rime fcitx5-configtool
 
  右键点击 fcitx5 托盘图标 →  切换输入方案为 "朙月拼音・简化字"
 
+ ### 3.4. 一些输入法的兼容配置
+
+**xwayland 应用的输入法配置**
+`~/.config/fish/conf.d/fcitx5.fish`
+
+```fish
+set -x XMODIFIERS "@im=fcitx"
+```
+
 ## 4. 上网代理
 
 ```sh
@@ -173,4 +182,4 @@ exec fish
 - {% post_link javascript-kaifa-huanjing 'Javascript' %}
 - {% post_link python-kaifa-huanjing 'Python' %}
 
-## 8.  {% post_link cachy-os-changyong-ruanjian '常用软件安装与配置' %}
+## 8.  {% post_link cachy-os-changyong-ruanjian '常用桌面软件安装与配置' %}
