@@ -32,6 +32,25 @@ sudo pacman -Syu cachyos-gaming-meta cachyos-gaming-applications
 ```sh
 sudo pacman -S vlc
 ```
+
+**blender**
+
+```sh
+sudo pacman -S blender
+```
+
+**kicad**
+
+```sh
+sudo pacman -S kicad
+```
+
+**freecad**
+
+```sh
+sudo pacman -S freecad
+```
+
 <!-- more -->
 
 ## 3. AUR 安装
@@ -56,7 +75,6 @@ paru -S wechat-appimage
 ```sh
 paru -S wps-office-cn wps-office-mime-cn wps-office-mui-zh-cn ttf-wps-fonts
 ```
-
 > 应用程序起动器 -> 右键 {WPS 相关软件} -> 编辑应用程序-> 环境变量:
 > `QT_IM_MODULE=fcitx`
 >
@@ -72,9 +90,16 @@ echo '--ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version
 ```sh
 paru -S "dingtalk-bin"
 ```
-
 > 应用程序起动器 -> 右键“钉钉”-> 编辑应用程序-> 环境变量:
 > `GTK_USE_PORTAL=1 QT_IM_MODULE=fcitx`
+
+**腾讯会议**
+
+```sh
+paru -S wemeet-bin
+```
+> 应用程序起动器 -> 右键“腾讯会议”-> 编辑应用程序-> 环境变量:
+> `QT_IM_MODULE=fcitx`
 
 **向日葵**
 ```sh
