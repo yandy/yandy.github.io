@@ -78,6 +78,26 @@ paru -Sua
 paru -Rns 包名
 ```
 
+### 2.3. Flatpak
+
+```sh
+# 安装 Flatpak
+sudo pacman -S flatpak
+
+# 配置 flathub 镜像
+sudo flatpak remote-modify flathub --url=https://mirror.sjtu.edu.cn/flathub
+
+# 查看已配置的 flatpak 远程仓库
+flatpak remotes
+
+# 搜索 flatpak 应用
+flatpak search 关键词
+
+# 安装 flatpak 应用
+flatpak install flathub 应用名
+```
+
+
 ## 3. 配置中文输入法
 
 Cachy OS 默认使用了 plasma 桌面环境，所以我需要配置输入法。我选择了 [fcitx5](https://fcitx-im.org/wiki/Fcitx5) 作为输入法框架，[fcitx5-rime](https://github.com/fcitx/fcitx5-rime) 作为 Rime 输入法。
@@ -95,6 +115,9 @@ sudo pacman -S fcitx5-rime fcitx5-configtool
 
 前往 "系统配置 > 输入法 > 配置全局选项" 配置相关快捷键，例如 `Super(Win) + Space` 切换输入法。
 
+### 3.3. 配置 Rime 输入法
+
+ 右键点击 fcitx5 托盘图标 →  切换输入方案为 "朙月拼音・简化字"
 
 ## 4. 上网代理
 
@@ -111,12 +134,6 @@ paru -S clash-verge-rev-bin
 git config --global user.name "Your Full Name"
 git config --global user.email "you@email.com"
 git config --global core.editor "vim"
-
-# 2. vscode
-paru -S "visual-studio-code-bin"
-
-# 3. edge/chrome
-paru -S "microsoft-edge-stable-bin"
 ```
 
 ## 6. 美化
@@ -148,3 +165,12 @@ exec fish
 **配置终端(Konsole)字体**
 
 `CTRL + SHIFT + ,`打开配置，新建配置方案，选择 "外观" -> "字体"，设置为 `MesloLGM Nerd Font`
+
+## 7. 各语言开发环境配置
+
+- {% post_link cpp-kaifa-huanjing 'C++' %}
+- {% post_link rust-kaifa-huanjing 'Rust' %}
+- {% post_link javascript-kaifa-huanjing 'Javascript' %}
+- {% post_link python-kaifa-huanjing 'Python' %}
+
+## 8.  {% post_link cachy-os-changyong-ruanjian '常用软件安装与配置' %}

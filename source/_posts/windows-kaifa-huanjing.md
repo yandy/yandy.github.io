@@ -101,5 +101,6 @@ $env:PATH = "$HOME\AppData\Local\CmdTools;$env:PATH"
 ## 2. Language
 
 - {% post_link cpp-kaifa-huanjing 'C++' %}
+- {% post_link rust-kaifa-huanjing 'Rust' %}
 - {% post_link javascript-kaifa-huanjing 'Javascript' %}
 - {% post_link python-kaifa-huanjing 'Python' %}
