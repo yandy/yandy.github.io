@@ -15,7 +15,8 @@ tags:
 1. 从官方仓库安装 (`pacman`)
 2. 从 AUR 安装 (`paru`)
 3. `bun`/`cargo` 等程序包管理器安装 (`bun`/`cargo`)
-4. `wine`/`proton`
+4. 使用 `android` 版 (`waydroid`)
+5. `wine`/`proton`
 
 以下是针对一些常用软件， 我的安装策略
 
@@ -116,4 +117,12 @@ sudo systemctl start runsunloginclient
 ```sh
 # opencode
 bun add -g opencode-ai
+```
+
+
+## 5. 使用 android 版 (`waydroid`)
+
+```sh
+# 安装
+sudo pacman -S waydroid
 ```
