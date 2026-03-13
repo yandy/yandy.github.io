@@ -126,5 +126,30 @@ bun add -g opencode-ai
 # 安装
 sudo pacman -S waydroid waydroid-image
 sudo waydroid init
+
+# 使用
+## 启动服务
 sudo systemctl start waydroid-container
+## 启动session
+waydroid session start
+
+## 安装apk
+waydroid app install /path/to/your/app.apk
+
+## 启动 app： 先查包名再启动
+waydroid app list #列出已安装应用及包名
+waydroid app launch 包名
+
+## 卸载 app
+waydroid app remove 包名
+
+# 文件传输
+## 挂载 Downloads 目录（安卓显示为 Download）
+sudo mount --bind ~/Downloads ~/.local/share/waydroid/data/media/0/Download
+
+## 挂载其他常用目录（按需执行）
+sudo mount --bind ~/Documents ~/.local/share/waydroid/data/media/0/Documents
+sudo mount --bind ~/Pictures ~/.local/share/waydroid/data/media/0/Pictures
+sudo mount --bind ~/Videos ~/.local/share/waydroid/data/media/0/Movies
+sudo mount --bind ~/Music ~/.local/share/waydroid/data/media/0/Music
 ```
