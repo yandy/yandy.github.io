@@ -113,8 +113,6 @@ sudo pacman -S fcitx5-rime fcitx5-configtool
 
 用 Wayland 输入法协议，首先退出正在运行的 Fcitx 5 进程，前往"系统设置 > 输入与输出 > 键盘 > 虚拟键盘"，选择 "Fcitx 5 Wayland 启动器"。
 
-前往 "系统配置 > 输入法 > 配置全局选项" 配置相关快捷键，例如 `Super(Win) + Space` 切换输入法。
-
 ### 3.3. 配置 Rime 输入法
 
  右键点击 fcitx5 托盘图标 →  切换输入方案为 "朙月拼音・简化字"
@@ -140,9 +138,15 @@ paru -S clash-verge-rev-bin
 
 ```sh
 # 1. git
+sudo pacman -S git-lfs github-cli
+gh auth login
 git config --global user.name "Your Full Name"
 git config --global user.email "you@email.com"
 git config --global core.editor "vim"
+
+# 2. docker
+sudo pacman -S docker docker-buildx docker-compose
+sudo systemctl enable --now docker
 ```
 
 ## 6. 美化

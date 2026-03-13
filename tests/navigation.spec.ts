@@ -44,7 +44,7 @@ test.describe('Internal Link Navigation', () => {
     await page.goto('/');
     await clickNavLink(page, '/archives');
     await expect(page).toHaveURL(/\/archives/);
-    await expect(page.locator('h1')).toContainText('归档');
+    await expect(page.locator('h1')).toContainText('文章');
   });
 
   test('should navigate to categories page', async ({ page }) => {
@@ -79,7 +79,7 @@ test.describe('Internal Link Navigation', () => {
 
   test('should navigate through pagination', async ({ page }) => {
     await page.goto('/');
-    
+
     // Check if pagination exists (if there are multiple pages)
     const nextPageLink = page.locator('a:has-text("下一页")');
     if (await nextPageLink.isVisible().catch(() => false)) {
@@ -91,7 +91,7 @@ test.describe('Internal Link Navigation', () => {
   test('should have working tag links on article pages', async ({ page }) => {
     // Navigate to a post page
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
-    
+
     // Find and click a tag link
     const tagLink = page.locator('a[href^="/tags/"]').first();
     if (await tagLink.isVisible().catch(() => false)) {

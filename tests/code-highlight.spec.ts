@@ -13,7 +13,9 @@ test.describe('Code Block Syntax Highlighting', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to an article with code blocks
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
-    await page.waitForLoadState('networkidle');
+    // Use domcontentloaded for Firefox compatibility
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1000);
   });
 
   test('should have syntax highlighting classes on code elements', async ({ page }) => {
