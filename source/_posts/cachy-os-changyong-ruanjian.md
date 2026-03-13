@@ -125,4 +125,6 @@ bun add -g opencode-ai
 ```sh
 # 安装
 sudo pacman -S waydroid waydroid-image
+sudo waydroid init
+sudo systemctl start waydroid-container
 ```
