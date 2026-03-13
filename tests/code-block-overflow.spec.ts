@@ -12,9 +12,10 @@ test.describe('Code Block Overflow', () => {
   test('should not overflow horizontally on article page', async ({ page }) => {
     // Navigate to an article with code blocks
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
-    
-    // Wait for the page to load
-    await page.waitForLoadState('networkidle');
+
+    // Wait for the page to load (use domcontentloaded for Firefox compatibility)
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1000);
     
     // Find all highlight containers
     const codeBlocks = page.locator('figure.highlight');
@@ -51,7 +52,8 @@ test.describe('Code Block Overflow', () => {
 
   test('should have horizontal scroll for long lines', async ({ page }) => {
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1000);
     
     // Find code blocks
     const codeBlocks = page.locator('figure.highlight');
@@ -79,7 +81,8 @@ test.describe('Code Block Overflow', () => {
     await page.setViewportSize({ width: 375, height: 667 });
 
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1000);
 
     // Get the page body width - it should not exceed viewport width
     const bodyWidth = await page.evaluate(() => {
@@ -92,7 +95,8 @@ test.describe('Code Block Overflow', () => {
 
   test('should handle very long lines without wrapping', async ({ page }) => {
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1000);
     
     // Find code lines in the first code block
     const codeLines = page.locator('figure.highlight td.code pre');

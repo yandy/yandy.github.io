@@ -27,8 +27,9 @@ test.describe('Resource Loading', () => {
     });
     
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1500);
+
     // Check for failed CSS requests
     expect(failedRequests, `Failed CSS requests: ${failedRequests.join(', ')}`).toHaveLength(0);
     
@@ -53,22 +54,24 @@ test.describe('Resource Loading', () => {
     });
     
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1500);
+
     expect(failedRequests, `Failed JS requests: ${failedRequests.join(', ')}`).toHaveLength(0);
   });
 
   test('should load all images without 404 errors', async ({ page }) => {
     const failedImages: string[] = [];
-    
+
     page.on('requestfailed', request => {
       if (request.resourceType() === 'image') {
         failedImages.push(request.url());
       }
     });
-    
+
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1500);
     
     expect(failedImages, `Failed images: ${failedImages.join(', ')}`).toHaveLength(0);
   });
@@ -92,15 +95,16 @@ test.describe('Resource Loading', () => {
 
   test('should not have any 404 errors on home page', async ({ page }) => {
     const errorUrls: string[] = [];
-    
+
     page.on('response', response => {
       if (response.status() === 404) {
         errorUrls.push(response.url());
       }
     });
-    
+
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1500);
     
     expect(errorUrls, `404 errors found: ${errorUrls.join(', ')}`).toHaveLength(0);
   });

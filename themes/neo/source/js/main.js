@@ -140,8 +140,116 @@ class DonationManager {
         });
     }
 }
+class TOCManager {
+    constructor() {
+        this.tocNav = document.querySelector('.toc-nav');
+        this.headings = [];
+        this.tocLinks = [];
+        this.activeId = null;
+        this.init();
+    }
+    init() {
+        if (!this.tocNav) return;
+        const article = document.querySelector('.prose');
+        if (!article) return;
+        this.headings = Array.from(article.querySelectorAll('h2[id], h3[id], h4[id]'));
+        this.tocLinks = Array.from(this.tocNav.querySelectorAll('a[href^="#"]'));
+        if (this.headings.length === 0 || this.tocLinks.length === 0) return;
+        this.setupSmoothScroll();
+        this.setupScrollSpy();
+        this.updateActiveHeading();
+    }
+    setupSmoothScroll() {
+        this.tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (!href) return;
+                const id = href.replace('#', '');
+                const target = document.getElementById(id);
+                if (target) {
+                    const headerOffset = 100;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    history.pushState(null, '', href);
+                }
+            });
+        });
+    }
+    setupScrollSpy() {
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -60% 0px',
+            threshold: 0
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.setActiveLink(entry.target.id);
+                }
+            });
+        }, observerOptions);
+        this.headings.forEach(heading => {
+            observer.observe(heading);
+        });
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    this.updateActiveHeading();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+    }
+    setActiveLink(id) {
+        if (this.activeId === id) return;
+        this.activeId = id;
+        this.tocLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === `#${id}`) {
+                link.classList.add('active');
+                const tocContainer = this.tocNav?.parentElement;
+                if (tocContainer) {
+                    const linkTop = link.offsetTop;
+                    const containerScrollTop = tocContainer.scrollTop;
+                    const containerHeight = tocContainer.clientHeight;
+                    if (linkTop < containerScrollTop || linkTop > containerScrollTop + containerHeight - 40) {
+                        link.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+    updateActiveHeading() {
+        if (this.headings.length === 0) return;
+        const scrollPos = window.pageYOffset + 120;
+        let currentHeading = null;
+        for (const heading of this.headings) {
+            if (heading.offsetTop <= scrollPos) {
+                currentHeading = heading;
+            } else {
+                break;
+            }
+        }
+        if (!currentHeading && this.headings.length > 0) {
+            currentHeading = this.headings[0];
+        }
+        if (currentHeading) {
+            this.setActiveLink(currentHeading.id);
+        }
+    }
+}
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new DarkModeManager();
     new DonationManager();
+    new TOCManager();
 });

@@ -124,5 +124,5 @@ bun add -g opencode-ai
 
 ```sh
 # 安装
-sudo pacman -S waydroid
+sudo pacman -S waydroid waydroid-image
 ```
