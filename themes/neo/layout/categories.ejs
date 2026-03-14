@@ -2,7 +2,9 @@
 <div class="categories-page">
   <div class="page-header">
     <h1 class="page-title">
-      <i class="fas fa-folder-open"></i>
+      <svg class="icon-folder-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+      </svg>
       分类
     </h1>
     <span class="page-subtitle">
@@ -15,7 +17,9 @@
       <div class="category-card">
         <a href="<%= url_for(category.path) %>" class="category-header">
           <div class="category-icon">
-            <i class="fas fa-folder"></i>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
           </div>
           <div class="category-info">
             <h3 class="category-name"><%= category.name %></h3>
@@ -24,7 +28,9 @@
             </span>
           </div>
           <div class="category-arrow">
-            <i class="fas fa-chevron-right"></i>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
           </div>
         </a>
 
@@ -43,7 +49,10 @@
             <% if (category.posts.length > 3) { %>
               <a href="<%= url_for(category.path) %>" class="preview-more">
                 还有 <%= category.posts.length - 3 %> 篇
-                <i class="fas fa-arrow-right"></i>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
               </a>
             <% } %>
           </div>
@@ -64,22 +73,28 @@
   text-align: center;
   margin-bottom: 40px;
   padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-color, #e8e8e8);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .page-title {
+  font-family: var(--font-heading);
   font-size: 2rem;
-  color: var(--heading-color, #333);
+  color: var(--text-primary);
   margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
-.page-title i {
-  color: var(--primary-color, #FF9800);
-  margin-right: 10px;
+.icon-folder-open {
+  width: 32px;
+  height: 32px;
+  color: #f59e0b;
 }
 
 .page-subtitle {
-  color: var(--text-muted, #999);
+  color: var(--text-tertiary);
   font-size: 0.95rem;
 }
 
@@ -90,15 +105,15 @@
 }
 
 .category-card {
-  background: var(--card-bg, #fff);
-  border: 1px solid var(--border-color, #e0e0e0);
-  border-radius: 12px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .category-card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
 
@@ -114,7 +129,7 @@
 .category-icon {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #FF9800, #F57C00);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -122,8 +137,9 @@
   flex-shrink: 0;
 }
 
-.category-icon i {
-  font-size: 1.5rem;
+.category-icon svg {
+  width: 24px;
+  height: 24px;
   color: #fff;
 }
 
@@ -133,9 +149,10 @@
 }
 
 .category-name {
+  font-family: var(--font-heading);
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--heading-color, #333);
+  color: var(--text-primary);
   margin: 0 0 5px 0;
   white-space: nowrap;
   overflow: hidden;
@@ -144,7 +161,7 @@
 
 .category-count {
   font-size: 0.85rem;
-  color: var(--text-muted, #888);
+  color: var(--text-tertiary);
 }
 
 .category-arrow {
@@ -153,19 +170,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-muted, #ccc);
+  color: var(--text-tertiary);
   transition: all 0.3s ease;
 }
 
+.category-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
 .category-card:hover .category-arrow {
-  color: var(--primary-color, #FF9800);
+  color: #f59e0b;
   transform: translateX(3px);
 }
 
 .category-posts-preview {
-  border-top: 1px solid var(--border-color, #f0f0f0);
+  border-top: 1px solid var(--border-color);
   padding: 15px 20px;
-  background: var(--bg-color, #fafafa);
+  background: var(--bg-tertiary);
 }
 
 .preview-post {
@@ -174,7 +196,7 @@
   gap: 12px;
   padding: 8px 0;
   text-decoration: none;
-  color: var(--text-color, #555);
+  color: var(--text-secondary);
   transition: all 0.2s ease;
   border-bottom: 1px dashed transparent;
 }
@@ -184,13 +206,13 @@
 }
 
 .preview-post:hover {
-  color: var(--primary-color, #FF9800);
+  color: #f59e0b;
 }
 
 .preview-date {
   font-size: 0.8rem;
-  color: var(--text-muted, #999);
-  font-family: monospace;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono, monospace);
   white-space: nowrap;
 }
 
@@ -209,21 +231,22 @@
   margin-top: 10px;
   padding: 6px 12px;
   font-size: 0.85rem;
-  color: var(--primary-color, #FF9800);
+  color: #f59e0b;
   text-decoration: none;
-  background: #fff;
-  border: 1px solid var(--primary-color, #FF9800);
+  background: var(--bg-secondary);
+  border: 1px solid #f59e0b;
   border-radius: 15px;
   transition: all 0.3s ease;
 }
 
 .preview-more:hover {
-  background: var(--primary-color, #FF9800);
+  background: #f59e0b;
   color: #fff;
 }
 
-.preview-more i {
-  font-size: 0.75rem;
+.preview-more svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* 响应式 */
@@ -245,8 +268,9 @@
     height: 40px;
   }
 
-  .category-icon i {
-    font-size: 1.2rem;
+  .category-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
   .category-name {
