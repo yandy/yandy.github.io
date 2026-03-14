@@ -165,7 +165,7 @@ class TOCManager {
                 e.preventDefault();
                 const href = link.getAttribute('href');
                 if (!href) return;
-                const id = href.replace('#', '');
+                const id = decodeURIComponent(href.replace('#', ''));
                 const target = document.getElementById(id);
                 if (target) {
                     const headerOffset = 100;

@@ -165,6 +165,62 @@ test.describe('TOC Functionality', () => {
     }
   });
 
+  test('clicking TOC link with Chinese characters should scroll to heading', async ({ page }) => {
+    await page.goto('/2025/02/06/rust-kaifa-huanjing/');
+
+    // Wait for page to load
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(1000);
+
+    // Find a TOC link with URL-encoded Chinese characters (e.g., %E5%AE%89%E8%A3%85)
+    const tocLinks = page.locator('.toc-nav a');
+    const linkCount = await tocLinks.count();
+
+    let chineseLink = null;
+    let chineseHref = null;
+
+    for (let i = 0; i < linkCount; i++) {
+      const link = tocLinks.nth(i);
+      const href = await link.getAttribute('href');
+      // Look for links with URL-encoded characters (e.g., %XX patterns)
+      if (href && /%[0-9A-Fa-f]{2}/.test(href)) {
+        chineseLink = link;
+        chineseHref = href;
+        break;
+      }
+    }
+
+    // Skip test if no Chinese headings found
+    if (!chineseLink || !chineseHref) {
+      return;
+    }
+
+    const decodedId = decodeURIComponent(chineseHref.replace('#', ''));
+
+    // Scroll to bottom first
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(200);
+
+    // Click TOC link with Chinese characters
+    await chineseLink.click();
+    await page.waitForTimeout(800);
+
+    // Check if the decoded heading ID is in viewport
+    const heading = page.locator(`[id="${decodedId}"]`);
+
+    // Verify the heading exists and is visible
+    await expect(heading).toBeVisible();
+
+    // Retry check for Firefox timing
+    await expect(async () => {
+      const isInViewport = await heading.evaluate(el => {
+        const rect = el.getBoundingClientRect();
+        return rect.top >= 0 && rect.top <= window.innerHeight;
+      });
+      expect(isInViewport).toBe(true);
+    }).toPass({ timeout: 5000 });
+  });
+
   test('TOC should have correct styling', async ({ page }) => {
     // Set desktop viewport to ensure TOC is visible (xl breakpoint: 1280px+)
     await page.setViewportSize({ width: 1280, height: 800 });
