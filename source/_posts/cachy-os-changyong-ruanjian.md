@@ -15,8 +15,8 @@ tags:
 1. 从官方仓库安装 (`pacman`)
 2. 从 AUR 安装 (`paru`)
 3. `bun`/`cargo` 等程序包管理器安装 (`bun`/`cargo`)
-4. 使用 `android` 版 (`waydroid`)
-5. `wine`/`proton`
+4. `wine`/`proton`
+5. 使用 `android` 版 (`waydroid`)
 
 以下是针对一些常用软件， 我的安装策略
 
@@ -119,8 +119,19 @@ sudo systemctl start runsunloginclient
 bun add -g opencode-ai
 ```
 
+## 5. 使用 wine
 
-## 5. 使用 android 版 (`waydroid`)
+```sh
+# 安装
+## 在安装 cachyos-gaming 相关包的时候已经安装了wine，所以这里只补充安装 wine-mono, wine-gecko
+sudo pacman -S wine-mono wine-gecko
+
+# 使用
+## 打开 Winetricks，选择/创建容器(wineprefix)，执行相关操作：运行程序，卸载程序，安装dll/字体，运行wine配置程序等等
+```
+
+
+## 6. 使用 android 版 (`waydroid`)
 
 ```sh
 # 安装
