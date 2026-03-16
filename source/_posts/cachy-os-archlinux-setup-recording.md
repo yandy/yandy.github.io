@@ -147,6 +147,13 @@ git config --global core.editor "vim"
 # 2. docker
 sudo pacman -S docker docker-buildx docker-compose
 sudo systemctl enable --now docker
+
+# 3. neovim
+sudo pacman -S neovim wl-clipboard
+
+# 4. alacritty
+git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
+sudo pacman -S alacritty
 ```
 
 ## 6. 美化
@@ -174,10 +181,6 @@ echo "oh-my-posh init fish --config 'jandedobbeleer' | source" >> ~/.config/fish
 # 另开一个新终端 或者执行
 exec fish
 ```
-
-**配置终端(Konsole)字体**
-
-`CTRL + SHIFT + ,`打开配置，新建配置方案，选择 "外观" -> "字体"，设置为 `MesloLGM Nerd Font`
 
 ## 7. 各语言开发环境配置
 
