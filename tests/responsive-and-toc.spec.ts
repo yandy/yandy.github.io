@@ -75,7 +75,7 @@ test.describe('TOC Functionality', () => {
   test('TOC should display correct headings from article', async ({ page }) => {
     await page.goto('/2025/02/06/rust-kaifa-huanjing/');
 
-    const tocNav = page.locator('.toc-nav');
+    const tocNav = page.locator('.toc-sidebar .toc-nav');
     await expect(tocNav).toBeVisible();
 
     // TOC should contain links
@@ -232,8 +232,8 @@ test.describe('TOC Functionality', () => {
     // Check TOC container has sticky position (the .toc-sidebar element itself is sticky)
     await expect(tocSidebar).toHaveCSS('position', 'sticky');
 
-    // Check TOC navigation exists
-    const tocNav = page.locator('.toc-nav');
+    // Check TOC navigation exists (desktop sidebar only)
+    const tocNav = page.locator('.toc-sidebar .toc-nav');
     await expect(tocNav).toBeVisible();
   });
 
