@@ -19,8 +19,8 @@
         <div class="hidden md:flex items-center space-x-1">
           <% if (theme.navbar && theme.navbar.menu) { %>
             <% for (var key in theme.navbar.menu) { %>
-              <a href="<%= url_for(theme.navbar.menu[key]) %>" 
-                 class="px-3 py-1.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
+              <a href="<%= url_for(theme.navbar.menu[key]) %>"
+                 class="nav-link px-3 py-1.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
                 <%= key %>
               </a>
             <% } %>
@@ -54,8 +54,8 @@
         <nav class="flex flex-col space-y-1 pt-2">
           <% if (theme.navbar && theme.navbar.menu) { %>
             <% for (var key in theme.navbar.menu) { %>
-              <a href="<%= url_for(theme.navbar.menu[key]) %>" 
-                 class="px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
+              <a href="<%= url_for(theme.navbar.menu[key]) %>"
+                 class="nav-link px-3 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
                 <%= key %>
               </a>
             <% } %>

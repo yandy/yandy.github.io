@@ -4,9 +4,15 @@
   <%- partial('partial/head') %>
 </head>
 <body class="bg-bg-primary text-text-primary min-h-screen antialiased">
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">跳转到主要内容</a>
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress" id="reading-progress"></div>
+
   <%- partial('partial/header') %>
 
-  <main class="max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main id="main-content" tabindex="-1" class="max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <%- body %>
   </main>
   

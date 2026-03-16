@@ -40,6 +40,10 @@ class DarkModeManager {
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => this.toggle());
         }
+        const mobileToggleBtn = document.getElementById('theme-toggle-mobile');
+        if (mobileToggleBtn) {
+            mobileToggleBtn.addEventListener('click', () => this.toggle());
+        }
     }
 }
 // Donation Modal Manager
@@ -183,10 +187,10 @@ class TOCManager {
     setupScrollSpy() {
         const observerOptions = {
             root: null,
-            rootMargin: '-100px 0px -60% 0px',
+            rootMargin: '-80px 0px -70% 0px',
             threshold: 0
         };
-        const observer = new IntersectionObserver((entries) => {
+        this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     this.setActiveLink(entry.target.id);
@@ -194,18 +198,21 @@ class TOCManager {
             });
         }, observerOptions);
         this.headings.forEach(heading => {
-            observer.observe(heading);
+            this.observer.observe(heading);
         });
-        let ticking = false;
+        let scrollTimeout;
         window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    this.updateActiveHeading();
-                    ticking = false;
-                });
-                ticking = true;
-            }
+            if (scrollTimeout) return;
+            scrollTimeout = window.setTimeout(() => {
+                this.updateActiveHeading();
+                scrollTimeout = undefined;
+            }, 100);
         }, { passive: true });
+    }
+    destroy() {
+        if (this.observer) {
+            this.observer.disconnect();
+        }
     }
     setActiveLink(id) {
         if (this.activeId === id) return;
@@ -247,9 +254,146 @@ class TOCManager {
         }
     }
 }
+// Code Block Copy Manager
+class CodeCopyManager {
+    constructor() {
+        this.init();
+    }
+    init() {
+        const codeBlocks = document.querySelectorAll('.highlight');
+        codeBlocks.forEach(block => {
+            this.addCopyButton(block);
+        });
+    }
+    addCopyButton(block) {
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.textContent = '复制';
+        copyBtn.setAttribute('aria-label', '复制代码');
+        
+        // Create feedback element
+        const feedback = document.createElement('span');
+        feedback.className = 'copy-feedback';
+        feedback.textContent = '已复制!';
+        
+        block.appendChild(copyBtn);
+        block.appendChild(feedback);
+        
+        copyBtn.addEventListener('click', () => {
+            this.copyCode(block, copyBtn, feedback);
+        });
+    }
+    async copyCode(block, button, feedback) {
+        const codeElement = block.querySelector('td.code pre, pre code');
+        if (!codeElement) return;
+        
+        const code = codeElement.textContent || '';
+        
+        try {
+            await navigator.clipboard.writeText(code);
+            this.showFeedback(feedback, button);
+        } catch (err) {
+            // Fallback for older browsers
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                this.showFeedback(feedback, button);
+            } catch (e) {
+                console.error('Copy failed:', e);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    }
+    showFeedback(feedback, button) {
+        feedback.classList.add('show');
+        button.style.opacity = '0';
+        
+        setTimeout(() => {
+            feedback.classList.remove('show');
+            button.style.opacity = '';
+        }, 2000);
+    }
+}
+// Mobile TOC Toggle Manager
+class MobileTOCManager {
+    constructor() {
+        this.toggleBtn = document.getElementById('toc-toggle');
+        this.tocContent = document.getElementById('toc-mobile');
+        this.tocIcon = document.getElementById('toc-icon');
+        this.init();
+    }
+    init() {
+        if (!this.toggleBtn || !this.tocContent) return;
+        this.toggleBtn.addEventListener('click', () => this.toggle());
+        this.setupLinkClose();
+    }
+    toggle() {
+        const isHidden = this.tocContent.classList.contains('hidden');
+        if (isHidden) {
+            this.tocContent.classList.remove('hidden');
+            this.tocIcon.style.transform = 'rotate(180deg)';
+        } else {
+            this.tocContent.classList.add('hidden');
+            this.tocIcon.style.transform = 'rotate(0deg)';
+        }
+    }
+    setupLinkClose() {
+        const links = this.tocContent?.querySelectorAll('a');
+        links?.forEach(link => {
+            link.addEventListener('click', () => {
+                this.tocContent.classList.add('hidden');
+                this.tocIcon.style.transform = 'rotate(0deg)';
+            });
+        });
+    }
+}
+// Reading Progress Manager
+class ReadingProgressManager {
+    constructor() {
+        this.progressBar = document.getElementById('reading-progress');
+        this.article = document.querySelector('.prose');
+        this.init();
+    }
+    init() {
+        if (!this.progressBar || !this.article) {
+            this.progressBar.style.display = 'none';
+            return;
+        }
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    this.updateProgress();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+        this.updateProgress();
+    }
+    updateProgress() {
+        const articleRect = this.article.getBoundingClientRect();
+        const articleTop = articleRect.top + window.pageYOffset;
+        const articleHeight = this.article.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const scrolled = window.pageYOffset - articleTop + windowHeight / 2;
+        const progress = Math.max(0, Math.min(100, (scrolled / articleHeight) * 100));
+        this.progressBar.style.width = progress + '%';
+    }
+}
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new DarkModeManager();
     new DonationManager();
     new TOCManager();
+    new CodeCopyManager();
+    new MobileTOCManager();
+    new ReadingProgressManager();
 });

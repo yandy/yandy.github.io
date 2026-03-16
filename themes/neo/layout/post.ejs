@@ -1,5 +1,5 @@
-<div class="flex gap-8">
-  <!-- TOC Sidebar - Desktop only -->
+<div class="flex flex-col xl:flex-row gap-8">
+  <!-- TOC Sidebar - Desktop/Tablet collapsible -->
   <% var tocContent = toc(page.content, {list_number: false, max_depth: 3}); %>
   <% if (tocContent) { %>
   <aside class="hidden xl:block w-64 flex-shrink-0">
@@ -17,6 +17,26 @@
       </div>
     </div>
   </aside>
+  
+  <!-- Mobile/Tablet TOC Toggle Button -->
+  <div class="xl:hidden w-full mb-4">
+    <button id="toc-toggle" class="w-full flex items-center justify-between px-4 py-3 bg-bg-secondary/80 backdrop-blur-xl rounded-xl border border-border-custom shadow-lg shadow-zinc-200/20 dark:shadow-black/20 text-text-primary font-medium">
+      <span class="flex items-center">
+        <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+        </svg>
+        目录
+      </span>
+      <svg id="toc-icon" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    <div id="toc-mobile" class="hidden mt-2 bg-bg-secondary/80 backdrop-blur-xl rounded-xl border border-border-custom p-4 shadow-lg shadow-zinc-200/20 dark:shadow-black/20">
+      <nav class="toc-nav overflow-y-auto max-h-[50vh] text-sm">
+        <%- tocContent %>
+      </nav>
+    </div>
+  </div>
   <% } %>
 
   <!-- Main Content -->
@@ -85,7 +105,7 @@
             <span class="text-sm font-medium text-text-secondary">标签：</span>
             <% page.tags.each(function(tag) { %>
             <a href="<%= url_for(tag.path) %>"
-               class="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 transition-all">
+               class="tag-link inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 transition-all">
               <%= tag.name %>
             </a>
             <% }); %>
@@ -145,5 +165,6 @@
           </div>
         </nav>
       </div>
+    </div>
   </article>
 </div>
