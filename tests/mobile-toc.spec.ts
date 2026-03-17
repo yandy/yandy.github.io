@@ -46,7 +46,7 @@ test.describe('Mobile TOC Toggle', () => {
     await tocToggle.click();
 
     await expect(tocContent).toBeVisible();
-    // Check that transform is applied (either rotate or matrix representation)
+    await page.waitForTimeout(300);
     const transformValue = await tocIcon.evaluate(el => getComputedStyle(el).transform);
     expect(transformValue).not.toBe('none');
     expect(transformValue).not.toBe('matrix(1, 0, 0, 1, 0, 0)');
