@@ -148,12 +148,11 @@ git config --global core.editor "vim"
 sudo pacman -S docker docker-buildx docker-compose
 sudo systemctl enable --now docker
 
-# 3. neovim
-sudo pacman -S neovim wl-clipboard
+# 3. vim
+sudo pacman -S wl-clipboard
 
 # 4. alacritty
 git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
-sudo pacman -S alacritty
 ```
 
 ## 6. 美化
