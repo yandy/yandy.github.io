@@ -8,63 +8,23 @@ tags:
   - xops
 ---
 
-## 1. 常用桌面软件安装策略
+## 1. 游戏相关程序和优化项
 
-有以下几种 安装策略
-
-1. 从官方仓库安装 (`pacman`)
-2. 从 AUR 安装 (`paru`)
-3. `bun`/`cargo` 等程序包管理器安装 (`bun`/`cargo`)
-4. `wine`/`proton`
-5. 使用 `android` 版 (`waydroid`)
-
-以下是针对一些常用软件， 我的安装策略
-
-## 2. 从官方仓库安装
-
-**Steam 在内的游戏相关程序和优化项**
+cachy os 对游戏的优化十分到位，并准备了相关的程序包。
 
 ```sh
 sudo pacman -Syu cachyos-gaming-meta cachyos-gaming-applications
 ```
 
-**vlc media player**
+## 2. 建模绘图软件
 
 ```sh
-sudo pacman -S vlc
-```
-
-**blender**
-
-```sh
-sudo pacman -S blender
-```
-
-**kicad**
-
-```sh
-sudo pacman -S kicad
-```
-
-**freecad**
-
-```sh
-sudo pacman -S freecad
+sudo pacman -S blender kicad freecad
 ```
 
 <!-- more -->
 
-## 3. AUR 安装
-
-**visual studio code**
-```sh
-paru -S visual-studio-code-bin
-```
-
-**microsoft edge**
-```sh
-paru -S microsoft-edge-stable-bin
-```
+## 3. 常用国内软件
 
 **微信**
 ```sh
@@ -83,13 +43,13 @@ paru -S wps-office-cn wps-office-mime-cn wps-office-mui-zh-cn ttf-wps-fonts
 
 **飞书**
 ```sh
-paru -S "feishu-bin"
+paru -S feishu-bin
 echo '--ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3' > ~/.config/feishu-flags.conf
 ```
 
 **钉钉**
 ```sh
-paru -S "dingtalk-bin"
+paru -S dingtalk-bin
 ```
 > 应用程序起动器 -> 右键“钉钉”-> 编辑应用程序-> 环境变量:
 > `GTK_USE_PORTAL=1 QT_IM_MODULE=fcitx`
@@ -102,24 +62,8 @@ paru -S wemeet-bin
 > 应用程序起动器 -> 右键“腾讯会议”-> 编辑应用程序-> 环境变量:
 > `QT_IM_MODULE=fcitx`
 
-**向日葵**
-```sh
-# 安装
-paru -S sunloginclient
 
-# 启动服务
-sudo systemctl start runsunloginclient
-```
-
-
-## 4. 程序包管理器安装
-
-```sh
-# opencode
-bun add -g opencode-ai
-```
-
-## 5. 使用 wine
+## 4. 使用 wine 安装 windows 软件
 
 ```sh
 # 安装
@@ -131,7 +75,7 @@ sudo pacman -S wine-mono wine-gecko
 ```
 
 
-## 6. 使用 android 版 (`waydroid`)
+## 5. 使用 wayland 安装 android 软件
 
 ```sh
 # 安装

@@ -71,9 +71,9 @@ uv self update
 
 ### 3.2. python
 
-use  **bash**
-
 ```bash
+# use  **bash** !!
+
 # set uv pip install mirror
 cat > ~/.config/uv/uv.toml <<- 'EOM'
 [[index]]
@@ -87,5 +87,5 @@ EOM
 uv python list
 
 # install a Python version
-uv python install 3.12 --default
+uv python install 3.12
 ```

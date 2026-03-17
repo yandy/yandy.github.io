@@ -125,3 +125,13 @@ export BUN_CONFIG_REGISTRY="https://registry.npmmirror.com"
 ```sh
 set -x BUN_CONFIG_REGISTRY "https://registry.npmmirror.com"
 ```
+
+#### npx/npm 别名
+
+在`fish`下，可以通过`abbr`命令添加别名，将`npx`和`npm`指向`bun`x和`bun`。
+
+```sh
+abbr -a -- npx bunx
+abbr -a -- npm bun
+abbr >> ~/.config/fish/conf.d/fnm.fish
+```

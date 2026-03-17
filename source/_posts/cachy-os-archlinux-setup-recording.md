@@ -117,7 +117,7 @@ sudo pacman -S fcitx5-rime fcitx5-configtool
 
  右键点击 fcitx5 托盘图标 →  切换输入方案为 "朙月拼音・简化字"
 
- ### 3.4. 一些输入法的兼容配置
+### 3.4. 一些输入法的兼容配置
 
 **xwayland 应用的输入法配置**
 `~/.config/fish/conf.d/fcitx5.fish`
@@ -136,23 +136,44 @@ paru -S clash-verge-rev-bin
 
 ## 5. 常用工具
 
+**visual studio code 和 microsoft edge**
 ```sh
-# 1. git
+paru -S visual-studio-code-bin microsoft-edge-stable-bin
+```
+
+**git**
+```sh
+# 补充git相关工具
 sudo pacman -S git-lfs github-cli
+# github credential helper
 gh auth login
+# 基本配置
 git config --global user.name "Your Full Name"
 git config --global user.email "you@email.com"
 git config --global core.editor "vim"
+```
 
-# 2. docker
+**docker**
+```sh
 sudo pacman -S docker docker-buildx docker-compose
 sudo systemctl enable --now docker
+```
 
-# 3. vim
+**wl-clipboard**
+```sh
 sudo pacman -S wl-clipboard
+```
 
-# 4. alacritty
+**alacritty**
+```sh
+# 安装 alacritty 配置，如果配置目录已经存在，需要先删除/移动到其他地方
 git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
+```
+
+**vim**
+```sh
+# 安装 vim 配置
+git clone https://github.com/yandy/vim-config.git ~/.config/vim
 ```
 
 ## 6. 美化
@@ -163,16 +184,15 @@ git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
 
 ![](ohmyposh.png)
 
-
 ```sh
 # 安装 oh-my-posh
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
 # 安装字体
 ## cachy os  自带了大量的 nerd 字体，包括 "meslo"，所以大多情况下无需安装字体
-oh-my-posh font install
+# oh-my-posh font install
 # This will present a list of Nerd Font libraries, from which you can select Meslo, which includes the Meslo LGM NF font we recommend. Note that you can also install it directly via:
-oh-my-posh font install meslo
+# oh-my-posh font install meslo
 
 # 配置 shell
 echo "oh-my-posh init fish --config 'jandedobbeleer' | source" >> ~/.config/fish/config.fish
@@ -181,11 +201,6 @@ echo "oh-my-posh init fish --config 'jandedobbeleer' | source" >> ~/.config/fish
 exec fish
 ```
 
-## 7. 各语言开发环境配置
+## 7. {% post_link develop-env-setup '开发环境配置(合集)' %}
 
-- {% post_link cpp-kaifa-huanjing 'C++' %}
-- {% post_link rust-kaifa-huanjing 'Rust' %}
-- {% post_link javascript-kaifa-huanjing 'Javascript' %}
-- {% post_link python-kaifa-huanjing 'Python' %}
-
-## 8.  {% post_link cachy-os-changyong-ruanjian '常用桌面软件安装与配置' %}
+## 8. {% post_link cachy-os-changyong-ruanjian '常用桌面软件安装与配置' %}
