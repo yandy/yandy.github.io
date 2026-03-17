@@ -254,114 +254,225 @@ class TOCManager {
         }
     }
 }
-// Code Block Copy Manager
-class CodeCopyManager {
+// Code Block Manager with header bar and actions
+class CodeBlockManager {
     constructor() {
         this.init();
     }
+
     init() {
         const codeBlocks = document.querySelectorAll('.highlight');
         codeBlocks.forEach(block => {
-            this.addCopyButton(block);
+            this.addHeader(block);
+            this.wrapContent(block);
         });
     }
-    addCopyButton(block) {
+
+    addHeader(block) {
+        if (block.querySelector('.code-header')) return;
+
+        const lang = this.getLanguage(block);
+        const header = document.createElement('div');
+        header.className = 'code-header';
+
+        const langSection = document.createElement('div');
+        langSection.className = 'lang-section';
+
+        const langLabel = document.createElement('span');
+        langLabel.className = 'lang-label';
+        langLabel.textContent = lang;
+
+        const collapseBtn = document.createElement('button');
+        collapseBtn.className = 'collapse-btn';
+        collapseBtn.setAttribute('aria-label', '折叠/展开代码');
+        collapseBtn.setAttribute('data-tooltip', '折叠/展开');
+        collapseBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+        collapseBtn.addEventListener('click', () => this.toggleCollapse(block, collapseBtn));
+
+        langSection.appendChild(langLabel);
+        langSection.appendChild(collapseBtn);
+
+        const actions = document.createElement('div');
+        actions.className = 'code-actions';
+
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
-        copyBtn.textContent = '复制';
         copyBtn.setAttribute('aria-label', '复制代码');
-        
-        // Create feedback element
+        copyBtn.setAttribute('data-tooltip', '复制');
+        copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+        copyBtn.addEventListener('click', () => this.copyCode(block));
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'fullscreen-btn';
+        fullscreenBtn.setAttribute('aria-label', '全屏查看');
+        fullscreenBtn.setAttribute('data-tooltip', '全屏');
+        fullscreenBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>';
+        fullscreenBtn.addEventListener('click', () => this.toggleFullscreen(block, fullscreenBtn));
+
+        actions.appendChild(copyBtn);
+        actions.appendChild(fullscreenBtn);
+
+        header.appendChild(langSection);
+        header.appendChild(actions);
+
         const feedback = document.createElement('span');
         feedback.className = 'copy-feedback';
         feedback.textContent = '已复制!';
-        
-        block.appendChild(copyBtn);
+
+        block.insertBefore(header, block.firstChild);
         block.appendChild(feedback);
-        
-        copyBtn.addEventListener('click', () => {
-            this.copyCode(block, copyBtn, feedback);
-        });
     }
-    getCodeText(codeElement) {
+
+    wrapContent(block) {
+        const content = block.querySelector('table, pre:not(.code-header ~ pre)');
+        if (!content || content.parentElement.classList.contains('highlight-content')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'highlight-content';
+
+        if (content.parentElement === block) {
+            block.insertBefore(wrapper, content);
+            wrapper.appendChild(content);
+        }
+    }
+
+    getLanguage(block) {
+        const dataLang = block.getAttribute('data-lang');
+        if (dataLang) return dataLang;
+
+        const blockClasses = block.className.split(' ');
+        for (const cls of blockClasses) {
+            if (cls.startsWith('lang-')) {
+                return cls.replace('lang-', '');
+            }
+        }
+
+        for (const cls of blockClasses) {
+            if (cls.startsWith('highlight-') && cls !== 'highlight') {
+                return cls.replace('highlight-', '');
+            }
+        }
+
+        // Check for direct language class (e.g., "highlight pwsh" -> "pwsh")
+        const nonHighlightClass = blockClasses.find(cls => cls && cls !== 'highlight');
+        if (nonHighlightClass) {
+            return nonHighlightClass;
+        }
+
+        const codeElement = block.querySelector('code');
+        if (codeElement) {
+            const codeClasses = codeElement.className.split(' ');
+            for (const cls of codeClasses) {
+                if (cls.startsWith('language-')) {
+                    return cls.replace('language-', '');
+                }
+                if (cls.startsWith('lang-')) {
+                    return cls.replace('lang-', '');
+                }
+            }
+        }
+
+        return 'code';
+    }
+
+    toggleCollapse(block, btn) {
+        block.classList.toggle('collapsed');
+        btn.classList.toggle('collapsed');
+    }
+
+    toggleFullscreen(block, btn) {
+        const isFullscreen = block.classList.contains('fullscreen');
+
+        if (isFullscreen) {
+            block.classList.remove('fullscreen');
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>';
+            btn.setAttribute('aria-label', '全屏查看');
+            document.body.style.overflow = '';
+        } else {
+            block.classList.add('fullscreen');
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>';
+            btn.setAttribute('aria-label', '退出全屏');
+            document.body.style.overflow = 'hidden';
+
+            const exitOnEscape = (e) => {
+                if (e.key === 'Escape') {
+                    this.toggleFullscreen(block, btn);
+                    document.removeEventListener('keydown', exitOnEscape);
+                }
+            };
+            document.addEventListener('keydown', exitOnEscape);
+        }
+    }
+
+    getCodeText(block) {
+        // Only get code from td.code pre, not from gutter (line numbers)
+        const codeElement = block.querySelector('td.code pre');
+        if (!codeElement) {
+            // Fallback for code blocks without line numbers
+            const pre = block.querySelector('.highlight-content pre');
+            if (pre) {
+                const clone = pre.cloneNode(true);
+                clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+                return clone.textContent || '';
+            }
+            return '';
+        }
+
         const clone = codeElement.cloneNode(true);
         clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
         return clone.textContent || '';
     }
-    async copyCode(block, button, feedback) {
-        const codeElement = block.querySelector('td.code pre, pre code');
-        if (!codeElement) return;
 
-        const code = this.getCodeText(codeElement);
-        
-        if (await this.hasClipboardPermission()) {
-            try {
-                await navigator.clipboard.writeText(code);
-                this.showFeedback(feedback, button);
-                return;
-            } catch {
-            }
-        }
-        
-        this.fallbackCopy(code, feedback, button);
-    }
-    
-    async hasClipboardPermission() {
-        if (!navigator.clipboard || !navigator.permissions) return false;
-        
+    async copyCode(block) {
+        const code = this.getCodeText(block);
+        if (!code) return;
+
+        const feedback = block.querySelector('.copy-feedback');
+        const copyBtn = block.querySelector('.copy-btn');
+
         try {
-            const result = await navigator.permissions.query({ name: 'clipboard-write' });
-            return result.state === 'granted' || result.state === 'prompt';
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(code);
+            } else {
+                this.fallbackCopy(code);
+            }
+            this.showFeedback(feedback, copyBtn);
         } catch {
-            return true;
+            this.showFeedback(feedback, copyBtn, '复制失败');
         }
     }
-    
-    fallbackCopy(text, feedback, button) {
+
+    fallbackCopy(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
         textarea.setAttribute('readonly', '');
-        textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
-        
+        textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none;z-index:-1;';
+
         document.body.appendChild(textarea);
-        
-        const range = document.createRange();
-        range.selectNodeContents(textarea);
-        
-        const selection = window.getSelection();
-        selection?.removeAllRanges();
-        selection?.addRange(range);
-        
+        textarea.select();
         textarea.setSelectionRange(0, text.length);
-        
-        let success = false;
-        try {
-            success = document.execCommand('copy');
-        } catch {
-            success = false;
-        }
-        
-        selection?.removeAllRanges();
+
+        document.execCommand('copy');
         document.body.removeChild(textarea);
-        
-        if (success) {
-            this.showFeedback(feedback, button);
-        } else {
-            feedback.textContent = '复制失败';
-            feedback.classList.add('show');
-            setTimeout(() => {
-                feedback.classList.remove('show');
-                feedback.textContent = '已复制!';
-            }, 2000);
-        }
     }
-    showFeedback(feedback, button) {
+
+    showFeedback(feedback, button, message = '已复制!') {
+        if (!feedback) return;
+
+        const originalText = feedback.textContent;
+        feedback.textContent = message;
         feedback.classList.add('show');
-        button.style.opacity = '0';
-        
+
+        if (button) {
+            button.style.opacity = '0.5';
+        }
+
         setTimeout(() => {
             feedback.classList.remove('show');
-            button.style.opacity = '';
+            feedback.textContent = originalText;
+            if (button) {
+                button.style.opacity = '';
+            }
         }, 2000);
     }
 }
@@ -437,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new DarkModeManager();
     new DonationManager();
     new TOCManager();
-    new CodeCopyManager();
+    new CodeBlockManager();
     new MobileTOCManager();
     new ReadingProgressManager();
 });

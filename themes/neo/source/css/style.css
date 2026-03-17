@@ -438,14 +438,245 @@ html[data-theme="dark"] .donation-tab:not(.active):hover {
   display: none;
 }
 
-/* Code Block Styles - Fix overflow issues */
-.highlight {
+/* ========================================
+   CODE BLOCK STYLES
+   ======================================== */
+
+/* Base Code Block Container - remove all borders and shadows */
+.highlight,
+figure.highlight {
   position: relative;
   max-width: 100%;
-  overflow-x: auto;
   margin: 1.5rem 0;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-lg);
   background-color: #282c34;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Light Theme */
+html[data-theme="light"] .highlight,
+html[data-theme="light"] figure.highlight {
+  background-color: #ffffff;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Code Block Header - no border, overflow visible for tooltip */
+.highlight .code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  user-select: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="light"] .highlight .code-header {
+  background-color: #f6f8fa;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+/* Language Section - Left Side */
+.highlight .code-header .lang-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Language Label */
+.highlight .code-header .lang-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #8b949e;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  text-transform: lowercase;
+  cursor: default;
+  letter-spacing: 0.025em;
+}
+
+html[data-theme="light"] .highlight .code-header .lang-label {
+  color: #57606a;
+}
+
+/* Collapse/Expand Button */
+.highlight .code-header .collapse-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  color: #8b949e;
+  transition: all 0.2s ease;
+  margin-left: 0.25rem;
+  position: relative;
+}
+
+.highlight .code-header .collapse-btn:hover {
+  color: #f0f6fc;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="light"] .highlight .code-header .collapse-btn {
+  color: #8c959f;
+}
+
+html[data-theme="light"] .highlight .code-header .collapse-btn:hover {
+  color: #24292f;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.highlight .code-header .collapse-btn svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.highlight .code-header .collapse-btn.collapsed svg {
+  transform: rotate(-90deg);
+}
+
+/* Action Buttons - Right Side */
+.highlight .code-header .code-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.highlight .code-header .code-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  color: #8b949e;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.highlight .code-header .code-actions button:hover {
+  color: #f0f6fc;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="light"] .highlight .code-header .code-actions button {
+  color: #57606a;
+}
+
+html[data-theme="light"] .highlight .code-header .code-actions button:hover {
+  color: #24292f;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.highlight .code-header .code-actions button svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* Copy Button */
+.highlight .code-header .copy-btn {
+  position: relative;
+}
+
+/* Fullscreen Button */
+.highlight .code-header .fullscreen-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.highlight .code-header .fullscreen-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Custom Tooltip for Code Block Buttons */
+.highlight .code-header button[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.375rem 0.75rem;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 100;
+}
+
+.highlight .code-header button[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 100;
+}
+
+.highlight .code-header button[data-tooltip]:hover::after,
+.highlight .code-header button[data-tooltip]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+html[data-theme="light"] .highlight .code-header button[data-tooltip]::after {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+html[data-theme="light"] .highlight .code-header button[data-tooltip]::before {
+  border-top-color: rgba(0, 0, 0, 0.85);
+}
+
+/* Collapsed State */
+.highlight.collapsed .highlight-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.highlight .highlight-content {
+  max-height: 2000px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+
+/* Code Block Content - rounded bottom corners, unified background */
+.highlight .code-header + table,
+.highlight .code-header + .highlight-content,
+.highlight .code-header + pre {
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  margin-top: 0;
+  overflow: hidden;
+}
+
+.highlight table {
+  margin-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  overflow: hidden;
+  background-color: transparent;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .highlight table {
@@ -459,23 +690,39 @@ html[data-theme="dark"] .donation-tab:not(.active):hover {
   vertical-align: top;
 }
 
+/* Line Numbers (Gutter) - seamless with header and code area */
 .highlight td.gutter {
   width: 3rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: transparent;
   text-align: right;
+  border: none;
+}
+
+html[data-theme="light"] .highlight td.gutter {
+  background-color: transparent;
+}
+
+/* Code Area - no border */
+.highlight td.code {
+  border: none;
 }
 
 .highlight td.gutter pre {
   margin: 0;
   padding: 0.75rem 0.5rem;
-  color: #6b7280;
+  color: #4b5563;
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.6;
   text-align: right;
   overflow: hidden;
+  background: transparent;
 }
 
+html[data-theme="light"] .highlight td.gutter pre {
+  color: #9ca3af;
+}
+
+/* Code Area */
 .highlight td.code {
   width: 100%;
   overflow-x: auto;
@@ -487,34 +734,102 @@ html[data-theme="dark"] .donation-tab:not(.active):hover {
   background-color: transparent;
   color: #f3f4f6;
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.6;
   white-space: pre;
   word-wrap: normal;
   word-break: keep-all;
   overflow-x: auto;
 }
 
-.highlight .copy-btn {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #9ca3af;
-  background-color: rgba(55, 65, 81, 0.5);
-  border-radius: 0.25rem;
-  transition: background-color 0.2s, color 0.2s;
-  opacity: 0;
+html[data-theme="light"] .highlight td.code pre {
+  color: #24292f;
 }
 
-.highlight:hover .copy-btn {
+/* Simple Code Block (without line numbers) */
+.highlight pre {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background-color: transparent;
+  overflow-x: auto;
+}
+
+.highlight pre code {
+  background: transparent;
+  padding: 0;
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Copy Feedback Animation */
+.copy-feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #10b981;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.copy-feedback.show {
   opacity: 1;
 }
 
-.highlight .copy-btn:hover {
-  background-color: rgba(55, 65, 81, 0.8);
-  color: #f3f4f6;
+/* Fullscreen Mode */
+.highlight.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  margin: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight.fullscreen .code-header {
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.highlight.fullscreen .highlight-content,
+.highlight.fullscreen table,
+.highlight.fullscreen pre {
+  flex: 1;
+  overflow: auto;
+  max-height: none;
+}
+
+.highlight.fullscreen td.code,
+.highlight.fullscreen td.code pre {
+  height: 100%;
+}
+
+/* Prose Code Blocks Override - ensure transparent background */
+.prose pre,
+.highlight pre,
+.prose .highlight pre {
+  background-color: transparent !important;
+  padding: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  display: block;
 }
 
 /* Mobile Menu */
