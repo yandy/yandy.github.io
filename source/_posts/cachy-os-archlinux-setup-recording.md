@@ -159,11 +159,6 @@ sudo pacman -S docker docker-buildx docker-compose
 sudo systemctl enable --now docker
 ```
 
-**wl-clipboard**
-```sh
-sudo pacman -S wl-clipboard
-```
-
 **alacritty**
 ```sh
 # 安装 alacritty 配置，如果配置目录已经存在，需要先删除/移动到其他地方
@@ -174,6 +169,11 @@ git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
 ```sh
 # 安装 vim 配置
 git clone https://github.com/yandy/vim-config.git ~/.config/vim
+```
+
+**小工具**
+```sh
+sudo pacman -S wl-clipboard net-tools
 ```
 
 ## 6. 美化
