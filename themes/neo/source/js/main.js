@@ -283,32 +283,76 @@ class CodeCopyManager {
             this.copyCode(block, copyBtn, feedback);
         });
     }
+    getCodeText(codeElement) {
+        const clone = codeElement.cloneNode(true);
+        clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+        return clone.textContent || '';
+    }
     async copyCode(block, button, feedback) {
         const codeElement = block.querySelector('td.code pre, pre code');
         if (!codeElement) return;
+
+        const code = this.getCodeText(codeElement);
         
-        const code = codeElement.textContent || '';
+        if (await this.hasClipboardPermission()) {
+            try {
+                await navigator.clipboard.writeText(code);
+                this.showFeedback(feedback, button);
+                return;
+            } catch {
+            }
+        }
+        
+        this.fallbackCopy(code, feedback, button);
+    }
+    
+    async hasClipboardPermission() {
+        if (!navigator.clipboard || !navigator.permissions) return false;
         
         try {
-            await navigator.clipboard.writeText(code);
+            const result = await navigator.permissions.query({ name: 'clipboard-write' });
+            return result.state === 'granted' || result.state === 'prompt';
+        } catch {
+            return true;
+        }
+    }
+    
+    fallbackCopy(text, feedback, button) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+        
+        document.body.appendChild(textarea);
+        
+        const range = document.createRange();
+        range.selectNodeContents(textarea);
+        
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        
+        textarea.setSelectionRange(0, text.length);
+        
+        let success = false;
+        try {
+            success = document.execCommand('copy');
+        } catch {
+            success = false;
+        }
+        
+        selection?.removeAllRanges();
+        document.body.removeChild(textarea);
+        
+        if (success) {
             this.showFeedback(feedback, button);
-        } catch (err) {
-            // Fallback for older browsers
-            const textarea = document.createElement('textarea');
-            textarea.value = code;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                document.execCommand('copy');
-                this.showFeedback(feedback, button);
-            } catch (e) {
-                console.error('Copy failed:', e);
-            }
-            
-            document.body.removeChild(textarea);
+        } else {
+            feedback.textContent = '复制失败';
+            feedback.classList.add('show');
+            setTimeout(() => {
+                feedback.classList.remove('show');
+                feedback.textContent = '已复制!';
+            }, 2000);
         }
     }
     showFeedback(feedback, button) {
