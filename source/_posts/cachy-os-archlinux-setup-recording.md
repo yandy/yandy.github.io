@@ -144,9 +144,13 @@ paru -S visual-studio-code-bin microsoft-edge-stable-bin
 **git**
 ```sh
 # 补充git相关工具
-sudo pacman -S git-lfs github-cli
-# github credential helper
-gh auth login
+sudo pacman -S git-lfs
+
+# git credential
+paru -S git-credential-manager-bin
+git-credential-manager configure
+git config --global credential.credentialStore secretservice
+
 # 基本配置
 git config --global user.name "Your Full Name"
 git config --global user.email "you@email.com"
