@@ -24,4 +24,13 @@ git clone https://github.com/yandy/opencode-config.git ~/.config/opencode
 
 # 安装 opencode-ai
 bun add -g opencode-ai
+
+# 用法
+cat ~/.config/opencode/README.md
+```
+
+#### 其他工具
+
+```sh
+bun install -g agent-browser playwright
 ```
