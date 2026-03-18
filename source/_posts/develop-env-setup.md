@@ -33,4 +33,5 @@ cat ~/.config/opencode/README.md
 
 ```sh
 bun install -g agent-browser playwright
+playwright install chromium firefox
 ```
