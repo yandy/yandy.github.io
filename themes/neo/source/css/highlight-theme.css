@@ -27,7 +27,7 @@ hue-6-2: #e6c07b
 */
 .hljs {
   color: #abb2bf;
-  background: #282c34
+  background: #1a1d23
 }
 .hljs-comment,
 .hljs-quote {
@@ -111,7 +111,7 @@ hue-6-2: #1f2328
 */
 html[data-theme="light"] .hljs {
   color: #24292f;
-  background: #ffffff
+  background: #f6f8fa
 }
 html[data-theme="light"] .hljs-comment,
 html[data-theme="light"] .hljs-quote {
