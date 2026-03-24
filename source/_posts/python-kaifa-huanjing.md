@@ -44,7 +44,7 @@ Add-Content -Path $PROFILE -Value @'
 uv python list
 
 # install a Python version
-uv python install 3.12 --default
+uv python install 3.12
 
 # set uv pip install mirror
 Add-Content -Path $env:APPDATA\uv\uv.toml -Value @'
