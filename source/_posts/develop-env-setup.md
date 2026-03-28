@@ -28,10 +28,3 @@ bun add -g opencode-ai
 # 用法
 cat ~/.config/opencode/README.md
 ```
-
-#### 其他工具
-
-```sh
-bun install -g agent-browser playwright
-playwright install chromium firefox
-```
