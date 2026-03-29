@@ -163,6 +163,7 @@ vim ~/.config/gitignore
 **docker**
 ```sh
 sudo pacman -S docker docker-buildx docker-compose nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl enable --now docker
 ```
 
