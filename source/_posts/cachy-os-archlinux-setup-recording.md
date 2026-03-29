@@ -155,6 +155,9 @@ git config --global credential.credentialStore secretservice
 git config --global user.name "Your Full Name"
 git config --global user.email "you@email.com"
 git config --global core.editor "vim"
+git config --global core.excludesfile ~/.config/gitignore
+# 配置 gitignore 文件
+vim ~/.config/gitignore
 ```
 
 **docker**
