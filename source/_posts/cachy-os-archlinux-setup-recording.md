@@ -162,7 +162,7 @@ vim ~/.config/gitignore
 
 **docker**
 ```sh
-sudo pacman -S docker docker-buildx docker-compose
+sudo pacman -S docker docker-buildx docker-compose nvidia-container-toolkit
 sudo systemctl enable --now docker
 ```
 
