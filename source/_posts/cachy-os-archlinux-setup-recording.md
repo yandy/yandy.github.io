@@ -162,9 +162,14 @@ vim ~/.config/gitignore
 
 **docker**
 ```sh
+# 安装 docker 相关工具
 sudo pacman -S docker docker-buildx docker-compose nvidia-container-toolkit
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl enable --now docker
+
+# 配置无需 sudo 运行docker
+sudo usermod -aG docker $USER
+newgrp docker
 ```
 
 **alacritty**
@@ -173,15 +178,15 @@ sudo systemctl enable --now docker
 git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
 ```
 
-**vim**
+**neovim**
 ```sh
-# 安装 vim 配置
-git clone https://github.com/yandy/vim-config.git ~/.config/vim
+git clone https://github.com/yandy/neovim-config.git ~/.config/nvim
+sudo pacman -S neovim wl-clipboard luarocks
 ```
 
-**小工具**
+**other tools**
 ```sh
-sudo pacman -S wl-clipboard net-tools
+sudo pacman -S tmux net-tools
 ```
 
 ## 6. 美化
