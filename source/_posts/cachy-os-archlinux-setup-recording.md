@@ -136,12 +136,12 @@ paru -S clash-verge-rev-bin
 
 ## 5. 常用工具
 
-**visual studio code 和 microsoft edge**
+### 5.1. visual studio code 和 microsoft edge
 ```sh
 paru -S visual-studio-code-bin microsoft-edge-stable-bin
 ```
 
-**git**
+### 5.2. git
 ```sh
 # 补充git相关工具
 sudo pacman -S git-lfs
@@ -160,7 +160,7 @@ git config --global core.excludesfile ~/.config/gitignore
 vim ~/.config/gitignore
 ```
 
-**docker**
+### 5.3. docker
 ```sh
 # 安装 docker 相关工具
 sudo pacman -S docker docker-buildx docker-compose nvidia-container-toolkit
@@ -172,19 +172,19 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-**alacritty**
+### 5.4. alacritty
 ```sh
 # 安装 alacritty 配置，如果配置目录已经存在，需要先删除/移动到其他地方
 git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
 ```
 
-**neovim**
+### 5.5. neovim
 ```sh
 git clone https://github.com/yandy/neovim-config.git ~/.config/nvim
-sudo pacman -S neovim wl-clipboard luarocks
+sudo pacman -S neovim-git wl-clipboard luarocks
 ```
 
-**other tools**
+### 5.6. 其他工具
 ```sh
 sudo pacman -S tmux net-tools
 ```
