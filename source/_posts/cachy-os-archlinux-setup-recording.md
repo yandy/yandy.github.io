@@ -172,16 +172,24 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-### 5.4. alacritty
+### 5.4. ghostty
 ```sh
-# 安装 alacritty 配置，如果配置目录已经存在，需要先删除/移动到其他地方
-git clone https://github.com/yandy/alacritty-config.git ~/.config/alacritty
+git clone https://github.com/yandy/term-config.git ~/.config/ghostty
+sudo pacman -S ghostty
 ```
 
 ### 5.5. neovim
 ```sh
 git clone https://github.com/yandy/neovim-config.git ~/.config/nvim
-sudo pacman -S neovim-git wl-clipboard luarocks
+
+# install neccessary tools/packages
+
+bun add -g typescript-language-server typescript @tailwindcss/language-server
+uv tool install basedpyright debugpy
+sudo pacman -S neovim lazygit wl-clipboard luarocks tree-sitter-grammars lua-language-server lldb
+
+# invoke nvim and wait for install completion
+nvim
 ```
 
 ### 5.6. 其他工具
