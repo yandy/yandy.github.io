@@ -44,8 +44,10 @@ paru -S wps-office-cn wps-office-mime-cn wps-office-mui-zh-cn ttf-wps-fonts
 **飞书**
 ```sh
 paru -S feishu-bin
-echo '--ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3' > ~/.config/feishu-flags.conf
 ```
+> 应用程序起动器 -> 右键“飞书”-> 编辑应用程序-> 命令行参数:
+> `--ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3 %u`
+
 
 **钉钉**
 ```sh
@@ -60,7 +62,7 @@ paru -S dingtalk-bin
 paru -S wemeet-bin
 ```
 > 应用程序起动器 -> 右键“腾讯会议”-> 编辑应用程序-> 环境变量:
-> `QT_IM_MODULE=fcitx`
+> `QT_IM_MODULE=fcitx __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json`
 
 
 ## 4. 使用 wine 安装 windows 软件
@@ -72,39 +74,4 @@ sudo pacman -S wine-mono wine-gecko
 
 # 使用
 ## 打开 Winetricks，选择/创建容器(wineprefix)，执行相关操作：运行程序，卸载程序，安装dll/字体，运行wine配置程序等等
-```
-
-
-## 5. 使用 wayland 安装 android 软件
-
-```sh
-# 安装
-sudo pacman -S waydroid waydroid-image
-sudo waydroid init
-
-# 使用
-## 启动服务
-sudo systemctl start waydroid-container
-## 启动session
-waydroid session start
-
-## 安装apk
-waydroid app install /path/to/your/app.apk
-
-## 启动 app： 先查包名再启动
-waydroid app list #列出已安装应用及包名
-waydroid app launch 包名
-
-## 卸载 app
-waydroid app remove 包名
-
-# 文件传输
-## 挂载 Downloads 目录（安卓显示为 Download）
-sudo mount --bind ~/Downloads ~/.local/share/waydroid/data/media/0/Download
-
-## 挂载其他常用目录（按需执行）
-sudo mount --bind ~/Documents ~/.local/share/waydroid/data/media/0/Documents
-sudo mount --bind ~/Pictures ~/.local/share/waydroid/data/media/0/Pictures
-sudo mount --bind ~/Videos ~/.local/share/waydroid/data/media/0/Movies
-sudo mount --bind ~/Music ~/.local/share/waydroid/data/media/0/Music
 ```
