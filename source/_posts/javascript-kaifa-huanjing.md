@@ -65,7 +65,7 @@ $env:BUN_CONFIG_REGISTRY = "https://registry.npmmirror.com"
 ### 3.1. fnm
 
 #### 安装
-```bash
+```sh
 curl -fsSL https://fnm.vercel.app/install | bash
 ```
 

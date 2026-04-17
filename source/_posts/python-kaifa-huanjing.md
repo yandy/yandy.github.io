@@ -71,10 +71,14 @@ uv self update
 
 ### 3.2. python
 
-```bash
-# use  **bash** !!
+**set uv pip install mirror**
 
-# set uv pip install mirror
+```sh
+# if you're not in bash, switch to bash first
+bash
+```
+
+```bash
 cat > ~/.config/uv/uv.toml <<- 'EOM'
 [[index]]
 url = "https://mirrors.aliyun.com/pypi/simple"
@@ -82,6 +86,7 @@ default = true
 EOM
 ```
 
+**usage**
 ```sh
 # list all available Python versions
 uv python list
