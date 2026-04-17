@@ -1,13 +1,12 @@
 ---
 title: Cachy OS下的雷神手柄连接问题
 toc: false
-date: 2026-03-30 16:28:39jjj
+date: 2026-03-30 16:28:39
 categories:
   - 刨根问底
 tags:
   - game
   - linux
-  - xops
 ---
 
 记录一个在 Cachy OS 下连接雷神手柄时遇到的问题，以及解决方法
