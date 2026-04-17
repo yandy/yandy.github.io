@@ -46,7 +46,7 @@ paru -S wps-office-cn wps-office-mime-cn wps-office-mui-zh-cn ttf-wps-fonts
 paru -S feishu-bin
 ```
 > 应用程序起动器 -> 右键“飞书”-> 编辑应用程序-> 命令行参数:
-> `--ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3 %u`
+> `--ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=3 %U`
 
 
 **钉钉**
