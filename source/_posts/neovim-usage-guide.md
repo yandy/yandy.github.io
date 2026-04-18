@@ -265,8 +265,9 @@ nvim
 | `<leader>oa` | 打开询问窗口（引用当前 buffer：`@buffer`） |
 | `{Visual}<leader>oa` | 打开询问窗口（引用选中的文本：`@this`） |
 | `{Visual}<leader>ox` | 执行 Opencode 动作 |
-| `<A-C-f>`（终端内） | 向下滚动页面 |
-| `<A-C-b>`（终端内） | 向上滚动页面 |
+| `[{Terminal}]<A-C-c>` | 清空提示词(prompt) |
+| `[{Terminal}]<A-C-f>` | 向下滚动页面 |
+| `[{Terminal}]<A-C-b>` | 向上滚动页面 |
 
 ### 8. 调试（DAP）
 
