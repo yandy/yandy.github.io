@@ -17,14 +17,4 @@ tags:
 
 ## 2. 开发工具
 
-#### opencode
-```sh
-# 配置 opencode-ai
-git clone https://github.com/yandy/opencode-config.git ~/.config/opencode
-
-# 安装 opencode-ai
-bun add -g opencode-ai
-
-# 用法
-cat ~/.config/opencode/README.md
-```
+- {% post_link opencode 'OpenCode' %}
