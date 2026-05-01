@@ -16,7 +16,7 @@ tags:
 否则可以手动安装
 
 ```bash
-uv tool install graphifyy[mcp] && graphify install --platform opencode
+uv tool install graphifyy && graphify install --platform opencode
 ```
 
 <!-- more -->
