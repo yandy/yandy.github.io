@@ -28,7 +28,6 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: true
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
@@ -46,6 +45,7 @@ index_generator:
   path: ''
   per_page: 10
   order_by: '-date'
+post_asset_folder: false
 marked:
   prependRoot: true
   postAsset: true

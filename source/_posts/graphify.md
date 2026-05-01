@@ -2,7 +2,7 @@
 title: graphify
 toc: true
 date: 2026-04-30 12:44:29
-categories: ['最佳实践']
+categories: ['按图索骥']
 tags:
   - xops
 ---
