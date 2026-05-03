@@ -58,6 +58,7 @@ ghostty +list-keybinds
 | `Ctrl + Shift + W` | 关闭当前标签页 |
 | `Ctrl + Shift + O` | 向右分屏 |
 | `Ctrl + Shift + E` | 向下分屏 |
+| `ctrl + shift + Enter` | toggle_split_zoom |
 | `Ctrl + Alt + ↓` | 切换到下方分屏 |
 | `Ctrl + Alt + ←` | 切换到左方分屏 |
 | `Ctrl + Alt + →` | 切换到右方分屏 |
