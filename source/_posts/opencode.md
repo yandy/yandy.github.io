@@ -28,49 +28,9 @@ git fetch -p origin
 git reset --hard origin/main
 ```
 
-<!-- more -->
+## 2. [superpowers](https://github.com/obra/superpowers)
 
-## 2. Skills Management
-
-### 2.1 Add skill
-
-```
-bunx skills add <package> --skill <skills> -a opencode -y
-# eg.
-bunx skills add anthropics/skills --skill pdf docx -a opencode -y
-```
-
-### 2.2 Update skills
-
-```
-bunx skills update
-```
-
-### 2.3 Current skills
-
-- `anthropics/skills --skill pdf docx xlsx pptx`
-- `nextlevelbuilder/ui-ux-pro-max-skill --skill ui-ux-pro-max`
-- `vercel-labs/agent-skills --skill vercel-react-best-practices`
-
-## 3. [OMO(Oh My Openagent)](https://github.com/code-yeongyu/oh-my-openagent)
-
-### 3.1 为单个项目开启 OMO
-```bash
-# Enable OMO, 在项目根目录下运行
-mkdir -p .opencode
-cat > .opencode/opencode.json <<- 'EOM'
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-    "oh-my-openagent@latest"
-  ]
-}
-EOM
-```
-
-## 4. [superpowers](https://github.com/obra/superpowers)
-
-### 4.1 为单个项目开启 superpowers
+### 2.1 为单个项目开启 superpowers
 ```bash
 # Enable superpowers, 在项目根目录下运行
 mkdir -p .opencode
@@ -78,16 +38,67 @@ cat > .opencode/opencode.json <<- 'EOM'
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "superpowers@git+https://github.com/obra/superpowers.git"
+    "superpowers@git+https://github.com/yandy/superpowers.git"
   ]
 }
 EOM
 ```
 
-## 5. Common Tools
+## 3. Skills Management
+
+### 3.1 Add skill
+
+```
+bunx skills add <package> --skill <skills> -a opencode -y
+# eg.
+bunx skills add anthropics/skills --skill pdf docx -a opencode -y
+```
+
+### 3.2 Update skills
+
+```
+bunx skills update
+```
+
+### 3.3 Current skills
+
+- office
 
 ```sh
-bun add -g agent-browser playwright
-playwright install chromium firefox
+# bunx skills add anthropics/skills --skill pdf docx xlsx pptx -a opencode -y
+```
+
+- ui/ux
+
+```sh
+# bunx skills add nextlevelbuilder/ui-ux-pro-max-skill --skill ui-ux-pro-max -a opencode -y
+# bunx skills add alchaincyf/huashu-design --skill huashu-design -a opencode -y
+```
+
+- graphify
+
+```sh
 uv tool install graphifyy
+# graphify install --platform opencode
+```
+
+- browser automation
+
+```sh
+bun add -g playwright @playwright/cli
+playwright install chromium firefox
+# bunx skills add microsoft/playwright-cli --skill playwright-cli -a opencode -y
+```
+
+- ast-grep
+
+```sh
+cargo install ast-grep --locked
+# bunx skills add ast-grep/agent-skill --skill ast-grep -a opencode -y
+```
+
+- frontend dev
+
+```sh
+# bunx skills add vercel-labs/agent-skills --skill vercel-react-best-practices -a opencode -y
 ```
