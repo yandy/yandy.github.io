@@ -11,4 +11,6 @@ _multiconfig.yml
 .marscode/
 .sisyphus/
 test-results/
-playwright-report
+playwright-report/
+.playwright-cli/
+.playwright/
