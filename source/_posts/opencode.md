@@ -7,7 +7,7 @@ tags:
   - xops
 ---
 
-[OpenCode](https://opencode.ai/)
+[OpenCode](https://opencode.ai/) 是一个 AI 驱动的命令行编码助手，能够在终端中直接理解上下文、执行命令、编辑代码和管理 Git 操作，帮助开发者更高效地完成日常开发任务。
 
 ## 1. Setup
 
