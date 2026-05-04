@@ -38,7 +38,7 @@ cat > .opencode/opencode.json <<- 'EOM'
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "superpowers@git+https://github.com/yandy/superpowers.git"
+    "superpowers@git+https://github.com/obra/superpowers.git"
   ]
 }
 EOM
@@ -88,13 +88,6 @@ uv tool install graphifyy
 bun add -g playwright @playwright/cli
 playwright install chromium firefox
 # bunx skills add microsoft/playwright-cli --skill playwright-cli -a opencode -y
-```
-
-- ast-grep
-
-```sh
-cargo install ast-grep --locked
-# bunx skills add ast-grep/agent-skill --skill ast-grep -a opencode -y
 ```
 
 - frontend dev
