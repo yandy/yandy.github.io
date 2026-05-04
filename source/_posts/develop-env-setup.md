@@ -9,12 +9,12 @@ tags:
 
 ## 1. 各语言开发环境配置
 
-- {% post_link cpp-kaifa-huanjing 'C++' %}
-- {% post_link rust-kaifa-huanjing 'Rust' %}
-- {% post_link javascript-kaifa-huanjing 'Javascript' %}
-- {% post_link python-kaifa-huanjing 'Python' %}
+- [C++](./cpp-kaifa-huanjing.md)
+- [Rust](./rust-kaifa-huanjing.md)
+- [Javascript](./javascript-kaifa-huanjing.md)
+- [Python](./python-kaifa-huanjing.md)
 
 
 ## 2. 开发工具
 
-- {% post_link opencode 'OpenCode' %}
+- [OpenCode](./opencode.md)

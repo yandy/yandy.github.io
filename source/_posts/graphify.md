@@ -11,7 +11,7 @@ tags:
 
 ## 安装
 
-如果遵循 {% post_link opencode 'OpenCode' %} 的说明，已经包含了 `graphify` 的安装
+如果遵循 [OpenCode](./opencode.md) 的说明，已经包含了 `graphify` 的安装
 
 否则可以手动安装
 

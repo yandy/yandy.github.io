@@ -40,11 +40,11 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ### 1.4. WSL(Windows Subsystem for Linux)
 
-{% post_link wsl-kaifa-huanjing '安装 WSL' %}
+[安装 WSL](./wsl-kaifa-huanjing.md)
 
 ### 1.5. Windows Terminal
 
-Windows Terminal的{% post_link windows-terminal-meihua '美化' %}
+Windows Terminal的[美化](./windows-terminal-meihua.md)
 
 
 ### 1.6. Docker Desktop
@@ -100,7 +100,7 @@ $env:PATH = "$HOME\AppData\Local\CmdTools;$env:PATH"
 
 ## 2. Language
 
-- {% post_link cpp-kaifa-huanjing 'C++' %}
-- {% post_link rust-kaifa-huanjing 'Rust' %}
-- {% post_link javascript-kaifa-huanjing 'Javascript' %}
-- {% post_link python-kaifa-huanjing 'Python' %}
+- [C++](./cpp-kaifa-huanjing.md)
+- [Rust](./rust-kaifa-huanjing.md)
+- [Javascript](./javascript-kaifa-huanjing.md)
+- [Python](./python-kaifa-huanjing.md)

@@ -62,7 +62,7 @@ wsl --manage Ubuntu-24.04 --move D:\wsl\packages\Ubuntu-24.04\
 
 ## 3. Language
 
-- {% post_link cpp-kaifa-huanjing 'C++' %}
-- {% post_link python-kaifa-huanjing 'Python' %}
-- {% post_link javascript-kaifa-huanjing 'Javascript' %}
-- {% post_link rust-kaifa-huanjing 'Rust' %}
+- [C++](./cpp-kaifa-huanjing.md)
+- [Python](./python-kaifa-huanjing.md)
+- [Javascript](./javascript-kaifa-huanjing.md)
+- [Rust](./rust-kaifa-huanjing.md)

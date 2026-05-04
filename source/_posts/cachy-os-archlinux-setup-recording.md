@@ -222,6 +222,6 @@ echo "oh-my-posh init fish --config 'jandedobbeleer' | source" >> ~/.config/fish
 exec fish
 ```
 
-## 7. {% post_link develop-env-setup '开发环境配置(合集)' %}
+## 7. [开发环境配置(合集)](./develop-env-setup.md)
 
-## 8. {% post_link cachy-os-changyong-ruanjian '常用桌面软件安装与配置' %}
+## 8. [常用桌面软件安装与配置](./cachy-os-changyong-ruanjian.md)
