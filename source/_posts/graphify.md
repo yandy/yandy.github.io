@@ -42,9 +42,8 @@ graphify-out/cache/
 graphify-out/manifest.json
 # local token tracking, not useful to share
 graphify-out/cost.json
-# local graphify cmd
-graphify-out/.graphify_python
-graphify-out/.graphify_root
+# local graphify dotfiles
+graphify-out/.graphify_*
 ```
 
 - 创建 `.graphifyignore` 文件，增加不需要 graphify 分析的内容，例如  `node_modules/`, `.venv` 等
@@ -68,5 +67,4 @@ build/
 
 1. 一人运行 `/graphify .` 构建初始图谱，并将 `graphify-out/` 提交至版本管理
 2. 其他人拉取后，其 AI 助手即可直接读取 `GRAPH_REPORT.md`，无需额外步骤
-3. 安装 post-commit hook（`graphify hook install`），代码变更后图谱自动重建——纯代码更新无需 LLM 调用
-4. 文档/论文变更时，编辑者运行 `graphify --update` 刷新语义节点
+3. 代码/文档/论文变更时，编辑者运行 `/graphify . --update` 刷新语义节点
