@@ -44,6 +44,7 @@ graphify-out/manifest.json
 graphify-out/cost.json
 # local graphify cmd
 graphify-out/.graphify_python
+graphify-out/.graphify_root
 ```
 
 - 创建 `.graphifyignore` 文件，增加不需要 graphify 分析的内容，例如  `node_modules/`, `.venv` 等
