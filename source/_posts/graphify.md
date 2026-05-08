@@ -65,6 +65,6 @@ build/
 
 ## 工作流程
 
-1. 一人运行 `/graphify .` 构建初始图谱，并将 `graphify-out/` 提交至版本管理
+1. 一人运行 `/graphify . --mode deep` 构建初始图谱，并将 `graphify-out/` 提交至版本管理
 2. 其他人拉取后，其 AI 助手即可直接读取 `GRAPH_REPORT.md`，无需额外步骤
-3. 代码/文档/论文变更时，编辑者运行 `/graphify . --update` 刷新语义节点
+3. 代码/文档/论文变更时，编辑者运行 `/graphify . --mode deep --update` 刷新语义节点
