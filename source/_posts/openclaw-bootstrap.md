@@ -1,5 +1,5 @@
 ---
-title: openclaw bootstrap
+title: OpenClaw 零障碍安装：国内网络完全指南
 toc: true
 date: 2026-05-19 10:34:03
 categories: ['最佳实践']
@@ -64,11 +64,25 @@ EOM
 # 新开 shell 或 source ~/.bashrc 后再执行以下命令
 fnm use --install-if-missing 24
 npm config set registry https://registry.npmmirror.com
+
+cat >> ~/.bashrc <<- 'EOM'
+
+# corepack
 export COREPACK_NPM_REGISTRY=$(npm config get registry)
+EOM
+
+# 新开 shell 或 source ~/.bashrc
 corepack enable pnpm
 pnpm setup
-# 新开 shell 或 source ~/.bashrc
-pnpm add -g bun
+npm install -g bun
+
+cat >> ~/.bashrc <<- 'EOM'
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export BUN_CONFIG_REGISTRY="https://registry.npmmirror.com"
+EOM
 ```
 
 ## 4. uv (Python 包管理)
