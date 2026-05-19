@@ -78,6 +78,7 @@ curl -fsSL https://fnm.vercel.app/install | bash
 ```bash
 export FNM_NODE_DIST_MIRROR="https://mirrors.aliyun.com/nodejs-release/"
 export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
+export COREPACK_NPM_REGISTRY="https://registry.npmmirror.com"
 ```
 
 **for fish**
@@ -87,16 +88,21 @@ export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
 ```sh
 set -x FNM_NODE_DIST_MIRROR "https://mirrors.aliyun.com/nodejs-release/"
 set -x ELECTRON_MIRROR "https://npmmirror.com/mirrors/electron/"
+set -x COREPACK_NPM_REGISTRY "https://registry.npmmirror.com"
 ```
 
 **打开新终端**
 
 ```sh
 # 安装 node (open in a new terminal tab)
-fnm use --install-if-missing 22
+fnm use --install-if-missing 24
 
 # 设置 npm 源
 npm config set registry https://registry.npmmirror.com
+
+# enable pnpm
+corepack enable pnpm
+pnpm setup
 ```
 
 ### 3.2. bun
