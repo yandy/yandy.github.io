@@ -22,7 +22,8 @@ tags:
 
 ```pwsh
 # Install uv
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+$env:UV_DOWNLOAD_URL = "https://mirrors.ustc.edu.cn/github-release/astral-sh/uv/LatestRelease/"
+powershell -ExecutionPolicy ByPass -c "irm https://mirrors.ustc.edu.cn/github-release/astral-sh/uv/LatestRelease/uv-installer.ps1 | iex"
 
 # Upgrading uv
 uv self update
@@ -31,6 +32,8 @@ uv self update
 Add-Content -Path $PROFILE -Value @'
 # uv
 (& uv generate-shell-completion powershell) | Out-String | Invoke-Expression
+$env:UV_PYTHON_INSTALL_MIRROR = "https://mirrors.ustc.edu.cn/github-release/astral-sh/python-build-standalone/"
+$env:UV_DOWNLOAD_URL = "https://mirrors.ustc.edu.cn/github-release/astral-sh/uv/LatestRelease/"
 
 '@
 ```
@@ -61,9 +64,42 @@ default = true
 
 ### 3.1. uv
 
+#### 设置 uv 国内源
+
 ```bash
+cat > ~/.config/uv/uv.toml <<- 'EOM'
+[[index]]
+url = "https://mirrors.ustc.edu.cn/pypi/simple"
+default = true
+EOM
+```
+
+#### 安装相关环境变量
+
+**bash**
+
+```bash
+cat >> ~/.bashrc <<- 'EOM'
+# uv
+export UV_PYTHON_INSTALL_MIRROR=https://mirrors.ustc.edu.cn/github-release/astral-sh/python-build-standalone/
+export UV_DOWNLOAD_URL=https://mirrors.ustc.edu.cn/github-release/astral-sh/uv/LatestRelease/
+EOM
+```
+**fish**
+
+`$HOME/.config/fish/conf.d/uv.fish`
+
+```fish
+set -x UV_PYTHON_INSTALL_MIRROR "https://mirrors.ustc.edu.cn/github-release/astral-sh/python-build-standalone/"
+set -x UV_DOWNLOAD_URL "https://mirrors.ustc.edu.cn/github-release/astral-sh/uv/LatestRelease/"
+```
+
+#### 安装
+
+```bash
+# in new shell
 # Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -sL https://mirrors.ustc.edu.cn/github-release/astral-sh/uv/LatestRelease/uv-installer.sh | sh
 
 # Upgrading uv
 uv self update
@@ -71,22 +107,7 @@ uv self update
 
 ### 3.2. python
 
-**set uv pip install mirror**
-
-```sh
-# if you're not in bash, switch to bash first
-bash
-```
-
-```bash
-cat > ~/.config/uv/uv.toml <<- 'EOM'
-[[index]]
-url = "https://mirrors.aliyun.com/pypi/simple"
-default = true
-EOM
-```
-
-**usage**
+#### usage
 ```sh
 # list all available Python versions
 uv python list

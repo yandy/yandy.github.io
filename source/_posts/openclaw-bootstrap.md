@@ -97,6 +97,13 @@ cat > ~/.config/uv/uv.toml <<- 'EOM'
 url = "https://mirrors.aliyun.com/pypi/simple"
 default = true
 EOM
+
+cat >> ~/.bashrc <<- 'EOM'
+
+# uv
+export UV_PYTHON_INSTALL_MIRROR=https://mirrors.ustc.edu.cn/github-release/astral-sh/python-build-standalone/
+export PATH="$PATH:$HOME/.local/bin"
+EOM
 ```
 
 ## 5. OpenClaw
