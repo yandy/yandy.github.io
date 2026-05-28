@@ -203,7 +203,7 @@ sudo pacman -S tmux net-tools
 
 [oh-my-posh](https://ohmyposh.dev/) 提供 Git 状态颜色编码和提示的完全自定义命令提示符体验提供主题功能。
 
-![ohmyposh](/assets/2026-05-01-23-13-49.png)
+![ohmyposh](assets/2026-05-01-23-13-49.png)
 
 ```sh
 # 安装 oh-my-posh
