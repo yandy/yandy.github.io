@@ -61,25 +61,16 @@ sudo pacman -S qemu-full virt-manager swtpm
 
 ### 2.1. 防火墙后端配置
 
-CachyOS（以及现代的 Arch Linux）默认使用 **nftables** 作为防火墙子系统。libvirt 从 9.x 版本开始原生支持 `nftables` 后端，通常能自动检测并正常运作，**不需要手动干预**。
+CachyOS（以及现代的 Arch Linux）默认使用 **nftables** 作为防火墙子系统。libvirt 从 9.x 版本开始原生支持 `nftables` 后端，但如果你开启了 **ufw** 且默认策略为 `deny (incoming)`，nftables 后端的规则与 ufw 规则会分属不同的 nft 表，UFW 的 DROP 策略可能先于 libvirt 的 ACCEPT 命中，导致虚拟机 DHCP 请求被拦截。
 
-如果你遇到虚拟机无法上网的问题，可以检查防火墙后端状态：
-
-```bash
-# 查看当前 libvirt 防火墙后端
-cat /etc/libvirt/network.conf | grep firewall_backend
-```
-
-如果该行被注释或不存在，libvirt 会自动选择可用的后端（优先 `nftables`）。需要显式指定时才取消注释：
+**推荐显式指定为 iptables 后端**，让 libvirt 将规则直接写入 iptables filter 表，自动排在 ufw 策略之前：
 
 ```bash
-# /etc/libvirt/network.conf
-# 二选一：
-# firewall_backend = "nftables"   # 原生 nftables（推荐，现代 CachyOS 默认走这个）
-# firewall_backend = "iptables"   # 通过 iptables-nft 兼容层（旧方案）
+# 指定 libvirt 使用 iptables 后端
+echo 'firewall_backend = "iptables"' | sudo tee -a /etc/libvirt/network.conf
 ```
 
-> **`iptables-nft` 兼容层**：CachyOS 虽然底层是 nftables，但 `iptables` 命令仍然可用——它由 `iptables-nft` 包提供，会将 iptables 指令翻译为 nftables 规则。所以即使设置为 `"iptables"` 后端也能工作，但这不是必要的。
+> **原理**：切换为 iptables 后端后，libvirt 将虚拟网络的 ACCEPT/DNAT 规则直接插入 `filter` 表和 `nat` 表的 INPUT / FORWARD / POSTROUTING 链顶部，在 ufw 的 DROP 之前命中。而原生 nftables 后端在独立的 `libvirt_network` 表中管理规则，与 ufw 的 `filter` 表存在优先级竞争。
 
 ### 2.2. 将当前用户加入 libvirt 组
 
@@ -94,7 +85,6 @@ sudo usermod -aG libvirt $USER
 ```bash
 # 启动并启用 libvirt 守护进程
 systemctl enable --now libvirtd.service
-systemctl enable --now libvirtd.socket
 
 # 设置默认网络自动启动
 sudo virsh net-autostart default
@@ -102,10 +92,16 @@ sudo virsh net-autostart default
 
 ### 2.4. 防火墙配置
 
-如果不放行虚拟网络流量，虚拟机可能无法正常上网：
+```bash
+# 放行 NAT 转发（VM 通过宿主机上网）
+sudo ufw route allow from 192.168.122.0/24
+```
+
+如果你在 2.1 中已将 libvirt 切换为 iptables 后端，则**无需下述操作**。
 
 ```bash
-sudo ufw route allow from 192.168.122.0/24
+# 放行 virbr0 入站流量（VM 获取 IP，DHCP/DNS）
+sudo ufw allow in on virbr0
 ```
 
 > 如果你使用 `firewalld`，libvirt 会自动添加相关规则，一般无需手动配置。
@@ -288,7 +284,14 @@ sudo virsh net-list --all
 sudo virsh net-start default
 ```
 
-另外检查防火墙是否放行了 192.168.122.0/24 网段。
+如果网络已启动但仍不通，最常见的原因是 **ufw + nftables 后端冲突**：libvirt 的 nftables 规则与 ufw 的 filter 表不在同一个表内，ufw 的 DROP 策略可能先于 libvirt 的 ACCEPT 命中，导致 DHCP 请求被拦截。
+
+**解决方案**：在 `/etc/libvirt/network.conf` 中设置 `firewall_backend = "iptables"`（详见 [2.1 防火墙后端配置](#21-防火墙后端配置)），重启 libvirtd 即可。
+
+```bash
+sudo systemctl restart libvirtd
+sudo virsh net-destroy default && sudo virsh net-start default
+```
 
 ### Q: 虚拟机性能差，感觉卡顿？
 
