@@ -5,7 +5,6 @@ date: 2024-11-10 23:37:49
 categories: ['按图索骥']
 tags:
   - git
-  - xops
   - pwsh
 ---
 

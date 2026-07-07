@@ -6,7 +6,7 @@ categories: ['最佳实践']
 tags:
   - linux
   - windows
-  - cachyos
+  - virtualization
 ---
 
 虽然 Linux 下很多场景可以通过 Wine 来运行 Windows 软件，但总有一些特殊场景 Wine 无法完美覆盖——比如某些专业的 Windows-only 办公软件、网银 U 盾驱动、或是依赖特定 Windows API 的行业工具。

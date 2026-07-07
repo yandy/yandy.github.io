@@ -6,8 +6,6 @@ categories: ['刨根问底']
 tags:
   - linux
   - virtualization
-  - kvm
-  - qemu
 ---
 
 在 Linux 上搞虚拟化，你会频繁遇到几个名字：KVM、QEMU、libvirt、virt-manager、VirtIO、SPICE、VNC、RDP……它们分别是什么？之间什么关系？本文用最直白的方式讲清楚。

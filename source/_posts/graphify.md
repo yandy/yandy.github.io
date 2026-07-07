@@ -4,7 +4,7 @@ toc: true
 date: 2026-04-30 12:44:29
 categories: ['按图索骥']
 tags:
-  - xops
+  - ai
 ---
 
 [graphify](https://github.com/safishamsi/graphify) 是一个 AI 技能，能将任意文件夹转换为可查询的知识图谱，支持代码、文档、论文、图片等多种格式。

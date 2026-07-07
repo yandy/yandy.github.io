@@ -5,7 +5,6 @@ categories: [ 刨根问底 ]
 tags:
   - docker
   - git
-  - xops
 ---
 
 [.dockerignore](https://docs.docker.com/reference/dockerfile/#dockerignore-file) 和 [.gitignore](https://git-scm.com/docs/gitignore) 语法相似，但是有两个主要区别

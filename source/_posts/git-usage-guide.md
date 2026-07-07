@@ -5,7 +5,6 @@ date: 2025-03-09 22:33:57
 categories: ['按图索骥']
 tags:
   - git
-  - xops
 ---
 
 ## 1. 安装配置

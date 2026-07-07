@@ -7,6 +7,7 @@ categories:
 tags:
   - game
   - linux
+  - cachyos
 ---
 
 记录一个在 Cachy OS 下连接雷神手柄时遇到的问题，以及解决方法

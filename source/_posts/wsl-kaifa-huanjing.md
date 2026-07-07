@@ -6,7 +6,6 @@ categories: ['最佳实践']
 tags:
   - linux
   - windows
-  - xops
 ---
 
 ## 1. 安装和配置 WSL

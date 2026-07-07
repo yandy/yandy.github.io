@@ -5,9 +5,7 @@ date: 2026-07-06 21:00:00
 categories: ['刨根问底']
 tags:
   - linux
-  - asr
   - 语音输入
-  - 概念
 ---
 
 想给 Linux 搞语音输入，你会频繁遇到几个名词：ASR、VAD、FunASR、sherpa-onnx、Paraformer、Whisper、SenseVoice、SLM……它们分别是什么？之间什么关系？本文用最直白的方式讲清楚。

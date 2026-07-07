@@ -4,7 +4,7 @@ toc: true
 date: 2026-04-30 10:07:50
 categories: ['最佳实践']
 tags:
-  - xops
+  - ai
 ---
 
 [OpenCode](https://opencode.ai/) 是一个 AI 驱动的命令行编码助手，能够在终端中直接理解上下文、执行命令、编辑代码和管理 Git 操作，帮助开发者更高效地完成日常开发任务。

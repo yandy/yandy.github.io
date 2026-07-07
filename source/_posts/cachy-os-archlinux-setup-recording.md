@@ -5,7 +5,7 @@ date: 2026-03-10 19:55:11
 categories: ['最佳实践']
 tags:
   - linux
-  - xops
+  - cachyos
 ---
 
 最近决定把自己的桌面操作系统换成 Linux，做个入坑记录。我之前有十几年Linux server和几年Mac OS的使用经验，所以这次入坑也算有些基础。

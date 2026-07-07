@@ -5,7 +5,7 @@ date: 2026-03-12 11:17:56
 categories: ['最佳实践']
 tags:
   - linux
-  - xops
+  - cachyos
 ---
 
 ## 1. 游戏相关程序和优化项

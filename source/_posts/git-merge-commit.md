@@ -4,7 +4,6 @@ date: 2025-02-06 23:57:53
 categories: [ 按图索骥 ]
 tags:
   - git
-  - xops
 ---
 
 有时候为了使 git log 看起来更简洁，需要合并多个commit为一个(例如：在一个分支做开发时，创建了很多commit，提交Pull Request，需要作为一个commit 提交)
