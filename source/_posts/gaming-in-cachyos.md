@@ -7,7 +7,7 @@ categories:
 tags:
   - game
   - linux
-  - xops
+  - cachyos
 ---
 
 Cachy OS 是一个基于 Arch Linux 的为性能专门优化的发行版，尤其是针对游戏性能的优化。它通过优化游戏性能和提供游戏专用的硬件加速，为玩家提供更流畅的游戏体验。

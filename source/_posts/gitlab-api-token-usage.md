@@ -4,7 +4,6 @@ date: 2024-11-07 13:14:41
 categories: ['按图索骥']
 tags:
   - git
-  - xops
 ---
 
 基于http协议进行git同步(例如 `git clone`, `git push`等)，有时候需要进行http认证。

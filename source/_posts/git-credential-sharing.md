@@ -5,7 +5,6 @@ toc: true
 categories: [ 按图索骥 ]
 tags:
   - git
-  - xops
 ---
 
 在Windows下，使用 [VSCode](https://code.visualstudio.com/) 做Linux应用开发，可以使用 [VSCode Remote Devlopment](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) 实现。

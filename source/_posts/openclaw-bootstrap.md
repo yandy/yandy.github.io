@@ -5,7 +5,6 @@ date: 2026-05-19 10:34:03
 categories: ['最佳实践']
 tags:
   - linux
-  - xops
 ---
 
 [OpenClaw](https://github.com/nicedoc/openclaw) 是一个 AI 编码助手代理，能够自主完成编码任务。

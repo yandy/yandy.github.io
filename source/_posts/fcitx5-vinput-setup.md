@@ -6,8 +6,6 @@ categories: ['最佳实践']
 tags:
   - linux
   - 语音输入
-  - fcitx5
-  - 教程
 ---
 
 本文介绍如何在 Linux 下安装和配置 fcitx5-vinput，获得可用甚至好用级别的语音输入体验。

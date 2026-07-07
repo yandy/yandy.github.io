@@ -5,7 +5,6 @@ date: 2024-11-02 23:13:52
 categories: ['最佳实践']
 tags:
   - windows
-  - xops
 ---
 
 ## 1. oh-my-posh

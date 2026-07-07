@@ -6,7 +6,7 @@ categories:
   - 按图索骥
 tags:
   - linux
-  - xops
+  - tmux
 ---
 
 ## 一、核心概念

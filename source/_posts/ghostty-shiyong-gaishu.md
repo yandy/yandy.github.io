@@ -6,7 +6,6 @@ categories:
   - 按图索骥
 tags:
   - linux
-  - xops
 ---
 
 [Ghostty](https://ghostty.org/) 是一个快速、功能丰富、原生平台的终端模拟器。

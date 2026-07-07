@@ -6,7 +6,6 @@ categories:
   - 按图索骥
 tags:
   - neovim
-  - vim
 ---
 
 ## 一、简介

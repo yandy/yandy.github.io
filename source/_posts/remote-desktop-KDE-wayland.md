@@ -4,7 +4,6 @@ toc: true
 date: 2026-05-01 21:53:45
 categories: ['按图索骥']
 tags:
-  - xops
   - linux
 ---
 
