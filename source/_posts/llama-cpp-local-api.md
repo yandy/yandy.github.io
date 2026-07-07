@@ -273,7 +273,7 @@ Description=llama.cpp API Server
 After=network.target
 
 [Service]
-ExecStart=%h/.local/bin/llama-server -hf Qwen/Qwen3-8B-GGUF:q4_k_m --port 8080
+ExecStart=%h/.local/bin/llama-server --port 8080
 Restart=always
 RestartSec=10
 
