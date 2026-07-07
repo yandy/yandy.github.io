@@ -196,6 +196,107 @@ Scene 是 fcitx5-vinput 对识别结果的二次加工流水线。在 Vinput GUI
 
 每个场景可以指定使用的 LLM（本地或远程，OpenAI 兼容即可），以及 system prompt。切换场景按 `Shift_R`。
 
+### 集成本地 llama.cpp 部署的 LLM 模型
+
+如果你已经按[基于 llama.cpp 搭建本地 LLM API 服务](./llama-cpp-local-api/)在本地启动了 `llama-server`（OpenAI 兼容 API），可以直接接入 vinput 做语音识别的后处理——纠错、润色、翻译等。
+
+> **前提**：确认 `curl http://localhost:8080/v1/models` 能正常返回模型列表。
+
+#### 1. 在 vinput 中添加 LLM Provider
+
+打开 Vinput GUI → **LLM** 标签页 → **Providers** → 点击 **Add**，填写：
+
+| 字段 | 值 | 说明 |
+|---|---|---|
+| Name | `llama.cpp (local)` | 任意名称 |
+| Base URL | `http://127.0.0.1:8080/v1` | llama.cpp 的 OpenAI 兼容端点 |
+| API Key | （留空） | 本地部署无需 key |
+
+也可以直接编辑配置文件 `~/.config/vinput/config.json`：
+
+```json
+{
+  "llm": {
+    "providers": [
+      {
+        "id": "llama.cpp",
+        "base_url": "http://127.0.0.1:8080/v1",
+        "api_key": ""
+      }
+    ]
+  }
+}
+```
+
+保存后在 GUI 中点击 **Test** 按钮，确认能成功拉取模型列表（`/v1/models` 返回正常）。
+
+#### 2. 创建后处理 Scene（关键：务必调大 timeout！）
+
+vinput 的 Scene 默认超时时间是 **4000ms（4 秒）**，这对本地 LLM 推理来说太短了。如果不调整，你会看到 Provider 测试能通过但实际使用时总会 Timeout——这正是因为 `/v1/models`（测试按钮）的请求很快，但 `/v1/chat/completions`（实际推理）需要几秒到几十秒。
+
+在 **LLM → Scenes** 页面创建新场景，或直接编辑 `config.json`：
+
+```json
+{
+  "scenes": {
+    "activeSceneId": "llama-correct",
+    "scenes": [
+      {
+        "id": "llama-correct",
+        "label": "LLM 纠错",
+        "provider_id": "llama.cpp",
+        "model": "gpt-3.5-turbo",
+        "prompt": "请修正以下语音识别结果中的错别字，只返回正确的文本，不要添加任何解释。",
+        "candidate_count": 1,
+        "timeout_ms": 60000,
+        "context_lines": 0
+      }
+    ]
+  }
+}
+```
+
+**几个关键字段说明：**
+
+| 字段 | 建议值 | 说明 |
+|---|---|---|
+| `model` | `gpt-3.5-turbo` | llama.cpp server 约定的名称（不是你的 .gguf 文件名） |
+| `timeout_ms` | `60000` ~ `120000` | **这是最重要的配置！** 默认 4000ms 对本地推理完全不够。60s 适合小模型，14B+ 建议 120s |
+| `candidate_count` | `1` ~ `3` | 让 LLM 生成几个候选结果供选择 |
+| `prompt` | 自定义 | 指令越具体效果越好。vinput 要求 LLM 返回 JSON 格式 `{"candidates": ["..."]]}` |
+
+
+#### 3. 验证效果
+
+重启 vinput daemon 让配置生效：
+
+```bash
+systemctl --user restart vinput-daemon.service
+```
+
+现在按 `Alt_R` 说一段话后，vinput 会把 ASR 识别结果发送给本地 llama.cpp，由 LLM 纠错后再上屏。按 `Shift_R` 可以切换不同的 Scene。
+
+#### 调试
+
+如果遇到问题，可以通过 debug 日志排查：
+
+```bash
+# 启用 debug 日志（会输出完整的 LLM 请求/响应）
+VINPUT_DEBUG=1 systemctl --user restart vinput-daemon.service
+
+# 查看日志
+journalctl --user -u vinput-daemon.service -f
+```
+
+常见错误码：
+
+| 错误 | 原因 | 解决 |
+|---|---|---|
+| `CURLE_OPERATION_TIMEDOUT` | 超时 | 增大 `timeout_ms` |
+| `CURLE_COULDNT_CONNECT` | 连接不上 | 确认 llama.cpp server 在运行，端口正确 |
+| `HTTP 400` | 请求格式不对 | 检查 `--chat-template` 是否正确 |
+| `no valid candidates` | LLM 返回格式不符合预期 | 检查 prompt 是否包含了输出格式要求，确认 `response_format` 配置为 `json_object` |
+
 ## 配置文件位置
 
 了解配置文件位置有助于排查问题：
