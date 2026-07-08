@@ -230,6 +230,35 @@ Scene 是 fcitx5-vinput 对识别结果的二次加工流水线。在 Vinput GUI
 
 保存后在 GUI 中点击 **Test** 按钮，确认能成功拉取模型列表（`/v1/models` 返回正常）。
 
+#### 关闭思考模式（重要）
+
+如果你使用的模型默认启用了思考/推理模式（如 Qwen3、DeepSeek-R1 等 reasoning 模型），在语音后处理场景下会**极大延长响应时间**——LLM 会先进行冗长的内部推理，再输出结果。对于语音输入这种实时交互场景，思考模式完全是多余的，必须关闭。
+
+解决方案是在 Provider 配置中通过 `extra_body` 字段向 llama.cpp 传递附加请求体，关闭思考模式：
+
+```json
+{
+  "llm": {
+    "providers": [
+      {
+        "id": "llama.cpp",
+        "base_url": "http://127.0.0.1:8080/v1",
+        "api_key": "",
+        "extra_body": {
+          "chat_template_kwargs": {
+            "enable_thinking": false
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+> **说明**：`chat_template_kwargs.enable_thinking = false` 会附加到每次 `/v1/chat/completions` 请求中，llama.cpp 的 chat template 引擎会据此跳过思考阶段，直接生成结果。不同模型的参数名可能略有差异（如 `thinking` / `enable_thinking`），请参考你所使用模型的文档。
+
+配置完成后再回到 GUI 中点击 **Test** 按钮确认连通性。
+
 #### 2. 创建后处理 Scene（关键：务必调大 timeout！）
 
 vinput 的 Scene 默认超时时间是 **4000ms（4 秒）**，这对本地 LLM 推理来说太短了。如果不调整，你会看到 Provider 测试能通过但实际使用时总会 Timeout——这正是因为 `/v1/models`（测试按钮）的请求很快，但 `/v1/chat/completions`（实际推理）需要几秒到几十秒。
