@@ -117,10 +117,7 @@ sudo pacman -S podman
 
 | 包 | 作用 | 判断 |
 |----|------|------|
-| `passt` | 提供 `pasta` 网络（Podman 5+ 默认 rootless 后端） | 推荐安装；不装则 Podman 会报错提示 |
 | `podman-compose` | 兼容 docker-compose.yml | 没有 compose 项目则不装 |
-| `podman-docker` | 提供 `/usr/bin/docker` 指向 podman | **迁移完再装**，避免与 Docker 的命令冲突 |
-| `slirp4netns` / `fuse-overlayfs` | 旧版网络/存储驱动 | 已被替代，不装 |
 
 **安装后校验：**
 
@@ -284,7 +281,7 @@ pacman -Q | grep -i docker || echo "✅ 无残留 Docker 包"
 ### 八（可选）：安装命令兼容层
 
 ```bash
-sudo pacman -S podman-docker podman-compose
+sudo pacman -S podman-docker
 ```
 
 装完后 `docker --version` 输出 Podman 版本号。如果你打算以后全部用 `podman` 命令，这步可以跳过。
