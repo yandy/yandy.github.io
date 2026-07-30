@@ -167,7 +167,6 @@ sudo pacman -S podman
 
 # NVIDIA GPU 支持（可选）
 sudo pacman -S nvidia-container-toolkit
-sudo nvidia-ctk runtime configure --runtime=podman
 ```
 
 ### 5.4. ghostty

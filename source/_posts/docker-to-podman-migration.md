@@ -85,17 +85,6 @@ docker ps -a
 pacman -Q | grep -iE 'docker|containerd|runc'
 ```
 
-**检查 Podman rootless 前提条件：**
-
-```bash
-# (a) 子UID/GID映射 — 大多数 CachyOS 用户已有，确认一下
-grep "^$USER:" /etc/subuid
-
-# (b) 内核非特权用户命名空间 — 如果装了 linux-hardened 内核则默认关闭
-sysctl kernel.unprivileged_userns_clone
-# 期望输出: kernel.unprivileged_userns_clone = 1
-```
-
 **共存期注意事项：**
 
 | 冲突点 | 影响 | 处理方式 |
