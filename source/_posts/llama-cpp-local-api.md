@@ -65,7 +65,7 @@ llama-server --version
 如果你的显卡很新（RTX 50 系列等 Blackwell 架构），或者包管理器版本不包含你需要的 GPU 后端，从源码编译最可靠。
 
 ```bash
-git clone https://github.com/ggml-org/llama.cpp
+git clone https://github.com/ggml-org/llama.cpp.git
 cd llama.cpp
 cmake -B build -DBUILD_SHARED_LIBS=OFF
 cmake --build build --config Release -j 12 # <= 你的 cpu cores

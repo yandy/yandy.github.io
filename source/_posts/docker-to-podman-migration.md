@@ -111,7 +111,7 @@ sysctl kernel.unprivileged_userns_clone
 sudo pacman -S podman
 ```
 
-**装了什么**：`podman` + 依赖 `netavark`（网络后端）+ `aardvark-dns`（容器 DNS）。
+**装了什么**：`podman` + 依赖 `netavark`（网络后端）+ `aardvark-dns`（容器 DNS）+ `passt`（Socket Transport） 。
 
 **按需可选：**
 
@@ -228,7 +228,7 @@ echo "Docker 镜像数: $(docker image ls -q | wc -l)"
 echo "Podman 镜像数: $(podman image ls -q | wc -l)"
 ```
 
-数量应对得上（docker 的输出比 podman 多 1）。
+数量应对得上。
 
 **6.2 核心功能：**
 
@@ -285,7 +285,6 @@ pacman -Q | grep -i docker || echo "✅ 无残留 Docker 包"
 
 ```bash
 sudo pacman -S podman-docker podman-compose
-sudo touch /etc/containers/nodocker  # 抑制 "Emulate Docker CLI" 提示
 ```
 
 装完后 `docker --version` 输出 Podman 版本号。如果你打算以后全部用 `podman` 命令，这步可以跳过。
