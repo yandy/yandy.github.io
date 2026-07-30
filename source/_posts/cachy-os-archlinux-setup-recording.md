@@ -160,16 +160,14 @@ git config --global core.excludesfile ~/.config/gitignore
 vim ~/.config/gitignore
 ```
 
-### 5.3. docker
+### 5.3. podman
 ```sh
-# 安装 docker 相关工具
-sudo pacman -S docker docker-buildx docker-compose nvidia-container-toolkit
-sudo nvidia-ctk runtime configure --runtime=docker
-sudo systemctl enable --now docker
+# 安装 podman
+sudo pacman -S podman
 
-# 配置无需 sudo 运行docker
-sudo usermod -aG docker $USER
-newgrp docker
+# NVIDIA GPU 支持（可选）
+sudo pacman -S nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=podman
 ```
 
 ### 5.4. ghostty
