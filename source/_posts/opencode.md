@@ -120,3 +120,7 @@ playwright install chromium firefox
 ```sh
 # bunx skills add vercel-labs/agent-skills --skill vercel-react-best-practices -a opencode -y
 ```
+
+---
+
+> 📌 目前已全面切换到 [Pi](/pi-coding-agent/)，参见：[《从 OpenCode 到 Pi — 我的 AI 编码助手进化之路》](/pi-coding-agent/)
