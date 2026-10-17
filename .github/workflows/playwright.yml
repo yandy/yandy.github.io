@@ -14,21 +14,22 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v7
       with:
-        bun-version: latest
+        node-version: 24
+        cache: npm
 
     - name: Install Dependencies
-      run: bun install
+      run: npm ci
 
     - name: Install Playwright Browsers
-      run: bunx playwright install --with-deps
+      run: npx playwright install --with-deps
 
     - name: Run Playwright tests
       env:
         CI: 'true'
-      run: bunx playwright test
+      run: npm test
 
     - uses: actions/upload-artifact@v7
       if: ${{ !cancelled() }}
