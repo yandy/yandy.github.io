@@ -33,7 +33,28 @@ tags:
 
 ## 2. 包管理器
 
-### 2.1. pacman 包管理器
+### 2.1. 配置镜像源
+
+Cachy OS 默认配置下选不到国内镜像（同步延迟阈值只有 2.7 小时，nju / ustc 基本都被过滤），放宽到 48 小时：
+
+```sh
+sudo tee /etc/conf.d/cachyos-rate-mirrors.env >/dev/null <<'EOF'
+RATE_MIRRORS_MAX_DELAY=172800
+EOF
+```
+
+重新生成镜像列表（原文件备份为 `*-backup`），国内源应排在最前面：
+
+```sh
+sudo cachyos-rate-mirrors
+
+# 验证
+head -3 /etc/pacman.d/mirrorlist /etc/pacman.d/cachyos-mirrorlist /etc/pacman.d/cachyos-v3-mirrorlist
+```
+
+> 不要在这个文件里设 `RATE_MIRRORS_ENTRY_COUNTRY=CN`，反而会让国内源调优失效并把 CDN77 插到第一行。
+
+### 2.2. pacman 包管理器
 
 ```sh
 # 核心更新 / 安装 / 卸载：
@@ -61,7 +82,7 @@ pacman -Qdt
 sudo pacman -Rns $(pacman -Qdtq)
 ```
 
-### 2.2. paru (AUR 助手)
+### 2.3. paru (AUR 助手)
 
 Cachy OS 默认安装了 paru 作为 AUR 助手
 
@@ -78,7 +99,7 @@ paru -Sua
 paru -Rns 包名
 ```
 
-### 2.3. Flatpak
+### 2.4. Flatpak
 
 ```sh
 # 安装 Flatpak
