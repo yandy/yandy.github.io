@@ -49,7 +49,7 @@ EOF
 sudo cachyos-rate-mirrors
 
 # 验证
-head -3 /etc/pacman.d/mirrorlist /etc/pacman.d/cachyos-mirrorlist /etc/pacman.d/cachyos-v3-mirrorlist
+tail -n 3 /etc/pacman.d/mirrorlist /etc/pacman.d/cachyos-mirrorlist /etc/pacman.d/cachyos-v3-mirrorlist
 ```
 
 > 不要在这个文件里设 `RATE_MIRRORS_ENTRY_COUNTRY=CN`，反而会让国内源调优失效并把 CDN77 插到第一行。
