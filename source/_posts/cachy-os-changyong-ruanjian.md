@@ -13,7 +13,7 @@ tags:
 cachy os 对游戏的优化十分到位，并准备了相关的程序包。
 
 ```sh
-sudo pacman -Syu cachyos-gaming-meta cachyos-gaming-applications
+sudo pacman -Syu cachyos-gaming-meta steam
 ```
 
 ## 2. 建模绘图软件

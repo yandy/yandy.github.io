@@ -99,7 +99,7 @@ paru -Sua
 paru -Rns 包名
 ```
 
-### 2.4. Flatpak
+### 2.4. Flatpak (可选)
 
 ```sh
 # 安装 Flatpak
@@ -125,10 +125,11 @@ Cachy OS 默认使用了 plasma 桌面环境，所以我需要配置输入法。
 
 > 参考 [fcitx5 中文输入法配置](https://wiki.archlinuxcn.org/wiki/Fcitx_5)
 
-### 3.1. 安装 fcitx5-rime 和 fcitx5-configtool
+### 3.1. 安装
 
 ```sh
 sudo pacman -S fcitx5-rime fcitx5-configtool
+paru -S rime-ice-pinyin-git
 ```
 ### 3.2. 配置fcitx5
 
@@ -136,7 +137,33 @@ sudo pacman -S fcitx5-rime fcitx5-configtool
 
 ### 3.3. 配置 Rime 输入法
 
- 右键点击 fcitx5 托盘图标 →  切换输入方案为 "朙月拼音・简化字"
+1) 初始化配置文件
+
+```sh
+rm -r ~/.local/share/fcitx5/rime
+mkdir -p ~/.local/share/fcitx5/rime
+touch ~/.local/share/fcitx5/rime/default.custom.yaml
+```
+
+2) 编辑 `~/.local/share/fcitx5/rime/default.custom.yaml`，写入：
+
+```yaml
+patch:
+  # 这里的 rime_ice_suggestion 为雾凇方案的默认预设
+  __include: rime_ice_suggestion:/
+```
+
+3) 部署
+
+右键点击 Fcitx5 托盘图标 → 点击输入法图标打开二级菜单 → 点击「重新部署」（英文界面为 Deploy）
+
+也可以用命令行触发重新部署：
+
+```bash
+dbus-send --session --print-reply --dest=org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1.SetConfig string:"fcitx://config/addon/rime/deploy" variant:string:""
+```
+
+等待部署完成，右键点击 Fcitx5 托盘图标 → 点击输入法图标选择「雾凇拼音」
 
 ### 3.4. 一些输入法的兼容配置
 
@@ -157,9 +184,9 @@ paru -S clash-verge-rev-bin
 
 ## 5. 常用工具
 
-### 5.1. visual studio code 和 microsoft edge
+### 5.1. microsoft edge
 ```sh
-paru -S visual-studio-code-bin microsoft-edge-stable-bin
+paru -S microsoft-edge-stable-bin
 ```
 
 ### 5.2. git
@@ -197,18 +224,8 @@ sudo pacman -S ghostty
 ```
 
 ### 5.5. neovim
-```sh
-git clone https://github.com/yandy/neovim-config.git ~/.config/nvim
 
-# install neccessary tools/packages
-
-bun add -g typescript-language-server typescript @tailwindcss/language-server
-uv tool install basedpyright debugpy
-sudo pacman -S neovim lazygit wl-clipboard luarocks tree-sitter-grammars lua-language-server lldb
-
-# invoke nvim and wait for install completion
-nvim
-```
+参考 `https://github.com/yandy/neovim-config` [README.md](https://github.com/yandy/neovim-config/blob/main/README.md)
 
 ### 5.6. 其他工具
 ```sh
