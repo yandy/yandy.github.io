@@ -125,9 +125,6 @@ if ! flock -n 9; then
   exit 0
 fi
 
-# Node 版本：这行是 fnm 的写法。换成你自己的方式（nvm / volta / 发行版包）或
-# 直接删掉都行，只要这时 PATH 上的 node 是 26.x（见第 2 步）。
-fnm use 26
 exec node_modules/.bin/vpr studio:desktop
 ```
 
@@ -142,7 +139,6 @@ bash -n ~/.local/bin/cad-studio && echo ok
 - **`TEXT_TO_CAD_DEV=1`** 决定跑哪套 CAD 工具。不设时 Studio 会用 `uvx` 从 PyPI 拉发布版 `cad-mcp`，技能只有 Jake 自带的 10 个；设了才用第 5 步刚建好的 `.venv`，并多出 `fdm`、`export`、`board-fab`、`cnc` 这批 job 技能。**建议始终带上。**
 - **`STUDIO_PROJECTS_DIR` / `STUDIO_NEW_PROJECTS_DIR`** 分别是项目记录目录和新项目文件夹位置。换一套路径就等于换一套状态，旧项目不会自动出现。
 - **`exec node_modules/.bin/vpr`** 而不是 `pnpm studio:desktop`：少一层 corepack/pnpm 解析，只依赖 `node`，行为完全一致。
-- **`fnm use 26`** 见脚本里的注释：它只负责让我这套用 26.x 的 Node，不属于必需项。
 - **`exec 9>…` + `flock -n 9`** 做单实例：文件描述符跟着 `exec` 进到 Studio 进程里，所以锁的生命周期就是 Studio 的生命周期。
 
 ## 7. 启动
