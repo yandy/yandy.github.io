@@ -2,7 +2,7 @@
 title: 雾凇拼音（rime-ice）安装与使用指南
 toc: true
 date: 2026-10-18 10:00:00
-categories: ['按图索骥']
+categories: ['最佳实践']
 tags:
   - linux
   - rime
