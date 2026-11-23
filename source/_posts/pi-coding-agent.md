@@ -92,22 +92,6 @@ pi install npm:@yandy0725/pi-context-insight
 
 单文件、内联 CSS/JS/JSON、无外部资源、不联网，全部 session 文本在生成期转义。默认报告把原文一并内嵌；要发给别人就加 `--short`，结构完全一致但没有任何正文——正文根本没写进文件，所以拿源码也翻不出来。报告里的分类值都是估算（与 pi 界面的上下文环用同一套密度启发式），实际用量和成本来自 provider 上报，两者差过 2% 时 Token 构成里会单列一行残差；估算规则、聚合口径和这次实际触发的截断清单都写在「说明」里。
 
-#### pi-memory — 跨会话记忆
-
-[simple-memory](https://github.com/yandy/simple-memory) 里的 pi 适配器，装法是一个 `pi install` 外加一份最小配置——在 `~/.pi/agent/memory.json` 里指定一个模型：
-
-```sh
-pi install npm:@yandy0725/pi-memory
-```
-
-```json
-{ "defaults": { "model": "provider/model-id" } }
-```
-
-这个模型没有随包默认值，也不回退到父会话模型；缺了它，会话启动时只会报一条配置错误，记忆层一个功能都不会初始化。
-
-架构上分两层：`memory-core`（与 harness 无关的磁盘格式、锁定、注入策略）和适配器（`pi-memory`、`dsh-memory`）。每条记忆是一个 Markdown 文件，在 `MEMORY.md` 里占一行；记忆默认落在 `$XDG_DATA_HOME/simple-memory/`（未设置时是 `~/.local/share/simple-memory/`）下，按 git **remote** 分命名空间，所以同一仓库的 clone 和 worktree 共享同一份，非 git 或没有 remote 的项目按绝对路径单独落一份。`/dream` 负责去重合并重建，`memory search scope=sessions` 用来翻历史会话。
-
 #### pi-subagents — 子代理系统
 
 在同一个 Pi 运行时内启动子代理（进程内，不 spawn 子进程），工具名、调用约定和 UI 都跟主子代理一致。适合把「翻代码库」「核一批事实」「查一遍链接」这种脏活甩出去，主会话接着干别的。
@@ -141,6 +125,45 @@ subagent({
 [![通过 /subagents:sessions 只读回看某个子代理的完整 transcript](assets/pi-subagents-session.png)](/assets/pi-subagents-session.png)
 
 生命周期事件也发在 `pi.events` 上（`subagents:created` / `started` / `completed` / `failed` / `steered` / `compacted`），其中 `completed` / `failed` 只对后台代理发；想改并发上限或宽限轮数，`/subagents:settings` 直接调。别的扩展可以挂上去做面板、告警或者自己的记账。
+
+#### pi-memory — 跨会话记忆
+
+[simple-memory](https://github.com/yandy/simple-memory) 里的 pi 适配器，装法是一个 `pi install` 外加一份最小配置——在 `~/.pi/agent/memory.json` 里指定一个模型：
+
+```sh
+pi install npm:@yandy0725/pi-memory
+```
+
+```json
+{ "defaults": { "model": "provider/model-id" } }
+```
+
+这个模型没有随包默认值，也不回退到父会话模型；缺了它，会话启动时只会报一条配置错误，记忆层一个功能都不会初始化。
+
+架构上分两层：`memory-core`（与 harness 无关的磁盘格式、锁定、注入策略）和适配器（`pi-memory`、`dsh-memory`）。每条记忆是一个 Markdown 文件，在 `MEMORY.md` 里占一行；记忆默认落在 `$XDG_DATA_HOME/simple-memory/`（未设置时是 `~/.local/share/simple-memory/`）下，按 git **remote** 分命名空间，所以同一仓库的 clone 和 worktree 共享同一份，非 git 或没有 remote 的项目按绝对路径单独落一份。`/dream` 负责去重合并重建，`memory search scope=sessions` 用来翻历史会话。
+
+真正让这套东西好用起来的是**跨设备同步**（默认关，一行配置打开）：
+
+```json
+// ~/.pi/agent/memory.json
+{ "sync": { "enabled": true, "remote": "git@github.com:you/project-memory.git" } }
+```
+
+远端就是一个你自己准备的普通 git 仓库（空的也行，pi-memory 不保存任何凭据）。配好之后，带这份配置的下一次 `session_start` 会自己 clone 到 `<memoryDir>/.sync/repo`、建好基线。这里刻意**没有** `/memory sync init`：首次克隆可能很慢，而「敲了却没生效」又多一个要排查的状态（URL 写错？连不上？），不如就改一行配置、让它幂等地重试。初始化失败也**不是致命的**：没有 git、断网、没有权限，会话就用本地记忆继续跑，只留一条能读懂的提醒；修好之后下次会话启动（或一次显式 pull / push）会把同一条幂等的初始化重走一遍。
+
+同步本身有几个我很满意的设计：
+
+- **一轮 push = 一次完整收敛**，不是「先 pull 再 push」。每轮走 fetch → 拿基线做三方差集（base / local / remote）→ 应用并重建索引 → 发布。因为进程内的脏标记只认得**本进程**写过的内容，拆成 pull/push 两步反而会漏掉别的会话改的东西。启动那一轮因此很划算：既把别的设备写的拉下来，也把上个会话没推出去的补推上去。
+- **按写入去抖，不是按时间轮询**：默认 5 秒静默期（从一串写入的第一笔起算）才发布，一轮 `/dream` 改十几个文件只产生一轮 push；退出时不管去抖还没到点，再 flush 一次。自动路径有 5 秒总预算，超了就预告「下一轮再推」，绝不为了同步把会话卡住。
+- **只同步 entry，不同步状态**：`MEMORY.md` 索引、`.lock`、`.backups/`、`sessions/` 都留在本机——索引本来就能重建，锁和备份是这台机器的事。
+- **冲突不丢东西，而且能自己收敛**：两侧同时改了同一条记忆时两份都保留，另一份变成一条正常 entry、`name` 加上 `(冲突 <date> <sha6>)` 后缀。后缀只由内容派生，所以两台设备各自解同一次冲突会写出**同一个**文件，不会越同步越多；重复的部分之后再交给 `/dream` 合并。
+- **启动时先收敛，再选索引值**：`pullOnStart` 默认开，而且跑在索引选定之前——否则新会话会用一份「上次的」记忆列表开工。
+- **状态检查是严格 dry-run**：`/memory sync status` 算出与真跑一轮完全一样的三方差集（Configured / Initialized / Origin / Branch / Ahead / Behind / Conflicts / Rejected…），但**不** clone、不建基线、不碰任何记忆文件。排查时敢随便敲。
+- **两把锁，且按段持有**：项目级的 `.lock` 管写入，根级的 `.sync/sync.lock` 管同步，传输段（fetch）与发布段（push）各持一次，绝不整轮壅着；真被遗弃时 `/memory sync unlock` 是唯一被认可的清除入口。
+
+有一个诚实的取舍值得单独提：pi 在 `resume` / `fork` / `reload` 里沿用会话开始时录制的 `memory_index`（改它会破掉 prompt cache），所以启动收敛照常跑、磁盘照常更新，但**本会话的索引里看不到刚同步来的记忆**，要等下一次 compaction 或下一个会话。`/memory sync status` 的最后一行会把这个话说清楚，而不是让你对着一份「怎么没生效」的磁盘发愣。
+
+手动收敛就三条：`/memory sync pull`（拉下来并重建索引，不发布）、`/memory sync push`（先收敛再发布）、`/memory sync remote <url>`（换远端并重置基线）。
 
 ## 4. Preset：一套二进制，按需组合能力
 
