@@ -110,7 +110,11 @@ pi install npm:@yandy0725/pi-memory
 
 #### pi-subagents — 子代理系统
 
-在同一个 Pi 运行时内启动子代理，支持后台并行执行，有生命周期事件、自定义 agent 类型、运行时注入消息、会话恢复等能力。可以用来做代码探索、安全检查、文档生成等后台任务。
+在同一个 Pi 运行时内启动子代理（进程内，不 spawn 子进程），工具名、调用约定和 UI 都跟主子代理一致。适合把「翻代码库」「核一批事实」「查一遍链接」这种脏活甩出去，主会话接着干别的。
+
+```sh
+pi install npm:@yandy0725/pi-subagents
+```
 
 ```text
 subagent({
@@ -120,6 +124,23 @@ subagent({
   run_in_background: true,
 })
 ```
+
+前台代理阻塞到跑完，后台代理立刻返回 ID、完成后再回调。后台默认同时最多 4 个在跑，多出来的排队、空出槽位按序启动；前台调用不排队，直接起。编辑器上方那个常驻 widget 就是它们的仪表盘，每个代理一行：类型、一句话描述、模型、工具调用数、token、花销、耗时，跑着的时候带转圈和 `thinking…`——下面这张就是我写这篇稿子时同时派出去的四个人：
+
+[![pi-subagents 的 Agents 面板：四个并行子代理各自的模型、工具调用数、token、花销与耗时](assets/pi-subagents-panel.png)](/assets/pi-subagents-panel.png)
+
+几个不写在明面上、但反而最有用的行为：
+
+- **类型就是一份 frontmatter**：`.pi/agents/<name>.md` 里写 `description`、`tools`、`model`、`thinking`、`max_turns`、`timeout`、`prompt_mode`、`inherit_context`、`run_in_background`、`enabled`。内置只有 `general-purpose`（全部工具）和只读的 `Explore`（`read`/`bash`/`grep`/`find`/`ls`），项目级 `.pi/agents/` 覆盖全局 `~/.pi/agent/agents/`，同名文件连内置类型都能盖掉。
+- **`max_turns` 是软限，`timeout` 是硬杀**：轮次到点先给代理发一句「立即收尾」，再宽限 5 轮才真中止；`timeout` 没有收尾阶段，到点连正在跑的工具一起中断，结果前面标 `⏱ Timed out after Ns`。两者都是 frontmatter > 调用参数 > 全局默认。
+- **子代理不能再套子代理**：绑定时就从活动工具集里剔掉 `subagent` / `get_subagent_result` / `steer_subagent`，它也固定跑父会话的工作目录，没有 `cwd` 参数——不担心它一激动把整棵树都派出去。
+- **能边跑边掰**：`steer_subagent` 往运行中的代理插话，实际送达时机是「当前工具调用结束、下一次模型请求之前」，所以卡在一条长命令里的代理收不到，得等它回来；非 running 状态直接拒绝。
+- **账记回父会话**：每个子代理的用量累加进父会话 footer / `/usage`，后台跑的也算；lifetime 口径是 `input + output + cacheWrite`，故意不含 `cacheRead`（否则同一段缓存前缀会被重复计 N 次）。这也是 `/insight` 能直接给出父子两级账本的原因。
+- **transcript 独立落盘、事后可翻**：子代理会话放在父会话目录下的 `tasks/` 里；只要会话还在内存里，跑完的能 `resume` 接着聊，超过 10 分钟就 dispose 会话、只留一条可查看的记录。想回看就用 `/subagents:sessions` 挑一个，整段对话只读打开，头部标着它的模型与花销，`q` 退出：
+
+[![通过 /subagents:sessions 只读回看某个子代理的完整 transcript](assets/pi-subagents-session.png)](/assets/pi-subagents-session.png)
+
+生命周期事件也发在 `pi.events` 上（`subagents:created` / `started` / `completed` / `failed` / `steered` / `compacted`），其中 `completed` / `failed` 只对后台代理发；想改并发上限或宽限轮数，`/subagents:settings` 直接调。别的扩展可以挂上去做面板、告警或者自己的记账。
 
 ## 4. Preset：一套二进制，按需组合能力
 
