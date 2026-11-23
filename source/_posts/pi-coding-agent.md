@@ -44,22 +44,22 @@ npm install -g @earendil-works/pi-coding-agent
 | [pi-notify](https://github.com/yandy/pi-packages/tree/main/pi-notify) | 并行实例的桌面通知（阻塞弹窗 / 回合完成） |
 | [pi-sandbox](https://github.com/yandy/pi-packages/tree/main/pi-sandbox) | 进程级沙箱（bwrap/landlock/seatbelt/windows-acl） |
 | [pi-subagents](https://github.com/yandy/pi-packages/tree/main/pi-subagents) | 进程内子代理（后台并行执行 + 生命周期事件） |
-| [pi-todo](https://github.com/yandy/pi-packages/tree/main/pi-todo) | 极简 todo 工具，编辑器内嵌小组件 |
-| [pi-vision-tools](https://github.com/yandy/pi-packages/tree/main/pi-vision-tools) | `describe_image`——把图像分析委托给视觉模型 |
+| [pi-todo](https://github.com/yandy/pi-packages/tree/main/pi-todo) | 极简 todo 工具，编辑器上方常驻进度小组件 |
+| [pi-vision-tools](https://github.com/yandy/pi-packages/tree/main/pi-vision-tools) | `describe_image`——把图像分析委托给视觉模型（调用方模型自带视觉时自动隐藏） |
 | [pi-web-tools](https://github.com/yandy/pi-packages/tree/main/pi-web-tools) | websearch + webfetch 工具 |
-| [pi-memory](https://github.com/yandy/simple-memory) | 跨会话持久化记忆层（simple-memory 里的 pi 适配器） |
+| [pi-memory](https://github.com/yandy/simple-memory) | 跨会话持久化记忆层（simple-memory 仓库里的 pi 适配器，不在上面的 monorepo 里） |
 
 ### 3.1 几个亮点包
 
 #### pi-sandbox — 进程级沙箱
 
-[pi-sandbox](https://github.com/yandy/pi-packages/tree/main/pi-sandbox) 直接给 agent 的进程设限，按平台挑后端（Linux 上是 bwrap / landlock，macOS 是 seatbelt，Windows 是 ACL）。默认策略是**工作目录可写、其余宿主文件可读不可写**，判定失败时 fail-closed——宁可拒绝执行，也不放行。相比把 agent 关进容器，这条路少了一层路径映射、镜像维护和启动延迟。
+[pi-sandbox](https://github.com/yandy/pi-packages/tree/main/pi-sandbox) 直接给 agent 的进程设限，按平台挑后端（Linux 上是 bwrap / landlock，macOS 是 seatbelt，Windows 是 ACL）。默认策略是**工作目录与系统临时目录可写、其余宿主文件可读不可写**，判定失败时 fail-closed——宁可拒绝执行，也不放行。相比把 agent 关进容器，这条路少了一层路径映射、镜像维护和启动延迟。它只管模型发起的 `bash` / `write` / `edit`：你自己敲的 `!命令`、以及 pi 之外启动的进程都不在这层里；网络也不做隔离，始终放行。
 
 ```sh
 pi install npm:@yandy0725/pi-sandbox
 ```
 
-它要求 pi >= 1.5.0。低于这个版本的宿主上，扩展可能在加载阶段就失败，`bash` / `write` / `edit` 会**静默回落到未受限的内建实现**——所以装完先用 `/permission` 确认它真的生效了。
+它要求 pi >= 1.5.0，而这个 peer 下限不会有人替你告警：低于这个版本的宿主上，扩展可能在加载期就失败（Windows 上受限 shell 还只剩 `powershell`），`bash` / `write` / `edit` 就由 pi 那套未受限的内建实现顶位上——所以装完先用 `/permission` 看一眼 runner 和模式，确认它真的生效了。
 
 #### pi-notify — 别让我轮流盯终端
 
@@ -94,13 +94,19 @@ pi install npm:@yandy0725/pi-context-insight
 
 #### pi-memory — 跨会话记忆
 
-[simple-memory](https://github.com/yandy/simple-memory) 里的 pi 适配器，装法就是一个 `pi install`：
+[simple-memory](https://github.com/yandy/simple-memory) 里的 pi 适配器，装法是一个 `pi install` 外加一份最小配置——在 `~/.pi/agent/memory.json` 里指定一个模型：
 
 ```sh
 pi install npm:@yandy0725/pi-memory
 ```
 
-架构上分两层：`memory-core`（与 harness 无关的磁盘格式、锁定、注入策略）和适配器（`pi-memory`、`dsh-memory`）。每条记忆是一个 Markdown 文件，在 `MEMORY.md` 里占一行；记忆落在 `~/.local/share/simple-memory/` 下，按 git 仓库分配命名空间，克隆和 worktree 共享同一份。`/dream` 负责去重合并重建，`memory search scope=sessions` 用来翻历史会话。
+```json
+{ "defaults": { "model": "provider/model-id" } }
+```
+
+这个模型没有随包默认值，也不回退到父会话模型；缺了它，会话启动时只会报一条配置错误，记忆层一个功能都不会初始化。
+
+架构上分两层：`memory-core`（与 harness 无关的磁盘格式、锁定、注入策略）和适配器（`pi-memory`、`dsh-memory`）。每条记忆是一个 Markdown 文件，在 `MEMORY.md` 里占一行；记忆默认落在 `$XDG_DATA_HOME/simple-memory/`（未设置时是 `~/.local/share/simple-memory/`）下，按 git **remote** 分命名空间，所以同一仓库的 clone 和 worktree 共享同一份，非 git 或没有 remote 的项目按绝对路径单独落一份。`/dream` 负责去重合并重建，`memory search scope=sessions` 用来翻历史会话。
 
 #### pi-subagents — 子代理系统
 
@@ -244,7 +250,7 @@ npx skills ls -p -y
 **OpenCode 给你一个成品，Pi 给你一套积木。**
 
 我用 Pi 的扩展机制构建了自己的一整套 AI 编码助手生态：
-- 9 个自研 Pi Packages 覆盖代码智能、沙箱、子代理、通知、洞察
+- 9 个自研 Pi Packages 覆盖代码智能、沙箱、子代理、通知、洞察（另有一个 `simple-memory` 仓库里的记忆适配器）
 - preset 按场景组合能力，`pi -ps coding` / `pi -ps office,design`，不改全局配置
 - 进程级沙箱兜住风险，`simple-memory` 让记忆跨会话、跨 harness
 - 子代理并行执行，`/insight` 告诉你上下文和钱都花在哪
