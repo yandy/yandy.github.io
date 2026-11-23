@@ -32,8 +32,8 @@ tmux 是**分层的终端工作空间**，三者是**包含关系**，从大到�
 ```
 
 ### 关键特性
-1. **Session**：关闭Alacritty窗口，Session会**后台挂起**，下次能重新连接（tmux 核心功能）
-2. **Window**：就是你要的**标签页(Tab)**，一个Session可以开无数个Tab
+1. **Session**：关闭终端窗口，Session会**后台挂起**，下次能重新连接（tmux 核心功能）
+2. **Window**：类似于**标签页(Tab)**，一个Session可以开无数个Tab
 3. **Pane**：分屏用，不影响Tab逻辑
 
 ---
@@ -58,7 +58,7 @@ set -g status on
 # 开启vi模式
 set -g mode-keys vi
 set -g status-keys vi
-```  
+```
 ---
 
 ## 三、常用操作（按功能分类，直接背）
