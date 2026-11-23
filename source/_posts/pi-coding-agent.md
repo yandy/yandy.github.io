@@ -65,7 +65,7 @@ pi install npm:@yandy0725/pi-sandbox
 
 我经常同时开好几个 pi 实例。麻烦的是 agent 停下来等你，你却不知道是哪个终端在等。pi-notify 只在两种时刻发桌面通知：
 
-- **阻塞式弹窗**：select / confirm / input / editor 等所有 `ctx.ui` 弹窗（包括别的扩展发起的），延迟 4 秒投递，4 秒内被关掉就不发
+- **显式请求**：任何扩展都能在共享事件总线 `pi.events` 上发 `notify:request`（pi-ask-user 等它等输入、pi-sandbox 等升级审批都这么做），合法请求立即投递；没有这个信号，普通弹窗保持安静
 - **一轮跑完**：`agent_settled` 时通知，带回合耗时和最后一条回复的纯文本摘要
 
 太短的回合（默认 10 秒以内）、被中断的回合、custom 回合都不发，避免刷屏；`/notify` 可以运行时开关。通知发不出去也不会阻塞 agent 循环。
@@ -74,7 +74,7 @@ pi install npm:@yandy0725/pi-sandbox
 
 `/insight` 生成一份独立、离线的 HTML 报告，回答「这个 session 的上下文由什么组成、钱花在哪、agent 都干了什么」：系统提示词、工具定义、注入内容、推理与回答各占多少；token/成本/缓存命中率与实际用量时间线；工具调用、文件改动、命令退出码；每个子 Agent 单独一节。
 
-单文件、内联 CSS/SVG、无 JavaScript、无外部资源、不联网，也不包含原始 prompt、回复和命令输出——发给别人看也不至于泄露什么。
+单文件、内联 CSS/JS/JSON、无外部资源、不联网。默认报告把原文一并内嵌（可逐条展开到真实 prompt、工具输出）；要发给别人就加 `--short`，结构完全一致但没有任何正文。
 
 #### pi-memory — 跨会话记忆
 
