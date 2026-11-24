@@ -234,6 +234,20 @@ pi install npm:@yandy0725/pi-sandbox
 
 升级审批是 **denial-first** 的：模型如果想申请更大的权限，必须本次会话里**先真的被拒过一次**同类操作；否则那两个参数会被忽略，结果里带一条「参数未生效」的说明，让它知道没生效而不是反复换措辞重试。`Deny` 还能附一句理由回传给模型，于是它学到的是原因，不是猜谜。
 
+**边界可以放宽，但只能由你在沙箱外面放宽。** 默认围栏是工作区 + tmp；少数目录天生要写（`uv sync` 的 `~/.cache/uv`、`pnpm install` 的 store、`cargo build` 的 `~/.cargo`），开口子的权力刻意留在外面：唯一入口是 `~/.pi/agent/sandbox-writable.json`，裸 JSON 数组，没有根 key，加一个根就是改一行。**路径支持 `~` 展开**，但必须是已存在的目录，写错的那条加载时告警并跳过：
+
+```json
+["~/.cache/uv", "~/.local/share/pnpm/store", "/srv/team-data"]
+```
+
+三条硬规矩：
+
+- **只在 `workspace-write` 下生效**，且只在启动时读一次，改完重启 pi。
+- **只认全局文件**。项目级 `.pi/sandbox-writable.json` 静默忽略——项目目录对受限模型可写，那层等于让它改自己的边界。
+- **别授予 bin 目录**（`~/.local/bin`、`~/.cargo/bin`、`~/go/bin`）。那等于允许受限模型在 `PATH` 上留下持久可执行文件。Cargo 是例外：`cargo build` 要整棵 `~/.cargo`，授予即一并放行 `cargo install`。
+
+具体路径用工具自己的命令查（`uv cache dir`、`pnpm store path`），别照抄默认值。配好之后 `/permission` 多一行 `extra writable:`，当前模式不吃这份清单时标 `(inactive: <mode>)`。反过来，模型仍**不该**自己搬 `XDG_CACHE_HOME` / `PNPM_HOME` / `--cache-dir`——那是在围栏里静默另开一扇门；撞墙时它该说的是「把这个目录加进授权」，等你点头。
+
 有两个边界要记住，它们不是 bug：
 
 - **只管模型发起的动作**。你自己敲的 `!命令` 跑在你自己的 shell 里，不受这三档约束；同样也不限制读（沙箱进程能读你所有能读的东西），网络永远放行。
