@@ -10,7 +10,7 @@ tags:
 
 [Pi](https://pi.dev) 是个极简、可扩展的终端 agent harness。装上它只要一条命令，但把它变成「我自己那一套」需要往里补东西——这一年我把常用的补丁都做成了独立的 Pi package，攒出一套自洽的工作流。
 
-这篇文章按上手顺序写：先是最小可用的基本用法，再是四层定制能力，然后是我陆续加进来的九块补丁，最后是把它们按场景组合起来的做法（preset）和让结论活过会话的记忆层。
+这篇文章按上手顺序写：先是最小可用的基本用法，再是四层定制能力，然后是我陆续加进来的十块补丁，最后是把它们按场景组合起来的做法（preset）。
 
 <!-- more -->
 
@@ -197,9 +197,9 @@ my-pi-package/
 
 宿主提供的包（`@earendil-works/pi-ai`、`pi-tui`、`typebox` 等）写进 `peerDependencies` 且范围 `*`，**绝不要**放进 `dependencies`——打进 tarball 会复制出第二份实例，绕过模块映射，症状是很难查的重复注册。
 
-## 五、我给自己补的九块
+## 五、我给自己补的十块
 
-Pi 只提供编排能力，于是缺什么就补什么。下面九个都收在 [yandy/pi-packages](https://github.com/yandy/pi-packages) 这个 monorepo 里（npm 上是 `@yandy0725/*`），彼此不依赖，`pi install` 一个就是一块，全部要求 pi >= 1.5.0：
+Pi 只提供编排能力，于是缺什么就补什么。下面十个里九个收在 [yandy/pi-packages](https://github.com/yandy/pi-packages) 这个 monorepo 里（npm 上是 `@yandy0725/*`），记忆层在 [yandy/simple-memory](https://github.com/yandy/simple-memory)；彼此不依赖，`pi install` 一个就是一块，全部要求 pi >= 1.5.0：
 
 | 包 | 解决什么 | 额外前置 |
 |---|---|---|
@@ -212,6 +212,7 @@ Pi 只提供编排能力，于是缺什么就补什么。下面九个都收在 [
 | [pi-notify](https://github.com/yandy/pi-packages/tree/main/pi-notify) | 多开时知道哪个终端在等你 | Linux 要 `notify-send` |
 | [pi-web-tools](https://github.com/yandy/pi-packages/tree/main/pi-web-tools) | 搜索和抓网页 | 零配置可用 |
 | [pi-vision-tools](https://github.com/yandy/pi-packages/tree/main/pi-vision-tools) | 让看不到图的模型也能看图 | 可选 `sharp` |
+| [pi-memory](https://github.com/yandy/simple-memory/tree/main/pi-memory) | 结论活过会话，跨会话、跨设备 | `memory.json` 里先配一个模型 |
 
 下面按我建议的安装顺序讲——最先装的应该是那个**兜住风险**的。
 
@@ -366,6 +367,57 @@ pi install npm:@yandy0725/pi-vision-tools
 
 `describe_image` 让非多模态模型也能看图：调用方把图像和提示词交给配置好的视觉模型，拿回文本答案。它按**调用方模型是否支持图像输入自动开关**——你在用多模态模型时这个工具根本不存在，换模型就换行为，不需要手动开关。视觉模型可以写精确的 `provider/id`，也可以写 `haiku`、`qwen vl` 这种模糊名。
 
+### 5.10 pi-memory：让结论活过会话
+
+同一类问题我三个月问了三遍，每次都得重新解释一遍项目约束——这就是我加记忆层的原因。[simple-memory](https://github.com/yandy/simple-memory) 是一条磁盘记忆、多个 harness 共用：记忆是一个 Markdown 文件，在 `MEMORY.md` 里占一行，两台 harness 指到同一台机器上读写的是同一批文件。
+
+```sh
+pi install npm:@yandy0725/pi-memory
+```
+
+```json
+// ~/.pi/agent/memory.json
+{ "defaults": { "model": "provider/model-id" } }
+```
+
+这个模型**没有随包默认值，也不回退到父会话模型**；缺了它，会话启动时只会报一条配置错误，记忆层一个功能都不初始化。先配模型，再谈别的。
+
+#### 它是怎么工作的
+
+- **一个 `memory` 工具**：`add` / `replace` / `remove` / `list` / `search`（`scope=sessions` 还能翻历史会话）。一条记忆一个文件，`name` 是定位键，同名 `add` 就是覆盖。
+- **`MEMORY.md` 索引进 system prompt**：索引整个会话内冻结，Pi 对 sections 做 diff 时不会逐轮追加消息，provider 的前缀缓存一直命中。
+- **自动浮现**：每轮用一次轻量侧查询挑出相关记忆，把正文注入 `<relevant_memories>`。
+- **自动提取**（默认关）：每轮结束后由子会话挑出值得长期记住的内容。我关着——我更愿意自己决定记什么。
+- **`/dream`**：headless 整理，合并重复、消解矛盾、重建索引。
+- `/memory` 看目录、索引容量、条目数、模块状态、锁持有者；`/memory unlock` 清理崩溃遗留的 `.lock`。
+
+记忆默认落在 `$XDG_DATA_HOME/simple-memory/`（未设置时 `~/.local/share/simple-memory/`），按 git **remote** 分命名空间——所以同一仓库的 clone 和 worktree 共享同一份，非 git 或没有 remote 的项目按绝对路径单独落一份。
+
+#### 跨设备同步（默认关）
+
+```json
+// ~/.pi/agent/memory.json
+{ "sync": { "enabled": true, "remote": "git@github.com:you/project-memory.git" } }
+```
+
+远端就是一个你自己准备的普通 git 仓库（空的也行），pi-memory 不保存任何凭据、也从不提示输入，只调用 `PATH` 上的 `git`。配好之后，带这份配置的下一次会话启动会自己 clone 到 `<memoryDir>/.sync/repo`、建好基线。
+
+这里刻意**没有** `/memory sync init`：首次克隆可能很慢，而「敲了却没生效」又多一个要排查的状态（URL 写错？连不上？），不如就改一行配置、让它幂等地重试。初始化失败也**不是致命的**：没有 git、断网、没权限，会话就用本地记忆继续跑，只留一条能读懂的提醒。
+
+几个我很满意的设计：
+
+- **一轮 push = 一次完整收敛**，不是「先 pull 再 push」。进程内的脏标记只认得本进程写过的内容，拆成两步反而会漏掉别的会话改的东西。启动那一轮因此很划算：既把别的设备写的拉下来，也把上个会话没推出去的补上去。
+- **按写入去抖，不是按时间轮询**：默认 5 秒静默期（从一串写入的第一笔起算），一轮 `/dream` 改十几个文件只产生一轮 push；退出时不管去抖到没到点，再 flush 一次。
+- **只同步 entry，不同步状态**：`MEMORY.md` 索引、`.lock`、`.backups/`、`sessions/` 都留本机——索引能重建，锁和备份是这台机器的事。
+- **冲突不丢东西、而且能自己收敛**：两侧同时改同一条记忆时两份都保留，另一份变成一条正常 entry、`name` 加 `(冲突 <date> <sha6>)` 后缀。后缀只由内容派生，所以两台设备各自解同一次冲突会写出**同一个**文件，不会越同步越多；重复的部分之后交给 `/dream` 合并。
+- **状态检查是严格 dry-run**：`/memory sync status` 算出与真跑一轮完全一样的差集（Configured / Initialized / Origin / Branch / Ahead / Behind / Conflicts…），但**不** clone、不建基线、不碰任何记忆文件。
+
+有一个诚实的取舍值得单独提：Pi 在 `resume` / `fork` / `reload` 里沿用会话开始时录制的 `memory_index`（改它会破掉 prompt cache），所以启动收敛照常跑、磁盘照常更新，但**本会话的索引里看不到刚同步来的记忆**，要等下一次 compaction 或下一个会话。`/memory sync status` 最后一行会把这个话说清楚，而不是让你对着一份「怎么没生效」的磁盘发愣。
+
+#### 记什么，不记什么
+
+这条规则比功能重要：**只记下次还有用的**——项目约束、用户偏好、流程规则、踩过的坑和踩坑原因。不要记已经完成的活、仓库状态变更（合了什么、修了什么、发了什么版本）、一条命令就能查回来的事实、一次性任务细节。**记不准就干脆不记**；一条过时的记忆每一轮都在花你的上下文，比没有记忆更贵。
+
 ## 六、pi-presets：一条命令切场景
 
 Pi 有 `-e` 可以临时加载一个 package，但那串路径没人愿意每次手敲；`PI_CODING_AGENT_DIR` 也是选项，只是它意味着多套 `settings.json`、`models.json`、凭据和技能安装——而这些配置真正不同的部分，往往只是「这次加载哪些 package」。
@@ -439,58 +491,7 @@ superpowers 以 git 依赖装进 preset 目录**自己的** `node_modules`，再
 
 两个踩过的坑：npm 12 默认 `allow-git=none`，git 依赖会直接报 `EALLOWGIT`，需要在**该 preset 目录**的 `.npmrc` 里写 `allow-git=root`；另外 glob 展开会丢掉含 `.` 开头的路径段，`node_modules/*/.pi/extensions` 是匹配不到的，得写显式路径。
 
-## 七、simple-memory：让结论活过会话
-
-同一类问题我三个月问了三遍，每次都得重新解释一遍项目约束——这就是我加记忆层的原因。[simple-memory](https://github.com/yandy/simple-memory) 是一条磁盘记忆、多个 harness 共用：记忆是一个 Markdown 文件，在 `MEMORY.md` 里占一行，两台 harness 指到同一台机器上读写的是同一批文件。
-
-```sh
-pi install npm:@yandy0725/pi-memory
-```
-
-```json
-// ~/.pi/agent/memory.json
-{ "defaults": { "model": "provider/model-id" } }
-```
-
-这个模型**没有随包默认值，也不回退到父会话模型**；缺了它，会话启动时只会报一条配置错误，记忆层一个功能都不初始化。先配模型，再谈别的。
-
-### 7.1 它是怎么工作的
-
-- **一个 `memory` 工具**：`add` / `replace` / `remove` / `list` / `search`（`scope=sessions` 还能翻历史会话）。一条记忆一个文件，`name` 是定位键，同名 `add` 就是覆盖。
-- **`MEMORY.md` 索引进 system prompt**：索引整个会话内冻结，Pi 对 sections 做 diff 时不会逐轮追加消息，provider 的前缀缓存一直命中。
-- **自动浮现**：每轮用一次轻量侧查询挑出相关记忆，把正文注入 `<relevant_memories>`。
-- **自动提取**（默认关）：每轮结束后由子会话挑出值得长期记住的内容。我关着——我更愿意自己决定记什么。
-- **`/dream`**：headless 整理，合并重复、消解矛盾、重建索引。
-- `/memory` 看目录、索引容量、条目数、模块状态、锁持有者；`/memory unlock` 清理崩溃遗留的 `.lock`。
-
-记忆默认落在 `$XDG_DATA_HOME/simple-memory/`（未设置时 `~/.local/share/simple-memory/`），按 git **remote** 分命名空间——所以同一仓库的 clone 和 worktree 共享同一份，非 git 或没有 remote 的项目按绝对路径单独落一份。
-
-### 7.2 跨设备同步（默认关）
-
-```json
-// ~/.pi/agent/memory.json
-{ "sync": { "enabled": true, "remote": "git@github.com:you/project-memory.git" } }
-```
-
-远端就是一个你自己准备的普通 git 仓库（空的也行），pi-memory 不保存任何凭据、也从不提示输入，只调用 `PATH` 上的 `git`。配好之后，带这份配置的下一次会话启动会自己 clone 到 `<memoryDir>/.sync/repo`、建好基线。
-
-这里刻意**没有** `/memory sync init`：首次克隆可能很慢，而「敲了却没生效」又多一个要排查的状态（URL 写错？连不上？），不如就改一行配置、让它幂等地重试。初始化失败也**不是致命的**：没有 git、断网、没权限，会话就用本地记忆继续跑，只留一条能读懂的提醒。
-
-几个我很满意的设计：
-
-- **一轮 push = 一次完整收敛**，不是「先 pull 再 push」。进程内的脏标记只认得本进程写过的内容，拆成两步反而会漏掉别的会话改的东西。启动那一轮因此很划算：既把别的设备写的拉下来，也把上个会话没推出去的补上去。
-- **按写入去抖，不是按时间轮询**：默认 5 秒静默期（从一串写入的第一笔起算），一轮 `/dream` 改十几个文件只产生一轮 push；退出时不管去抖到没到点，再 flush 一次。
-- **只同步 entry，不同步状态**：`MEMORY.md` 索引、`.lock`、`.backups/`、`sessions/` 都留本机——索引能重建，锁和备份是这台机器的事。
-- **冲突不丢东西、而且能自己收敛**：两侧同时改同一条记忆时两份都保留，另一份变成一条正常 entry、`name` 加 `(冲突 <date> <sha6>)` 后缀。后缀只由内容派生，所以两台设备各自解同一次冲突会写出**同一个**文件，不会越同步越多；重复的部分之后交给 `/dream` 合并。
-- **状态检查是严格 dry-run**：`/memory sync status` 算出与真跑一轮完全一样的差集（Configured / Initialized / Origin / Branch / Ahead / Behind / Conflicts…），但**不** clone、不建基线、不碰任何记忆文件。
-
-有一个诚实的取舍值得单独提：Pi 在 `resume` / `fork` / `reload` 里沿用会话开始时录制的 `memory_index`（改它会破掉 prompt cache），所以启动收敛照常跑、磁盘照常更新，但**本会话的索引里看不到刚同步来的记忆**，要等下一次 compaction 或下一个会话。`/memory sync status` 最后一行会把这个话说清楚，而不是让你对着一份「怎么没生效」的磁盘发愣。
-
-### 7.3 记什么，不记什么
-
-这条规则比功能重要：**只记下次还有用的**——项目约束、用户偏好、流程规则、踩过的坑和踩坑原因。不要记已经完成的活、仓库状态变更（合了什么、修了什么、发了什么版本）、一条命令就能查回来的事实、一次性任务细节。**记不准就干脆不记**；一条过时的记忆每一轮都在花你的上下文，比没有记忆更贵。
-
-## 八、把这一套串起来
+## 七、把这一套串起来
 
 工具列完了，说三个我每天真会遇到的场景。
 
@@ -508,7 +509,7 @@ pi install npm:@yandy0725/pi-memory
 4. **每次收工花十秒看 `/insight --short`**，比月底看账单有用。
 5. **记忆和 `AGENTS.md` 都要定期收**：`/dream` 合并重复，`AGENTS.md` 删掉已经变成默认行为的条目。
 
-## 九、一屏速查
+## 八、一屏速查
 
 | 我想要 | 用什么 |
 |---|---|
@@ -528,8 +529,8 @@ pi install npm:@yandy0725/pi-memory
 
 代码都在 GitHub 上：
 
-- [pi-packages](https://github.com/yandy/pi-packages) —— 九块补丁，`pi install npm:@yandy0725/...`
+- [pi-packages](https://github.com/yandy/pi-packages) —— 九个 Pi package，`pi install npm:@yandy0725/...`
 - [pi-presets](https://github.com/yandy/pi-presets) —— preset 注册与 `pi -ps` 启动器
 - [simple-memory](https://github.com/yandy/simple-memory) —— 跨会话、跨 harness 的磁盘记忆层
 
-Pi 最舒服的地方在于它**不预设你的工作流**：一开始只有一个循环，你觉得缺什么就补什么，补到某一天它正好长成你手上这台机器。上面这九块不是标准答案，只是我这台机器的样子。
+Pi 最舒服的地方在于它**不预设你的工作流**：一开始只有一个循环，你觉得缺什么就补什么，补到某一天它正好长成你手上这台机器。上面这十块不是标准答案，只是我这台机器的样子。
