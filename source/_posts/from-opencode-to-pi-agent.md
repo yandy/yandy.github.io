@@ -2,7 +2,7 @@
 title: 从 OpenCode 到 Pi — 我的 AI 编码助手进化之路
 toc: true
 date: 2026-07-14 10:00:00
-categories: ['最佳实践']
+categories: ['按图索骥']
 tags:
   - ai
   - pi

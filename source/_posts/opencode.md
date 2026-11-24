@@ -123,4 +123,4 @@ playwright install chromium firefox
 
 ---
 
-> 📌 目前已全面切换到 [Pi](/pi-coding-agent/)，参见：[《从 OpenCode 到 Pi — 我的 AI 编码助手进化之路》](/pi-coding-agent/)
+> 📌 目前已全面切换到 [Pi](./from-opencode-to-pi-agent.md)，参见：[《从 OpenCode 到 Pi — 我的 AI 编码助手进化之路》](./from-opencode-to-pi-agent.md)
