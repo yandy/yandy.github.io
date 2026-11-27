@@ -24,78 +24,36 @@ tags:
 
 ## 1. 准备 git repo
 
+### 初次下载
+
 ```sh
 cd "$HOME/.local/src"   # <-- 改成你的存放源码的路径
-git clone --depth 1 https://github.com/amywork777/studio.git text-to-cad-studio
+git clone --depth 1 --revision '<tag|branch|完整40位SHA>' https://github.com/amywork777/studio.git text-to-cad-studio
 cd text-to-cad-studio
-git submodule update --init text-to-cad      # 带路径；不要加 --recurse-submodules
-cat text-to-cad/VERSION                      # 打印版本号
-ls text-to-cad/.claude-plugin/marketplace.json
-git submodule status text-to-cad             # 行首空格 + sha == git ls-tree HEAD text-to-cad
 ```
 
-CAD 能力全在 `text-to-cad` 子模块里，Studio 启动时会先检查它的 `.claude-plugin/marketplace.json`，缺了就直接退出。
-
-**子模块命令一定要带路径**，这不是风格问题：仓库索引里有 vendored 的 gitlink（`.repos/alchemy-effect/...`），但 `.gitmodules` 只声明了 `text-to-cad`，所以不带路径的 `git submodule status` 和任何 `--recurse-submodules` 都会报 `no submodule mapping found`。
-
-最后那条检查点的含义是：行首是一个空格（而不是 `-` 或 `+`），且 sha 与父仓库记录的 pin 一致，说明子模块处在干净状态。
-
-## 2. 确认 Node.js 26 环境
-
-monorepo 的 `package.json` 里 `engines.node` 写的是 `26.12.1`：
+### 后续更新
 
 ```sh
-node -v              # 期望是 v26.x
+cd "$HOME/.local/src/text-to-cad-studio"   # <-- 改成你的存放源码的路径
+git fetch --depth 1 origin tag '<new tag>' && git switch --detach '<new tag>'
+git fetch --depth 1 origin '<new branch>' && git switch --detach '<new branch>'
 ```
 
-低于 26 通常只是告警——`vite-plus@1.4.0` 自身允许 `^24.11.0`，我一开始就是在 24 上把依赖装完的。但如果哪一步真被 `engines` 拦下来，切到 26 重跑即可。
+## 2. 构建环境
 
-**具体用哪种方式装 Node 26 随意，下面只是我用的 `fnm`**；`nvm`、`volta`、发行版包、官方二进制都一样，本质是让 `PATH` 上的 `node` 是 26.x：
+项目中自带一个环境设置脚本 `scripts/setup-studio.sh`，但它限定了只能在 Mac 下执行。我们基于它改造出一个 Linux 版：
 
+- 复制一个作为 Linux 版设置脚本
 ```sh
-fnm install 26.12.1
-fnm use 26.12.1
-node -v              # 再确认一次
+cp scripts/setup-studio.sh scripts/setup-studio-linux.sh
 ```
+- 删掉其中的 mac 平台检测代码 (搜索 darwin 和 xcode-select)
 
-换 Node 大版本**不需要重装 `node_modules`**：它按项目放，不按 Node 版本，而且这个仓库里没有按 ABI 编译的原生模块（`node-pty`、`sharp`、`koffi` 都是 N-API 或按平台的 prebuild）。唯一代价是 `engines` 是个精确值，切过去之后建议在第 3 步重跑一次 `vp install`（store 命中，十几秒）。
-
-## 3. 装 monorepo
-
+- 运行脚本
 ```sh
-npx --yes -p vite-plus@1.4.0 vp install
-# 检查点
-ls node_modules/.bin/vp node_modules/.bin/vpr
+scripts/setup-studio-linux.sh
 ```
-
-仓库用 vite-plus 的 `vp` 管依赖，版本在 catalog 里固定为 `1.4.0`。本机没有全局 `vp`，所以用 `npx` 临时拉这个版本执行安装。
-
-## 4. 下载 Electron 运行时
-
-```sh
-(cd apps/desktop && node scripts/ensure-electron-runtime.mjs)
-# 检查点
-(cd apps/desktop && node -e "console.log(require('./node_modules/electron'))")
-```
-
-Electron 从某个版本起不再带 install 脚本，运行时得单独拉一次。
-
-## 5. 准备 text-to-cad（checkout 版插件要用）
-
-```sh
-cd text-to-cad
-uv venv --clear --python 3.14 .venv
-uv pip install --python .venv/bin/python -r requirements-dev.txt
-uv pip install --python .venv/bin/python --editable "./packages/cad[build123d,trimesh,netgen,calculix]"
-npm ci
-npm run build:packages
-scripts/bundle/bundle.sh
-cd ..
-# 检查点
-text-to-cad/.venv/bin/python -c "import cad_mcp.shim, cad_server.cli, OCP, netgen, cad_ccx, trimesh; print('ok')"
-```
-
-这一步就是在造一个独立的 Python 3.14 环境，把 CAD 建模、网格、求解所需的二进制全装进去。最后那行 `import` 检查点跑通，说明建模、网格、求解、导出四条链路都齐了。
 
 ## 6. 启动脚本
 
@@ -108,14 +66,11 @@ text-to-cad/.venv/bin/python -c "import cad_mcp.shim, cad_server.cli, OCP, netge
 # terminal window, quits Studio.
 set -euo pipefail
 
-ROOT="$HOME/.local/src/text-to-cad-studio"   # <-- 改成你的 checkout 路径
-
 export TEXT_TO_CAD_STUDIO_HOME="$HOME/.text-to-cad-studio-dev"
-export TEXT_TO_CAD_DEV=1
 export STUDIO_PROJECTS_DIR="$HOME/workspace/text-to-cad/.studio-projects"
 export STUDIO_NEW_PROJECTS_DIR="$HOME/workspace/text-to-cad/studio"
 
-cd "$ROOT"
+RUN_SCRIPT="$HOME/.local/src/text-to-cad-studio/scripts/run-studio.sh"   # <-- 改成你的 checkout 路径
 
 # 单实例：第二次启动会去抢 CAD engine 的 3346 端口然后失败。锁跟着进程走，
 # 崩溃或 Ctrl-C 之后自动释放。
@@ -125,7 +80,7 @@ if ! flock -n 9; then
   exit 0
 fi
 
-exec node_modules/.bin/vpr studio:desktop
+exec $RUN_SCRIPT
 ```
 
 ```sh
@@ -136,7 +91,6 @@ bash -n ~/.local/bin/cad-studio && echo ok
 几个关键字都是有意为之：
 
 - **`TEXT_TO_CAD_STUDIO_HOME`** 是 Studio 自己的状态根目录（数据库、会话历史、插件副本、`cad/state`），不设时默认是 `~/.text-to-cad-studio`，带 `TEXT_TO_CAD_DEV=1` 时是 `~/.text-to-cad-studio-dev`。它必须写绝对路径，Node 不展开 `~`。
-- **`TEXT_TO_CAD_DEV=1`** 决定跑哪套 CAD 工具。不设时 Studio 会用 `uvx` 从 PyPI 拉发布版 `cad-mcp`，技能只有 Jake 自带的 10 个；设了才用第 5 步刚建好的 `.venv`，并多出 `fdm`、`export`、`board-fab`、`cnc` 这批 job 技能。**建议始终带上。**
 - **`STUDIO_PROJECTS_DIR` / `STUDIO_NEW_PROJECTS_DIR`** 分别是项目记录目录和新项目文件夹位置。换一套路径就等于换一套状态，旧项目不会自动出现。
 - **`exec node_modules/.bin/vpr`** 而不是 `pnpm studio:desktop`：少一层 corepack/pnpm 解析，只依赖 `node`，行为完全一致。
 - **`exec 9>…` + `flock -n 9`** 做单实例：文件描述符跟着 `exec` 进到 Studio 进程里，所以锁的生命周期就是 Studio 的生命周期。
