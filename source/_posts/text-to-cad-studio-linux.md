@@ -84,12 +84,11 @@ Keywords=CAD;Studio;text-to-cad;engineering;mechanical;
 
 如果想覆盖一些默认路径，可以增加如下环境变量
 
-- **`TEXT_TO_CAD_STUDIO_HOME`** 是 Studio 自己的状态根目录（数据库、会话历史、插件副本、`cad/state`），不设时默认是 `~/.text-to-cad-studio`，带 `TEXT_TO_CAD_DEV=1` 时是 `~/.text-to-cad-studio-dev`。它必须写绝对路径，Node 不展开 `~`。
 - **`STUDIO_PROJECTS_DIR` / `STUDIO_NEW_PROJECTS_DIR`** 分别是项目记录目录和新项目文件夹位置。默认分别为 `~/studio-projects` / `~/Documents/Studio`
 
 覆盖方法是：将以上 `cad-studio.desktop` 中 `Exec=` 改写为：
 
-`Exec=env TEXT_TO_CAD_STUDIO_HOME=/path/to/studio-home STUDIO_PROJECTS_DIR=/path/to/studio-projects STUDIO_NEW_PROJECTS_DIR=/path/to/studios /path/to/text-to-cad-studio/scripts/run-studio.sh`
+`Exec=env STUDIO_PROJECTS_DIR=/path/to/studio-projects STUDIO_NEW_PROJECTS_DIR=/path/to/studios /path/to/text-to-cad-studio/scripts/run-studio.sh`
 
 验证：
 
