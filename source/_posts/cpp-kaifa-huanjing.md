@@ -53,7 +53,6 @@ sudo apt install -y curl zip unzip tar
 sudo pacman -Syyu --noconfirm curl zip unzip tar
 ```
 
-
 #### installation
 
 **for bash**

@@ -34,29 +34,20 @@ fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 $env:ELECTRON_MIRROR = "https://npmmirror.com/mirrors/electron/"
 
 '@
+```
+
+### 2.2. nodejs
+
+```pwsh
 
 # 安装 node (open in a new terminal tab)
-fnm use --install-if-missing 22
+fnm use --install-if-missing 26
 
 # 设置 npm 源
 npm config set registry https://registry.npmmirror.com
-```
 
-### 2.2. bun
-
-#### 安装
-
-```pwsh
-powershell -c "irm bun.sh/install.ps1|iex"
-```
-
-#### 设置国内源
-
-```pwsh
-Add-Content -Path $PROFILE -Value @'
-$env:BUN_CONFIG_REGISTRY = "https://registry.npmmirror.com"
-
-'@
+# 安装 pnpm
+npm install -g pnpm@latest
 ```
 
 ## 3. Linux/WSL
@@ -77,7 +68,6 @@ curl -fsSL https://fnm.vercel.app/install | bash
 ```bash
 export FNM_NODE_DIST_MIRROR="https://mirrors.aliyun.com/nodejs-release/"
 export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
-export COREPACK_NPM_REGISTRY="https://registry.npmmirror.com"
 ```
 
 **for fish**
@@ -87,46 +77,17 @@ export COREPACK_NPM_REGISTRY="https://registry.npmmirror.com"
 ```sh
 set -x FNM_NODE_DIST_MIRROR "https://mirrors.aliyun.com/nodejs-release/"
 set -x ELECTRON_MIRROR "https://npmmirror.com/mirrors/electron/"
-set -x COREPACK_NPM_REGISTRY "https://registry.npmmirror.com"
 ```
 
-**打开新终端**
+### 3.2 nodejs
 
 ```sh
 # 安装 node (open in a new terminal tab)
-fnm use --install-if-missing 24
+fnm use --install-if-missing 26
 
 # 设置 npm 源
 npm config set registry https://registry.npmmirror.com
 
-# enable pnpm
-corepack enable pnpm
-pnpm setup
-```
-
-### 3.2. bun
-
-#### 安裝
-
-```sh
-curl -fsSL https://bun.com/install | bash
-```
-
-#### 设置国内源
-
-
-**for bash**
-
-`$HOME/.bashrc`
-
-```sh
-export BUN_CONFIG_REGISTRY="https://registry.npmmirror.com"
-```
-
-**for fish**
-
-`$HOME/.config/fish/config.fish`
-
-```sh
-set -x BUN_CONFIG_REGISTRY "https://registry.npmmirror.com"
+# 安装 pnpm
+npm install -g pnpm@latest
 ```
