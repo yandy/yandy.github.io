@@ -61,6 +61,7 @@ winget install --id Git.Git -e --source winget
 # 配置
 git config --global user.name "Michael Ding"
 git config --global user.email "yandy.ding@gmail.com"
+git config --global core.symlinks true
 ```
 
 自动补全：
